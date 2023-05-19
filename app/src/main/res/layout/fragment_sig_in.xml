@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_registration_block">
+
+    <ImageView
+        style="@style/TopStarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:contentDescription="@string/star_ic_content_description"
+        app:layout_constraintBottom_toTopOf="@id/topLine"
+        app:layout_constraintEnd_toStartOf="@id/label" />
+
+    <TextView
+        android:id="@+id/label"
+        style="@style/TopLabels"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_enter"
+        app:layout_constraintBottom_toTopOf="@id/topLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/topLine"
+        style="@style/TopLineBg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/emailLabel"
+        style="@style/LabelsInRegistrationBlocks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="193dp"
+        android:text="@string/label_text_email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topLine" />
+
+    <EditText
+        android:id="@+id/inputEmail"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="38dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="38dp"
+        android:textColor="@color/white"
+        android:background="@color/white_29"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailLabel" />
+
+    <TextView
+        android:id="@+id/passwordLabel"
+        style="@style/LabelsInRegistrationBlocks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/label_text_password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/inputEmail" />
+
+    <EditText
+        android:id="@+id/inputPassword"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="38dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/white"
+        android:layout_marginEnd="38dp"
+        android:background="@color/white_29"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordLabel" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnForgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/transparent"
+        android:fontFamily="@font/helvetica_regular"
+        android:text="@string/forgot_password"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/inputPassword" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnEnter"
+        style="@style/ButtonsOnRegistrationBlock"
+        android:layout_width="wrap_content"
+        android:layout_marginStart="40dp"
+        android:text="@string/btn_enter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnForgotPassword" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnRegistration"
+        style="@style/ButtonsOnRegistrationBlock"
+        android:layout_width="0dp"
+        android:layout_marginEnd="40dp"
+        android:text="@string/btn_registration_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnForgotPassword" />
+
+    <ImageButton
+        android:id="@+id/btnSignInWithGoogle"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="27dp"
+        android:background="@drawable/ic_google_png"
+        app:layout_constraintEnd_toStartOf="@+id/btnRegistration"
+        app:layout_constraintStart_toEndOf="@+id/btnEnter"
+        app:layout_constraintTop_toBottomOf="@+id/btnForgotPassword" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

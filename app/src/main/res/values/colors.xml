@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="eclipse_color">#8061FF</color>
+    <color name="calendarTextColorPrimary">#5B32FF</color>
+    <color name="primary_color">#5B32FF</color>
+    <color name="dark_white">#F4F4F4</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="registration_font">#063556</color>
+    <color name="white_29">#75ffffff</color>
+    <color name="white_50">#50ffffff</color>
+    <color name="white_80">#80ffffff</color>
+    <color name="start_color_for_btn_to_main">#FA06FF</color>
+</resources>

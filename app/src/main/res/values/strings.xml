@@ -1,0 +1,67 @@
+<resources>
+    <string name="app_name">NoteFireBase</string>
+    <string name="btn_text_to_current_date">Открыть ежедневник\nна выбранную дату</string>
+    <string name="btn_text_to_notes">заметки</string>
+    <string name="btn_text_to_finance">финансы</string>
+    <string name="btn_text_to_mood">mood</string>
+    <string name="btn_text_to_wish_list">wish list</string>
+    <string name="btn_text_to_diary">дневник</string>
+    <string name="btn_text_to_habits">трекер</string>
+    <string name="btn_text_create_directory">создать папку</string>
+    <string name="btn_text_commit_note">Готово</string>
+    <string name="btn_text_create_note">создать заметку</string>
+    <string name="btn_text_to_leaveReview">Оставить отзыв</string>
+    <string name="btn_text_write_to_support">Написать в поддержку</string>
+    <string name="btn_text_change_email">Сменить адрес электронной почты</string>
+    <string name="btn_text_change_password">Забыл пароль</string>
+    <string name="btn_text_reset_password">Восстановить пароль</string>
+    <string name="btn_text_create_project">Создать проект</string>
+    <string name="input_directory_name">Введите название папки</string>
+    <string name="directory_name_hint">Введите название папки</string>
+    <string name="wish_name_hint">Введите название желания</string>
+    <string name="btn_text_directory_commit">Подтвердить название</string>
+    <string name="label_project">Проект</string>
+    <string name="label_wish">Спискок желаний</string>
+    <string name="label_back">Назад</string>
+    <string name="label_notes">Заметки</string>
+    <string name="label_create_note">Введите имя заметки</string>
+    <string name="label_input_email">Введите адрес привязанной электронной почты</string>
+    <string name="create_wish">Создать желание</string>
+    <string name="wellcome">Добро пожаловать в ежедневник </string>
+    <string name="star_ic_content_description">Иконка звезды для заметок</string>
+    <string name="triple_star_ic_content_description">Иконка звезды для настроек</string>
+    <string name="go_to_main_ic_content_description">Иконка кнопки к главному фрагменту</string>
+    <string name="go_back_ic_content_description">Иконка кнопки назад</string>
+    <string name="dir_name">Заметки / </string>
+    <string name="diary">diary</string>
+    <string name="time_management">time\nmanagement</string>
+    <string name="text_plans">Планы — это мечты знающих людей.\nЭрнст Фейхтерслебен</string>
+    <string name="text_registration">Регистрация</string>
+    <string name="input_name">Введите имя</string>
+    <string name="input_email">Введите адрес электронной почты</string>
+    <string name="input_password">Придумайте пароль</string>
+    <string name="create_acc">Создать аккаунт</string>
+    <string name="message">На указанный почтовый адрес было\nвыслано письмо с подтверждением,\nзавершите регистрацию, подтвердив\nэлектронный адрес :)</string>
+    <string name="btn_enter">Войти</string>
+    <string name="label_enter">Войдите в приложение</string>
+    <string name="forgot_password">Забыли пароль?</string>
+    <string name="btn_registration_text">Регистрация</string>
+    <string name="label_settings">Настройки</string>
+    <string name="user_photo">Аватар пользователя</string>
+    <string name="btn_exit">Выйти</string>
+    <string name="text_btn_to_main">Вернуться на главную</string>
+    <string name="text_btn_to_settings">Перейти к настройкам</string>
+    <string name="label_text_email">Введите email</string>
+    <string name="label_text_password">Введите пароль</string>
+
+    <!--  Into code  -->
+    <string name="email_error">Электронная почта указана в неверном формате</string>
+    <string name="password_length_error">Пароль должен содержать не менее 8 символов</string>
+    <string name="password_up_low_error">Пароль должен содержать как минимум одну заглавную и одну строчную буквы</string>
+    <string name="password_lang_error">Пароль должен состоять из букв английского алфавита</string>
+    <string name="email_already_exist">Учетная запись с такой электронной почтой уже существует</string>
+
+    <string name="alert_dialog_title">Верификация аккаунта</string>
+    <string name="alert_dialog_message">Вы не подтвердили адрес электронной почты.\nЕсли сообщение не пришло, проверьте папку спам</string>
+    <string name="alert_dialog_positive">OK</string>
+</resources>

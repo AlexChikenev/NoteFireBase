@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape>
+            <corners android:radius="15px"/>
+            <solid android:color="@color/primary_color" />
+        </shape>
+    </item>
+    <item android:top="28px">
+        <shape>
+            <corners android:bottomLeftRadius="15px"
+                android:bottomRightRadius="15px"/>
+            <solid android:color="@color/white" />
+        </shape>
+    </item>
+    <item android:drawable="@drawable/ic_star" android:gravity="top|start" android:top="2dp" android:start="5dp">
+    </item>
+
+
+</layer-list>

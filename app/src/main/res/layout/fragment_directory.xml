@@ -1,0 +1,69 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/directoryLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_fragment_notes"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toBottomOf="parent">
+
+    <ImageButton
+        android:id="@+id/btnToSettings"
+        style="@style/ButtonToSettings"
+        android:layout_marginBottom="15dp"
+        android:contentDescription="@string/text_btn_to_settings"
+        app:layout_constraintBottom_toTopOf="@id/btnToMain"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ic_star"
+        style="@style/TopStarStyle"
+        android:contentDescription="@string/star_ic_content_description"
+        app:layout_constraintBottom_toTopOf="@+id/topLine"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        style="@style/TopLabels"
+        android:text="@string/label_notes"
+        app:layout_constraintBottom_toTopOf="@id/topLine"
+        app:layout_constraintStart_toEndOf="@id/ic_star" />
+
+    <ImageButton
+        android:id="@+id/btnToMain"
+        style="@style/ButtonGoToMain"
+        android:contentDescription="@string/go_to_main_ic_content_description"
+        app:layout_constraintBottom_toTopOf="@id/topLine"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <View
+        android:id="@+id/topLine"
+        style="@style/TopLineBg"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnCreateDirectory"
+        style="@style/ButtonNoteBg"
+        android:layout_marginStart="38dp"
+        android:layout_marginTop="26dp"
+        android:text="@string/btn_text_create_directory"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/topLine" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcDirectory"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnCreateDirectory" />
+</androidx.constraintlayout.widget.ConstraintLayout>

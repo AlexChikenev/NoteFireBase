@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_fragment_notes">
+
+    <ImageButton
+        android:id="@+id/btnToSettings"
+        style="@style/ButtonToSettings"
+        android:layout_marginBottom="14dp"
+        app:layout_constraintBottom_toTopOf="@id/btnGoBack"
+        android:contentDescription="@string/text_btn_to_settings"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ic_star"
+        style="@style/TopStarStyle"
+        android:background="@drawable/ic_star_purple"
+        android:contentDescription="@string/star_ic_content_description"
+        app:layout_constraintBottom_toTopOf="@+id/topLine"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/noteName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="@font/helvetica_bold"
+        android:hint="@string/label_create_note"
+        android:textColor="@color/primary_color"
+        app:layout_constraintBottom_toTopOf="@id/topLine"
+        app:layout_constraintEnd_toStartOf="@+id/btnGoBack"
+        app:layout_constraintStart_toEndOf="@+id/ic_star" />
+
+    <ImageButton
+        android:id="@+id/btnGoBack"
+        style="@style/ButtonGoBack"
+        android:contentDescription="@string/go_back_ic_content_description"
+        app:layout_constraintBottom_toTopOf="@id/topLine"
+        app:layout_constraintEnd_toStartOf="@id/btnToMain" />
+
+    <ImageButton
+        android:id="@+id/btnToMain"
+        style="@style/ButtonGoToMain"
+        android:contentDescription="@string/go_to_main_ic_content_description"
+        app:layout_constraintBottom_toTopOf="@id/topLine"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <View
+        android:id="@+id/topLine"
+        style="@style/TopLineBg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnCommitNote"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginEnd="38dp"
+        android:background="@drawable/bg_btn_commit_note"
+        android:fontFamily="@font/helvetica_light"
+        android:text="@string/btn_text_commit_note"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/topLine" />
+
+    <EditText
+        android:id="@+id/noteContent"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="38dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginEnd="38dp"
+        android:layout_marginBottom="100dp"
+        android:background="@drawable/bg_edit_text_note"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnCommitNote" />
+</androidx.constraintlayout.widget.ConstraintLayout>

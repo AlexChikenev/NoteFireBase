@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragmentSlideLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="bottom"
+    android:background="@color/black"
+    android:maxHeight="500dp">
+
+    <EditText
+        android:id="@+id/projectName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="50dp"
+        android:cursorVisible="false"
+        android:hint="@string/directory_name_hint"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnCommitProject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/btn_text_directory_commit"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/projectName" />
+</androidx.constraintlayout.widget.ConstraintLayout>

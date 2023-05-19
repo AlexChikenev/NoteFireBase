@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <corners android:radius="15px" />
+            <solid android:color="@color/primary_color" />
+        </shape>
+    </item>
+    <item android:drawable="@drawable/ic_four_angles_star" android:gravity="start|center_vertical" android:start="20px"/>
+</layer-list>

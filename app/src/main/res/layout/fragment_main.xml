@@ -1,0 +1,110 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_fragment_main"
+    tools:context=".fragments.MainFragment">
+
+    <ImageButton
+        android:id="@+id/btnToSettings"
+        style="@style/ButtonToSettings"
+        android:layout_marginBottom="18dp"
+        app:layout_constraintBottom_toTopOf="@id/calendarView"
+        android:contentDescription="@string/text_btn_to_settings"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="35dp"
+        android:dateTextAppearance="@style/CalendarCustomText"
+        android:theme="@style/CalendarCustomView"
+        android:weekDayTextAppearance="@style/CalendarCustomText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnToCurrentDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="25dp"
+        android:background="@drawable/bg_btn_current_date"
+        android:drawableEnd="@drawable/ic_arrow_right"
+        android:fontFamily="@font/helvetica_light"
+        android:gravity="start|center"
+        android:paddingStart="25dp"
+        android:paddingEnd="25dp"
+        android:text="@string/btn_text_to_current_date"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/calendarView" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="25dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnToCurrentDate">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnToNotes"
+                style="@style/ButtonMainFragment"
+                android:layout_marginEnd="48dp"
+                android:text="@string/btn_text_to_notes" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnToFinance"
+                style="@style/ButtonMainFragment"
+                android:layout_marginEnd="48dp"
+                android:text="@string/btn_text_to_finance" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnToMood"
+                style="@style/ButtonMainFragment"
+                android:text="@string/btn_text_to_mood" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnToWishList"
+                style="@style/ButtonMainFragment"
+                android:layout_marginEnd="48dp"
+                android:text="@string/btn_text_to_wish_list" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnToDiary"
+                style="@style/ButtonMainFragment"
+                android:layout_marginEnd="48dp"
+                android:text="@string/btn_text_to_diary" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnToHabits"
+                style="@style/ButtonMainFragment"
+                android:text="@string/btn_text_to_habits" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

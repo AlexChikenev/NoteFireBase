@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_registration_block_with_oval">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TopLabels"
+        android:text="@string/wellcome"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/topLine" />
+    <View
+        android:id="@+id/topLine"
+        style="@style/TopLineBg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/diary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="112dp"
+        android:fontFamily="@font/saunde"
+        android:text="@string/diary"
+        android:textColor="@color/registration_font"
+        android:textSize="115sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topLine" />
+
+    <TextView
+        android:id="@+id/timeManagement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="38dp"
+        android:fontFamily="@font/saunde"
+        android:text="@string/time_management"
+        android:textColor="@color/registration_font"
+        android:textSize="28sp"
+        android:layout_marginTop="250dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topLine" />
+
+    <TextView
+        android:id="@+id/plans"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_plans"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="8sp"
+        android:fontFamily="@font/helvetica_regular"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/bottomLine"
+        android:layout_width="0dp"
+        android:layout_marginTop="110dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="38dp"
+        android:layout_marginEnd="38dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timeManagement" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

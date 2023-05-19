@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "221802621696",
+    "firebase_url": "https://note-c510f-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "note-c510f",
+    "storage_bucket": "note-c510f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:221802621696:android:1c7e553a677a7a9c08a1e5",
+        "android_client_info": {
+          "package_name": "com.example.notefirebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "221802621696-8mggngf0vtm2ddk4apa05eh8adjds01a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.notefirebase",
+            "certificate_hash": "7b48bc05da750892e327e0adb175a868cc5d11cc"
+          }
+        },
+        {
+          "client_id": "221802621696-lsd5ar7i483nh2tffi87rm5o4ltg2hrv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRYitTr7iILz8aAxuBBlSK-qQF0Z_lJbA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "221802621696-3v4k0f11po256brhsi4hvtof8bjn571v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

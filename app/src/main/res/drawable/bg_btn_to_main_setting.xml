@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <gradient android:startColor="@color/start_color_for_btn_to_main"
+                android:endColor="#90FA06FF"/>
+            <corners android:radius="15px"/>
+        </shape>
+    </item>
+    <item android:drawable="@drawable/ic_to_main" android:gravity="right" android:right="40px" android:top="37px" android:bottom="38px"/>
+</layer-list>
