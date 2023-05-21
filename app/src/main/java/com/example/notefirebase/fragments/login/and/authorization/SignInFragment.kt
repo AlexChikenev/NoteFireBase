@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.example.notefirebase.R
 import com.example.notefirebase.databinding.FragmentSigInBinding
 import com.example.notefirebase.fragments.MainFragment
+import com.example.notefirebase.fragments.settings.InputYourEmailForResetFragment
 import com.example.notefirebase.utils.EmailPasswordAuth
 import com.example.notefirebase.utils.GoogleAuth
 import com.google.firebase.auth.FirebaseAuth
@@ -75,6 +76,14 @@ class SignInFragment : Fragment() {
                     }
                 )
             }
+        }
+
+        fragmentBinding.btnForgotPassword.setOnClickListener {
+            activity
+                ?.supportFragmentManager
+                ?.beginTransaction()
+                ?.replace(R.id.fragmentHolder, InputYourEmailForResetFragment())
+                ?.commit()
         }
     }
 

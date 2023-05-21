@@ -41,30 +41,17 @@ class CreateNoteFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setupClickListeners()
     }
 
     // Set up Click Listeners
     private fun setupClickListeners() {
-
-        fragmentBinding.btnGoBack.setOnClickListener {
-            if (projectId == null) {
-
-                activity
-                    ?.supportFragmentManager
-                    ?.beginTransaction()
-                    ?.replace(
-                        R.id.fragmentHolder,
-                        OpenDirectoryFragment(directoryId, directoryName)
-                    )
-                    ?.commit()
-            } else {
-                activity
-                    ?.supportFragmentManager
-                    ?.beginTransaction()
-                    ?.replace(
-                        R.id.fragmentHolder,
+        with(fragmentBinding) {
+            btnGoBack.setOnClickListener {
+                if (projectId == null) {
+                    updateUI(OpenDirectoryFragment(directoryId, directoryName))
+                } else {
+                    updateUI(
                         CreateNoteInProjectFragment(
                             directoryId,
                             directoryName,
@@ -72,95 +59,85 @@ class CreateNoteFragment(
                             projectName
                         )
                     )
-                    ?.commit()
-            }
-        }
-
-        // Go to main
-        fragmentBinding.btnToMain.setOnClickListener {
-            activity
-                ?.supportFragmentManager
-                ?.beginTransaction()
-                ?.replace(R.id.fragmentHolder, MainFragment())
-                ?.commit()
-        }
-
-        // Show settings
-        fragmentBinding.btnToSettings.setOnClickListener {
-            activity
-                ?.supportFragmentManager
-                ?.beginTransaction()
-                ?.replace(R.id.fragmentHolder, MainSettingsFragment())
-                ?.commit()
-        }
-
-        // Button for project creation
-        fragmentBinding.btnCommitNote.setOnClickListener {
-            if (directoryId != null) {
-                // Check data
-                if (fragmentBinding.noteContent.text.isNotEmpty()) {
-                    val userUid = FirebaseAuth.getInstance().currentUser?.uid ?: ""
-                    val noteName = fragmentBinding.noteName.text.toString()
-                    val noteContent = fragmentBinding.noteContent.text.toString()
-
-                    val email = FirebaseAuth.getInstance().currentUser?.email
-                    val parts = email?.split("@")
-                    val userEmail = parts!![0]
-
-                    writeNoteIntoDir(directoryId, userUid, noteName, noteContent)
-
-                    activity
-                        ?.supportFragmentManager
-                        ?.beginTransaction()
-                        ?.replace(
-                            R.id.fragmentHolder,
-                            OpenDirectoryFragment(directoryId, directoryName)
-                        )
-                        ?.commit()
-
-                } else {
-                    Toast.makeText(context, "Введите название своего проекта", Toast.LENGTH_SHORT)
-                        .show()
                 }
-            } else {
-                if (fragmentBinding.noteContent.text.isNotEmpty()) {
-                    val userUid = FirebaseAuth.getInstance().currentUser?.uid ?: ""
-                    val noteName = fragmentBinding.noteName.text.toString()
-                    val noteContent = fragmentBinding.noteContent.text.toString()
-                    if (projectId != null) {
-                        writeNoteIntoProject(projectId, userUid, noteName, noteContent)
-                    }
+            }
 
-                    activity
-                        ?.supportFragmentManager
-                        ?.beginTransaction()
-                        ?.replace(
-                            R.id.fragmentHolder,
+            // Go to main
+            btnToMain.setOnClickListener {
+                updateUI(MainFragment())
+            }
+
+            // Show settings
+            btnToSettings.setOnClickListener {
+                updateUI(MainSettingsFragment())
+            }
+
+            // Button for project creation
+            btnCommitNote.setOnClickListener {
+                val userUid = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+                var noteName = noteName.text.toString()
+                val noteContent = noteContent.text.toString()
+
+                if (directoryId != null) {
+                    // Check data
+                    if (noteContent.isNotEmpty()) {
+                        if (noteName.isEmpty()) {
+                            val newName = noteContent.split(" ")
+                            noteName = newName[0]
+                            writeNoteIntoDir(directoryId, userUid, noteName, noteContent)
+                        } else {
+                            writeNoteIntoDir(directoryId, userUid, noteName, noteContent)
+                        }
+                        updateUI(OpenDirectoryFragment(directoryId, directoryName))
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Введите название своего проекта",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    }
+                } else {
+                    if (noteContent.isNotEmpty()) {
+                        if (projectId != null) {
+                            if (noteName.isEmpty()) {
+                                val newName = noteContent.split(" ")
+                                noteName = newName[0]
+                                writeNoteIntoProject(projectId, userUid, noteName, noteContent)
+                            } else {
+                                writeNoteIntoDir(projectId, userUid, noteName, noteContent)
+                            }
+                        }
+                        updateUI(
                             CreateNoteInProjectFragment(
-                                directoryId,
+                                projectId,
                                 directoryName,
                                 projectId,
                                 projectName
                             )
                         )
-                        ?.commit()
-                } else {
-                    Toast.makeText(
-                        context,
-                        "Введите название своего проекта",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
-
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Введите название своего проекта",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    }
                 }
             }
         }
     }
 
-    fun getFirstTwoWords(input: String): String {
-        val words = input.trim().split("\\s+".toRegex()) // Разделение строки на слова
-        val firstTwoWords = words.take(2) // Получение первых двух слов
-        return firstTwoWords.joinToString(" ") // Объединение первых двух слов в строку
+    private fun updateUI(fragment: Fragment) {
+        activity
+            ?.supportFragmentManager
+            ?.beginTransaction()
+            ?.replace(
+                R.id.fragmentHolder,
+                fragment
+            )
+            ?.commit()
     }
 
     private fun writeNoteIntoDir(

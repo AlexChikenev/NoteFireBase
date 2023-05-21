@@ -50,11 +50,17 @@ class InputYourEmailForResetFragment : Fragment() {
         }
 
         binding.btnToMain.setOnClickListener {
-            activity
-                ?.supportFragmentManager
-                ?.beginTransaction()
-                ?.replace(R.id.fragmentHolder, MainFragment())
-                ?.commit()
+
+            val user = Firebase.auth.currentUser
+            if(user == null){
+                return@setOnClickListener
+            }else{
+                activity
+                    ?.supportFragmentManager
+                    ?.beginTransaction()
+                    ?.replace(R.id.fragmentHolder, MainFragment())
+                    ?.commit()
+            }
         }
     }
 }
