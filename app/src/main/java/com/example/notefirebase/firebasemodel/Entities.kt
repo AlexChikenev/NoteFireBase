@@ -52,3 +52,15 @@ data class Income(
     val incomeAmount: Double
 )
 
+data class FirebaseOutcomes(
+    val outcomeName: String,
+    val outcomeAmount: Double?
+) {
+    constructor() : this ("", null)
+}
+
+data class Outcome(
+    val outcomeName: String,
+    val outcomeAmount: Double
+)
+

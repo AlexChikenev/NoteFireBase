@@ -99,6 +99,7 @@
         android:text="@string/btn_text_create_income"/>
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnInputOutcome"
         style="@style/ButtonNoteBg"
         android:layout_width="0dp"
         android:layout_height="30dp"
