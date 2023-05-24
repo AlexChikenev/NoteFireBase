@@ -6,11 +6,9 @@
     android:background="@drawable/bg_main_fragment_settings">
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/topLine"
-        android:layout_marginEnd="152dp"
-        android:layout_marginStart="140dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 

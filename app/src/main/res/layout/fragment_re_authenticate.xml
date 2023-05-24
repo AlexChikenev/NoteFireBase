@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_setting_fragment">
+    android:background="@drawable/bg_setting_fragment"
+    tools:context=".fragments.settings.ChangeEmailFragment">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="wrap_content"
@@ -25,7 +27,7 @@
             style="@style/TopLabels"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_change_password" />
+            android:text="@string/label_re_auth" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <View
@@ -37,13 +39,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnForgot"
+        android:id="@+id/btnEmail"
         style="@style/ButtonInSettings"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="120dp"
         android:layout_marginEnd="40dp"
         android:background="@drawable/bg_btn_reset_password"
-        android:text="@string/btn_text_change_password"
+        android:text="@string/label_re_auth"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topLine" />
@@ -60,7 +62,7 @@
         android:textSize="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnForgot" />
+        app:layout_constraintTop_toBottomOf="@id/btnEmail" />
 
     <EditText
         android:id="@+id/inputEmail"
@@ -74,28 +76,67 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/labelEmail" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnResetPassword"
-        style="@style/ButtonsOnRegistrationBlock"
+
+    <TextView
+        android:id="@+id/labelPassword"
         android:layout_width="0dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="130dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="130dp"
-        android:text="@string/btn_text_reset_password"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/helvetica_regular"
+        android:gravity="center_horizontal"
+        android:text="@string/label_text_password"
+        android:textColor="@color/white"
+        android:textSize="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/inputEmail" />
+
+    <EditText
+        android:id="@+id/inputPassword"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="40dp"
+        android:background="@color/white_80"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/labelPassword" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnEnter"
+        style="@style/ButtonsOnRegistrationBlock"
+        android:layout_width="0dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/btn_enter"
+        app:layout_constraintEnd_toStartOf="@id/btnResetPassword"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/inputPassword" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnResetPassword"
+        style="@style/ButtonsOnRegistrationBlock"
+        android:layout_marginStart="40dp"
+        android:layout_width="0dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/forgot_password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btnEnter"
+        app:layout_constraintTop_toBottomOf="@id/inputPassword" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnToMain"
         style="@style/ButtonInSettings"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="210dp"
         android:layout_marginEnd="40dp"
+        android:layout_marginBottom="40dp"
         android:background="@drawable/bg_btn_to_main_setting"
         android:text="@string/text_btn_to_main"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnResetPassword" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

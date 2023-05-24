@@ -78,6 +78,7 @@ class CreateNoteFragment(
                 var noteName = noteName.text.toString()
                 val noteContent = noteContent.text.toString()
 
+                // If directoryId is not null
                 if (directoryId != null) {
                     // Check data
                     if (noteContent.isNotEmpty()) {
@@ -89,15 +90,9 @@ class CreateNoteFragment(
                             writeNoteIntoDir(directoryId, userUid, noteName, noteContent)
                         }
                         updateUI(OpenDirectoryFragment(directoryId, directoryName))
-                    } else {
-                        Toast.makeText(
-                            context,
-                            "Введите название своего проекта",
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
                     }
-                } else {
+                }// If projectId is not null
+                else {
                     if (noteContent.isNotEmpty()) {
                         if (projectId != null) {
                             if (noteName.isEmpty()) {
@@ -129,17 +124,7 @@ class CreateNoteFragment(
         }
     }
 
-    private fun updateUI(fragment: Fragment) {
-        activity
-            ?.supportFragmentManager
-            ?.beginTransaction()
-            ?.replace(
-                R.id.fragmentHolder,
-                fragment
-            )
-            ?.commit()
-    }
-
+    // Method for writing data inside a folder
     private fun writeNoteIntoDir(
         directoryId: String,
         userUid: String,
@@ -151,6 +136,7 @@ class CreateNoteFragment(
             .child("NotesInDirectory").child(noteName).setValue(note)
     }
 
+    // Method for writing data inside the project
     private fun writeNoteIntoProject(
         projectId: String,
         userUid: String,
@@ -166,6 +152,17 @@ class CreateNoteFragment(
                     .setValue(note)
             }
         }
+    }
+
+    private fun updateUI(fragment: Fragment) {
+        activity
+            ?.supportFragmentManager
+            ?.beginTransaction()
+            ?.replace(
+                R.id.fragmentHolder,
+                fragment
+            )
+            ?.commit()
     }
 
 //    companion object {

@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.notefirebase.R
 import com.example.notefirebase.databinding.FragmentForgotPasswordBinding
@@ -17,50 +18,62 @@ import com.google.firebase.ktx.Firebase
 
 class InputYourEmailForResetFragment : Fragment() {
 
-    lateinit var binding: FragmentForgotPasswordBinding
-    lateinit var userDataCheck: UserDataCheck
+    private lateinit var fragmentBinding: FragmentForgotPasswordBinding
+    private lateinit var userDataCheck: UserDataCheck
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentForgotPasswordBinding.inflate(inflater, container, false)
-        return binding.root
+        fragmentBinding = FragmentForgotPasswordBinding.inflate(inflater, container, false)
+        return fragmentBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupClickListeners()
+    }
 
-        binding.btnResetPassword.setOnClickListener {
-            with(binding) {
-                val email = binding.inputEmail.text.toString()
+    private fun setupClickListeners() {
+        with(fragmentBinding) {
+            // Reset password
+            btnResetPassword.setOnClickListener {
+                val email = inputEmail.text.toString()
                 userDataCheck = UserDataCheck("", email)
                 if (!userDataCheck.isEmailValid()) {
                     labelEmail.setTextColor(Color.RED)
                     labelEmail.setText(R.string.email_error)
-                }else{
-                    Firebase.auth.sendPasswordResetEmail(email).addOnCompleteListener{ task ->
-                        if(task.isSuccessful){
-                            Log.d("SendPasswordReset", "Message send")
+                } else {
+                    Firebase.auth.sendPasswordResetEmail(email).addOnCompleteListener {
+                        if (!it.isSuccessful) {
+                            Toast.makeText(
+                                requireContext(),
+                                "Сообщение не было отправлено",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
                 }
             }
-        }
 
-        binding.btnToMain.setOnClickListener {
-
-            val user = Firebase.auth.currentUser
-            if(user == null){
-                return@setOnClickListener
-            }else{
-                activity
-                    ?.supportFragmentManager
-                    ?.beginTransaction()
-                    ?.replace(R.id.fragmentHolder, MainFragment())
-                    ?.commit()
+            // Go to main
+            btnToMain.setOnClickListener {
+                val user = Firebase.auth.currentUser
+                if (user == null) {
+                    return@setOnClickListener
+                } else {
+                    updateUi(MainFragment())
+                }
             }
         }
+    }
+
+    private fun updateUi(fragment: Fragment) {
+        activity
+            ?.supportFragmentManager
+            ?.beginTransaction()
+            ?.replace(R.id.fragmentHolder, fragment)
+            ?.commit()
     }
 }

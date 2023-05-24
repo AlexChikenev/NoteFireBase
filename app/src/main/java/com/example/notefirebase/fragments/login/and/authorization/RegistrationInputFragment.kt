@@ -118,9 +118,9 @@ class RegistrationInputFragment : Fragment() {
     private fun createAccount(email: String, password: String, userName: String) {
         // Checking email
 //             Checking whether an account has been created with such an email or not
-        auth.fetchSignInMethodsForEmail(email).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                val result = task.result?.signInMethods ?: emptyList<String>()
+        auth.fetchSignInMethodsForEmail(email).addOnCompleteListener {
+            if (it.isSuccessful) {
+                val result = it.result?.signInMethods ?: emptyList<String>()
                 if (result.isNotEmpty()) {
                     binding.emailLabel.setTextColor(Color.RED)
                     binding.emailLabel.setText(R.string.email_already_exist)
@@ -128,7 +128,7 @@ class RegistrationInputFragment : Fragment() {
                     Log.d("MyLog", "Error")
                     // Creating a new user
                     auth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(requireActivity()) { task ->
+                        .addOnCompleteListener() { task ->
                             //If the operation was successful, we write the user name to the database and send an email with email confirmation
                             if (task.isSuccessful) {
                                 val user = auth.currentUser

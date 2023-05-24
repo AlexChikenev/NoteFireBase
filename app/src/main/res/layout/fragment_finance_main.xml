@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_fragment_finance"
+    tools:context=".fragments.finance.FinanceMainFragment">
+
+    <ImageButton
+        android:id="@+id/btnToSettings"
+        style="@style/ButtonToSettings"
+        android:layout_marginBottom="10dp"
+        android:contentDescription="@string/text_btn_to_settings"
+        app:layout_constraintBottom_toTopOf="@id/btnToMain"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ic_star"
+        style="@style/TopStarStyle"
+        android:contentDescription="@string/star_ic_content_description"
+        app:layout_constraintBottom_toTopOf="@+id/topLine"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/nameOfDirectory"
+        style="@style/TopLabels"
+        android:text="@string/label_finance"
+        app:layout_constraintBottom_toTopOf="@id/topLine"
+        app:layout_constraintStart_toEndOf="@id/ic_star" />
+
+    <ImageButton
+        android:id="@+id/btnToMain"
+        style="@style/ButtonGoToMain"
+        android:contentDescription="@string/go_to_main_ic_content_description"
+        app:layout_constraintBottom_toTopOf="@id/topLine"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <View
+        android:id="@+id/topLine"
+        style="@style/TopLineBg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/income"
+        style="@style/HeaderFinance"
+        android:text="@string/label_income_per_month"
+        app:layout_constraintStart_toStartOf="@id/topLine"
+        app:layout_constraintTop_toBottomOf="@id/topLine"
+        app:layout_constraintEnd_toStartOf="@id/outcome"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/income"
+        app:layout_constraintStart_toStartOf="@+id/income"
+        app:layout_constraintTop_toBottomOf="@+id/income" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/outcome"
+        style="@style/HeaderFinance"
+        android:layout_marginStart="16dp"
+        android:text="@string/label_outcome_per_month"
+        app:layout_constraintEnd_toEndOf="@id/topLine"
+        app:layout_constraintStart_toEndOf="@+id/income"
+        app:layout_constraintTop_toBottomOf="@id/topLine" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/incomeRcView"
+        android:layout_width="0dp"
+        android:layout_height="250dp"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/income"
+        app:layout_constraintStart_toStartOf="@+id/income"
+        app:layout_constraintTop_toBottomOf="@+id/income" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/outcomeRcView"
+        android:layout_width="0dp"
+        android:layout_height="250dp"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/outcome"
+        app:layout_constraintStart_toStartOf="@+id/outcome"
+        app:layout_constraintTop_toBottomOf="@+id/outcome" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnInputIncome"
+        style="@style/ButtonNoteBg"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:background="@drawable/bg_button_finance"
+        app:layout_constraintTop_toBottomOf="@id/incomeRcView"
+        app:layout_constraintStart_toStartOf="@id/incomeRcView"
+        app:layout_constraintEnd_toEndOf="@id/incomeRcView"
+        android:text="@string/btn_text_create_income"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        style="@style/ButtonNoteBg"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:background="@drawable/bg_button_finance"
+        app:layout_constraintTop_toBottomOf="@id/outcomeRcView"
+        app:layout_constraintStart_toStartOf="@id/outcomeRcView"
+        app:layout_constraintEnd_toEndOf="@id/outcomeRcView"
+        android:text="@string/btn_text_create_income"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

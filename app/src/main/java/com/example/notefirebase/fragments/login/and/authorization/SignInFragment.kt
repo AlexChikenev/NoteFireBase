@@ -56,7 +56,7 @@ class SignInFragment : Fragment() {
 
         // Registration via email and password
         fragmentBinding.btnRegistration.setOnClickListener {
-            replaceFragment(RegistrationInputFragment())
+            navigate(RegistrationInputFragment())
         }
 
         // Authentication via email and password
@@ -113,7 +113,7 @@ class SignInFragment : Fragment() {
             if (isEmailVerified == false) {
                 showEmailVerificationDialog()
             } else if (isEmailVerified == true) {
-                replaceFragment(MainFragment())
+                navigate(MainFragment())
             }
         }
     }
@@ -126,7 +126,7 @@ class SignInFragment : Fragment() {
         builder.show()
     }
 
-    private fun replaceFragment(fragment: Fragment) {
+    private fun navigate(fragment: Fragment) {
         requireActivity().supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentHolder, fragment).commit()
     }

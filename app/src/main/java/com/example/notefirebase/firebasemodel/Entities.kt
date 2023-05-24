@@ -40,4 +40,15 @@ data class Note(
     val name: String?,
 )
 
+data class FirebaseIncomes(
+    val incomeName: String,
+    val incomeAmount: Double?
+) {
+    constructor() : this ("", null)
+}
+
+data class Income(
+    val incomeName: String,
+    val incomeAmount: Double
+)
 

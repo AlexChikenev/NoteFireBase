@@ -16,6 +16,8 @@
     <string name="btn_text_change_password">Забыл пароль</string>
     <string name="btn_text_reset_password">Восстановить пароль</string>
     <string name="btn_text_create_project">Создать проект</string>
+    <string name="btn_text_create_income">ввести данные</string>
+    <string name="btn_text_create_outcome">ввести данные</string>
     <string name="input_directory_name">Введите название папки</string>
     <string name="directory_name_hint">Введите название папки</string>
     <string name="wish_name_hint">Введите название желания</string>
@@ -25,7 +27,12 @@
     <string name="label_back">Назад</string>
     <string name="label_notes">Заметки</string>
     <string name="label_create_note">Введите имя заметки</string>
-    <string name="label_input_email">Введите адрес привязанной электронной почты</string>
+    <string name="label_input_email">Введите привязанный адрес электронной почты</string>
+    <string name="label_income_per_month">Доходы в месяц</string>
+    <string name="label_income_name">Введите название дохода</string>
+    <string name="label_outcome_name">Название расхода</string>
+    <string name="hint_income_name">Полученная прибыль</string>
+    <string name="hint_outcome_name">Сумма расхода</string>
     <string name="create_wish">Создать желание</string>
     <string name="wellcome">Добро пожаловать в ежедневник </string>
     <string name="star_ic_content_description">Иконка звезды для заметок</string>
@@ -42,6 +49,7 @@
     <string name="input_password">Придумайте пароль</string>
     <string name="create_acc">Создать аккаунт</string>
     <string name="message">На указанный почтовый адрес было\nвыслано письмо с подтверждением,\nзавершите регистрацию, подтвердив\nэлектронный адрес :)</string>
+    <string name="verification">На указанный почтовый адрес было\nвыслано письмо с подтверждением,\nзавершите смену почты, подтвердив\nэлектронный адрес :)</string>
     <string name="btn_enter">Войти</string>
     <string name="label_enter">Войдите в приложение</string>
     <string name="forgot_password">Забыли пароль?</string>
@@ -64,4 +72,15 @@
     <string name="alert_dialog_title">Верификация аккаунта</string>
     <string name="alert_dialog_message">Вы не подтвердили адрес электронной почты.\nЕсли сообщение не пришло, проверьте папку спам</string>
     <string name="alert_dialog_positive">OK</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="label_change_password">Смена пароля</string>
+    <string name="label_change_email">Смена электронного адреса</string>
+    <string name="label_input_new_email">Введите новый адресс электронной почты</string>
+    <string name="label_re_auth">Подтвердите свои данные</string>
+    <string name="password_error">Поле должно быть заполнено</string>
+    <string name="label_finance">Финансы</string>
+    <string name="label_outcome_per_month">Расходы в месяц</string>
+    <string name="slash">/</string>
+    <string name="symbol">₽</string>
 </resources>

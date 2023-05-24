@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.notefirebase.R
 import com.example.notefirebase.databinding.FragmentMainBinding
 import com.example.notefirebase.fragments.create.note.and.projects.DirectoryFragment
+import com.example.notefirebase.fragments.finance.FinanceMainFragment
 import com.example.notefirebase.fragments.settings.MainSettingsFragment
 import kotlinx.coroutines.launch
 
@@ -21,7 +22,7 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentMainBinding.inflate(inflater, container,false)
+        binding = FragmentMainBinding.inflate(inflater, container, false)
 
         lifecycleScope.launch {
 //            dao.deleteAllFromDirectory()
@@ -37,30 +38,32 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.btnToNotes.setOnClickListener{
-            activity
-                ?.supportFragmentManager
-                ?.beginTransaction()
-                ?.replace(R.id.fragmentHolder, DirectoryFragment())
-                ?.commit()
+
+        binding.btnToFinance.setOnClickListener {
+            navigate(FinanceMainFragment())
+        }
+
+        binding.btnToNotes.setOnClickListener {
+            navigate(DirectoryFragment())
 
         }
 
-        binding.btnToWishList.setOnClickListener{
-            activity
-                ?.supportFragmentManager
-                ?.beginTransaction()
-                ?.replace(R.id.fragmentHolder, WishListFragment())
-                ?.commit()
+        binding.btnToWishList.setOnClickListener {
+            navigate(WishListFragment())
         }
 
         binding.btnToSettings.setOnClickListener {
             activity
-                ?.supportFragmentManager
-                ?.beginTransaction()
-                ?.replace(R.id.fragmentHolder, MainSettingsFragment())
-                ?.commit()
+            navigate(MainSettingsFragment())
         }
+    }
+
+    private fun navigate(fragment: Fragment) {
+        activity
+            ?.supportFragmentManager
+            ?.beginTransaction()
+            ?.replace(R.id.fragmentHolder, fragment)
+            ?.commit()
     }
 
     companion object {
