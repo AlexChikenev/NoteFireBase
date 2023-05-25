@@ -76,11 +76,20 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="label_change_password">Смена пароля</string>
     <string name="label_change_email">Смена электронного адреса</string>
-    <string name="label_input_new_email">Введите новый адресс электронной почты</string>
+    <string name="label_input_new_email">Введите новый адрес электронной почты</string>
     <string name="label_re_auth">Подтвердите свои данные</string>
     <string name="password_error">Поле должно быть заполнено</string>
     <string name="label_finance">Финансы</string>
     <string name="label_outcome_per_month">Расходы в месяц</string>
     <string name="slash">/</string>
     <string name="symbol">₽</string>
+    <string name="label_pillow">Подушка безопасности</string>
+    <string name="label_collect_name">Введите накопленную сумму</string>
+    <string name="label_total_income">Заработано всего</string>
+    <string name="label_total_outcome">Потрачено всего</string>
+    <string name="enter_directory_name">Введите название новой папки</string>
+    <string name="enter_project_name">Введите название своего проекта</string>
+    <string name="label_create_directory">Создание папки</string>
+    <string name="label_create_project">Создание проекта</string>
+    <string name="project_name_hint">Введите название проекта</string>
 </resources>

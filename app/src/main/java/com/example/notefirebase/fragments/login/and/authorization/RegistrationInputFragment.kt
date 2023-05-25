@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.notefirebase.R
 import com.example.notefirebase.databinding.FragmentRegistrationInputBinding
+import com.example.notefirebase.utils.Helper
 import com.example.notefirebase.utils.UserDataCheck
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -20,26 +21,75 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 class RegistrationInputFragment : Fragment() {
-    private lateinit var binding: FragmentRegistrationInputBinding
+    private lateinit var fragmentBinding: FragmentRegistrationInputBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var userDataCheck: UserDataCheck
+    private lateinit var helper: Helper
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentRegistrationInputBinding.inflate(inflater, container, false)
+        fragmentBinding = FragmentRegistrationInputBinding.inflate(inflater, container, false)
+        return fragmentBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        helper = Helper(requireActivity())
         auth = Firebase.auth
-        return binding.root
+        setUpClickListeners()
+        setUpTouchListeners()
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private fun setUpTouchListeners() {
+        with(fragmentBinding) {
 
-        // Clicking on the account creation button
-        binding.btnCreateAcc.setOnClickListener {
-            with(binding) {
+            inputName.setOnTouchListener { _, event ->
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        nameLabel.setText(R.string.input_name)
+                        nameLabel.setTextColor(Color.WHITE)
+                        false
+                    }
+
+                    else -> false
+                }
+            }
+
+            inputEmail.setOnTouchListener { _, event ->
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        emailLabel.setText(R.string.input_email)
+                        emailLabel.setTextColor(Color.WHITE)
+                        false
+                    }
+
+                    else -> false
+                }
+            }
+
+            inputPassword.setOnTouchListener { _, event ->
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        passwordLabel.setText(R.string.input_password)
+                        passwordLabel.setTextColor(Color.WHITE)
+                        false
+                    }
+
+                    else -> false
+                }
+            }
+        }
+
+    }
+
+    private fun setUpClickListeners() {
+        with(fragmentBinding) {
+            // Clicking on the account creation button
+            btnCreateAcc.setOnClickListener {
+
                 val userName = inputName.text.toString()
                 val email = inputEmail.text.toString()
                 val password = inputPassword.text.toString()
@@ -75,55 +125,18 @@ class RegistrationInputFragment : Fragment() {
                 }
             }
         }
-
-        binding.inputName.setOnTouchListener { _, event ->
-            when (event.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    binding.nameLabel.setText(R.string.input_name)
-                    binding.nameLabel.setTextColor(Color.WHITE)
-                    false
-                }
-
-                else -> false
-            }
-        }
-
-        binding.inputEmail.setOnTouchListener { _, event ->
-            when (event.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    binding.emailLabel.setText(R.string.input_email)
-                    binding.emailLabel.setTextColor(Color.WHITE)
-                    false
-                }
-
-                else -> false
-            }
-        }
-
-        binding.inputPassword.setOnTouchListener { _, event ->
-            when (event.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    binding.passwordLabel.setText(R.string.input_password)
-                    binding.passwordLabel.setTextColor(Color.WHITE)
-                    false
-                }
-
-                else -> false
-            }
-        }
     }
-
 
     // Method for creating account using email and password
     private fun createAccount(email: String, password: String, userName: String) {
         // Checking email
-//             Checking whether an account has been created with such an email or not
+        // Checking whether an account has been created with such an email or not
         auth.fetchSignInMethodsForEmail(email).addOnCompleteListener {
             if (it.isSuccessful) {
                 val result = it.result?.signInMethods ?: emptyList<String>()
                 if (result.isNotEmpty()) {
-                    binding.emailLabel.setTextColor(Color.RED)
-                    binding.emailLabel.setText(R.string.email_already_exist)
+                    fragmentBinding.emailLabel.setTextColor(Color.RED)
+                    fragmentBinding.emailLabel.setText(R.string.email_already_exist)
                 } else {
                     Log.d("MyLog", "Error")
                     // Creating a new user
@@ -138,7 +151,7 @@ class RegistrationInputFragment : Fragment() {
                                     database.child("users").child(userId).child("name")
                                         .setValue(userName)
                                     sendEmailVerification(user)
-                                    updateUI()
+                                    helper.navigate(VerificationFragment())
                                 }
                             } else {
                                 Toast.makeText(
@@ -153,7 +166,6 @@ class RegistrationInputFragment : Fragment() {
         }
     }
 
-
     private fun sendEmailVerification(user: FirebaseUser) {
         user.sendEmailVerification()
             .addOnCompleteListener(requireActivity()) { task ->
@@ -166,13 +178,5 @@ class RegistrationInputFragment : Fragment() {
                     ).show()
                 }
             }
-    }
-
-    private fun updateUI() {
-        activity
-            ?.supportFragmentManager
-            ?.beginTransaction()
-            ?.replace(R.id.fragmentHolder, VerificationFragment())
-            ?.commit()
     }
 }

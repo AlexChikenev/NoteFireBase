@@ -14,6 +14,7 @@ import com.example.notefirebase.databinding.FragmentChangeEmailBinding
 import com.example.notefirebase.fragments.MainFragment
 import com.example.notefirebase.fragments.login.and.authorization.ReAuthenticateFragment
 import com.example.notefirebase.fragments.login.and.authorization.VerificationFragment
+import com.example.notefirebase.utils.Helper
 import com.example.notefirebase.utils.UserDataCheck
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
@@ -26,6 +27,7 @@ class ChangeEmailFragment : Fragment() {
     private lateinit var fragmentBinding: FragmentChangeEmailBinding
     private lateinit var userDataCheck: UserDataCheck
     private lateinit var auth: FirebaseAuth
+    private lateinit var helper: Helper
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +41,7 @@ class ChangeEmailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupClickListeners()
+        helper = Helper(requireActivity())
     }
 
     private fun setupClickListeners() {
@@ -62,7 +65,7 @@ class ChangeEmailFragment : Fragment() {
                                 } else {
                                     updateEmail(newEmail, requireContext())
                                     user!!.updateEmail(newEmail)
-                                    navigate(VerificationEmailFragment())
+                                    helper.navigate(VerificationEmailFragment())
                                 }
                             }
                         }
@@ -72,7 +75,7 @@ class ChangeEmailFragment : Fragment() {
 
             // Go to main
             btnToMain.setOnClickListener {
-                navigate(MainFragment())
+                helper.navigate(MainFragment())
             }
         }
     }
@@ -100,15 +103,6 @@ class ChangeEmailFragment : Fragment() {
                 }
             }
         }
-    }
-
-    // Navigation
-    private fun navigate(fragment: Fragment) {
-        activity
-            ?.supportFragmentManager
-            ?.beginTransaction()
-            ?.replace(R.id.fragmentHolder, fragment)
-            ?.commit()
     }
 
     companion object {

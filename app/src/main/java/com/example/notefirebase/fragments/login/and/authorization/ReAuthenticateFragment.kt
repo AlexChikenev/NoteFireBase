@@ -12,6 +12,7 @@ import com.example.notefirebase.databinding.FragmentReAuthenticateBinding
 import com.example.notefirebase.fragments.MainFragment
 import com.example.notefirebase.fragments.settings.ChangeEmailFragment
 import com.example.notefirebase.utils.EmailPasswordAuth
+import com.example.notefirebase.utils.Helper
 import com.example.notefirebase.utils.UserDataCheck
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.ktx.auth
@@ -20,7 +21,7 @@ import com.google.firebase.ktx.Firebase
 class ReAuthenticateFragment : Fragment() {
     private lateinit var fragmentBinding: FragmentReAuthenticateBinding
     private lateinit var userDataCheck: UserDataCheck
-
+    private lateinit var helper: Helper
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -31,6 +32,7 @@ class ReAuthenticateFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        helper = Helper(requireActivity())
         setupClickListeners()
     }
 
@@ -51,7 +53,7 @@ class ReAuthenticateFragment : Fragment() {
                     val credential = EmailAuthProvider.getCredential(email, password)
                     user.reauthenticate(credential).addOnCompleteListener {
                         if (it.isSuccessful) {
-                            navigate(ChangeEmailFragment())
+                            helper.navigate(ChangeEmailFragment())
                         } else {
                             Toast.makeText(requireContext(), "Данные не верны", Toast.LENGTH_SHORT)
                                 .show()
@@ -61,20 +63,11 @@ class ReAuthenticateFragment : Fragment() {
             }
 
             btnToMain.setOnClickListener {
-                navigate(MainFragment())
+                helper.navigate(MainFragment())
             }
         }
 
     }
-
-    private fun navigate(fragment: Fragment) {
-        activity
-            ?.supportFragmentManager
-            ?.beginTransaction()
-            ?.replace(R.id.fragmentHolder, fragment)
-            ?.commit()
-    }
-
     companion object {
         fun newInstance() = ReAuthenticateFragment()
     }

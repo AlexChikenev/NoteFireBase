@@ -1,5 +1,7 @@
 package com.example.notefirebase.firebasemodel
 
+import com.google.firebase.database.PropertyName
+
 data class FirebaseDirectory(
     val directoryId: String = "",
     val userUid: String? = null,
@@ -63,4 +65,15 @@ data class Outcome(
     val outcomeName: String,
     val outcomeAmount: Double
 )
+
+data class FirebasePillows(
+    val pillowAmount: Double?
+) {
+    constructor() : this ( null)
+}
+
+data class Pillow(
+    val pillowAmount: Double
+)
+
 

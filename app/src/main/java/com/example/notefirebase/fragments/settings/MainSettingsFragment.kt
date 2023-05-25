@@ -6,15 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.notefirebase.R
 import com.example.notefirebase.databinding.FragmentMainSettingsBinding
 import com.example.notefirebase.fragments.MainFragment
 import com.example.notefirebase.fragments.login.and.authorization.ReAuthenticateFragment
 import com.example.notefirebase.fragments.login.and.authorization.SignInFragment
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.firebase.auth.FirebaseAuth
+import com.example.notefirebase.utils.Helper
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -22,16 +19,21 @@ import com.squareup.picasso.Picasso
 
 class MainSettingsFragment : Fragment() {
     private lateinit var frameBinding: FragmentMainSettingsBinding
+    private lateinit var helper: Helper
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         frameBinding = FragmentMainSettingsBinding.inflate(inflater, container, false)
         // Initializing user interface elements
         init()
         return frameBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupClickListeners()
+        helper = Helper(requireActivity())
     }
 
     private fun init() {
@@ -52,14 +54,11 @@ class MainSettingsFragment : Fragment() {
                     val providerId = userInfo.providerId
                     providerIdsList.add(providerId)
                 }
-                //Log.d("provider", "$providerIdsList")
                 // If the user used Google to log in, then we display his name and photo
                 if (providerIdsList.contains("google.com")) {
                     userName.text = user.displayName
 
-                    Picasso.get()
-                        .load(user.photoUrl)
-                        .into(userImg)
+                    Picasso.get().load(user.photoUrl).into(userImg)
                 } else {
                     // If the user used another provider, then we get his name from the database
                     val userId = user.uid
@@ -75,12 +74,6 @@ class MainSettingsFragment : Fragment() {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setupClickListeners()
-
-    }
-
     private fun setupClickListeners() {
         with(frameBinding) {
             // Log out from account
@@ -90,17 +83,17 @@ class MainSettingsFragment : Fragment() {
 
             // Change email
             btnChangeEmail.setOnClickListener {
-                navigate(ReAuthenticateFragment())
+                helper.navigate(ReAuthenticateFragment())
             }
 
             // Change password
             btnChangePassword.setOnClickListener {
-                navigate(InputYourEmailForResetFragment())
+                helper.navigate(InputYourEmailForResetFragment())
             }
 
             // Go to main
             btnToMain.setOnClickListener {
-                navigate(MainFragment())
+                helper.navigate(MainFragment())
             }
         }
     }
@@ -115,16 +108,7 @@ class MainSettingsFragment : Fragment() {
         if (user != null) {
             return
         } else {
-            navigate(SignInFragment())
+            helper.navigate(SignInFragment())
         }
     }
-
-    private fun navigate(fragment: Fragment) {
-        activity
-            ?.supportFragmentManager
-            ?.beginTransaction()
-            ?.replace(R.id.fragmentHolder, fragment)
-            ?.commit()
-    }
-
 }

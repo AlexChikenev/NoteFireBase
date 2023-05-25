@@ -10,21 +10,15 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.notefirebase.R
-import com.example.notefirebase.adapters.IncomeAdapter
-import com.example.notefirebase.adapters.ProjectAdapter
 import com.example.notefirebase.databinding.FragmentCreateIncomeBinding
 import com.example.notefirebase.firebasemodel.FirebaseIncomes
-import com.example.notefirebase.firebasemodel.FirebaseProject
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.ktx.Firebase
 
 class CreateIncomeFragment : DialogFragment() {
     private lateinit var fragmentBinding: FragmentCreateIncomeBinding
@@ -40,11 +34,10 @@ class CreateIncomeFragment : DialogFragment() {
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         auth = FirebaseAuth.getInstance()
         setUpClickListeners()
         setUpEditText()
-
-        super.onViewCreated(view, savedInstanceState)
         fragmentBinding.dialogBackground.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {

@@ -13,6 +13,7 @@ import com.example.notefirebase.fragments.MainFragment
 import com.example.notefirebase.fragments.settings.InputYourEmailForResetFragment
 import com.example.notefirebase.utils.EmailPasswordAuth
 import com.example.notefirebase.utils.GoogleAuth
+import com.example.notefirebase.utils.Helper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
@@ -23,6 +24,7 @@ class SignInFragment : Fragment() {
     lateinit var auth: FirebaseAuth
     private lateinit var googleAuthenticator: GoogleAuth
     private lateinit var emailPasswordAuthenticator: EmailPasswordAuth
+    private lateinit var helper: Helper
 
     override fun onStart() {
         super.onStart()
@@ -35,56 +37,54 @@ class SignInFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         fragmentBinding = FragmentSigInBinding.inflate(inflater, container, false)
-        initialize()
         return fragmentBinding.root
-    }
-
-    // Initialization
-    private fun initialize() {
-        auth = FirebaseAuth.getInstance()
-        googleAuthenticator = GoogleAuth(this)
-        emailPasswordAuthenticator = EmailPasswordAuth(requireContext())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        helper = Helper(requireActivity())
+        auth = FirebaseAuth.getInstance()
+        googleAuthenticator = GoogleAuth(this)
+        emailPasswordAuthenticator = EmailPasswordAuth(requireContext())
+        setUpClickListeners()
+    }
 
-        // Authentication via Google
-        fragmentBinding.btnSignInWithGoogle.setOnClickListener {
-            googleAuthenticator.signIn()
-        }
+    private fun setUpClickListeners() {
+        with(fragmentBinding) {
+            // Authentication via Google
+            btnSignInWithGoogle.setOnClickListener {
+                googleAuthenticator.signIn()
+            }
 
-        // Registration via email and password
-        fragmentBinding.btnRegistration.setOnClickListener {
-            navigate(RegistrationInputFragment())
-        }
+            // Registration via email and password
+            btnRegistration.setOnClickListener {
+                helper.navigate(RegistrationInputFragment())
+            }
 
-        // Authentication via email and password
-        fragmentBinding.btnEnter.setOnClickListener {
-            val email = fragmentBinding.inputEmail.text.toString()
-            val password = fragmentBinding.inputPassword.text.toString()
+            // Authentication via email and password
+            btnEnter.setOnClickListener {
+                val email = inputEmail.text.toString()
+                val password = inputPassword.text.toString()
 
-            if (email.isNotEmpty() && password.isNotEmpty()) {
-                emailPasswordAuthenticator.signIn(
-                    email,
-                    password,
-                    onSuccess = {
-                        checkCurrentUser()
-                    },
-                    onFailure = {
-                        updateUI(null)
-                    }
-                )
+                if (email.isNotEmpty() && password.isNotEmpty()) {
+                    emailPasswordAuthenticator.signIn(
+                        email,
+                        password,
+                        onSuccess = {
+                            checkCurrentUser()
+                        },
+                        onFailure = {
+                            updateUI(null)
+                        }
+                    )
+                }
+            }
+
+            btnForgotPassword.setOnClickListener {
+                 helper.navigate(InputYourEmailForResetFragment())
             }
         }
 
-        fragmentBinding.btnForgotPassword.setOnClickListener {
-            activity
-                ?.supportFragmentManager
-                ?.beginTransaction()
-                ?.replace(R.id.fragmentHolder, InputYourEmailForResetFragment())
-                ?.commit()
-        }
     }
 
     // Processing the authentication result via Google
@@ -113,7 +113,7 @@ class SignInFragment : Fragment() {
             if (isEmailVerified == false) {
                 showEmailVerificationDialog()
             } else if (isEmailVerified == true) {
-                navigate(MainFragment())
+                helper.navigate(MainFragment())
             }
         }
     }
@@ -124,11 +124,6 @@ class SignInFragment : Fragment() {
         builder.setMessage(R.string.alert_dialog_message)
         builder.setPositiveButton(R.string.alert_dialog_positive) { dialog, _ -> dialog.dismiss() }
         builder.show()
-    }
-
-    private fun navigate(fragment: Fragment) {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentHolder, fragment).commit()
     }
 }
 

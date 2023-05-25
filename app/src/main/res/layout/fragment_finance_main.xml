@@ -48,17 +48,9 @@
         android:id="@+id/income"
         style="@style/HeaderFinance"
         android:text="@string/label_income_per_month"
+        app:layout_constraintEnd_toStartOf="@id/outcome"
         app:layout_constraintStart_toStartOf="@id/topLine"
-        app:layout_constraintTop_toBottomOf="@id/topLine"
-        app:layout_constraintEnd_toStartOf="@id/outcome"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/income"
-        app:layout_constraintStart_toStartOf="@+id/income"
-        app:layout_constraintTop_toBottomOf="@+id/income" />
+        app:layout_constraintTop_toBottomOf="@id/topLine" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/outcome"
@@ -93,10 +85,10 @@
         android:layout_width="0dp"
         android:layout_height="30dp"
         android:background="@drawable/bg_button_finance"
-        app:layout_constraintTop_toBottomOf="@id/incomeRcView"
-        app:layout_constraintStart_toStartOf="@id/incomeRcView"
+        android:text="@string/btn_text_create_income"
         app:layout_constraintEnd_toEndOf="@id/incomeRcView"
-        android:text="@string/btn_text_create_income"/>
+        app:layout_constraintStart_toStartOf="@id/incomeRcView"
+        app:layout_constraintTop_toBottomOf="@id/incomeRcView" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnInputOutcome"
@@ -104,8 +96,128 @@
         android:layout_width="0dp"
         android:layout_height="30dp"
         android:background="@drawable/bg_button_finance"
-        app:layout_constraintTop_toBottomOf="@id/outcomeRcView"
-        app:layout_constraintStart_toStartOf="@id/outcomeRcView"
+        android:text="@string/btn_text_create_income"
         app:layout_constraintEnd_toEndOf="@id/outcomeRcView"
-        android:text="@string/btn_text_create_income"/>
+        app:layout_constraintStart_toStartOf="@id/outcomeRcView"
+        app:layout_constraintTop_toBottomOf="@id/outcomeRcView" />
+
+    <ImageView
+        android:id="@+id/ic_back_star"
+        style="@style/TopStarStyle"
+        android:contentDescription="@string/star_ic_content_description"
+        app:layout_constraintBottom_toTopOf="@+id/backLine"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/save"
+        style="@style/TopLabels"
+        android:text="@string/label_pillow"
+        app:layout_constraintBottom_toTopOf="@id/backLine"
+        app:layout_constraintStart_toEndOf="@id/ic_back_star" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnCreatePillow"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/bg_pillow"
+        android:contentDescription="@string/go_to_main_ic_content_description"
+        app:layout_constraintBottom_toTopOf="@id/backLine"
+        app:layout_constraintEnd_toEndOf="@id/backLine" />
+
+    <View
+        android:id="@+id/backLine"
+        style="@style/TopLineBg"
+        android:layout_height="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnInputIncome" />
+
+    <TextView
+        android:id="@+id/showPillow"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:fontFamily="@font/helvetica_bold"
+        android:gravity="center"
+        android:textColor="@color/pillow_color"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@id/backLine"
+        app:layout_constraintEnd_toStartOf="@id/btnCreatePillow"
+        app:layout_constraintStart_toEndOf="@id/save" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/totalIncomeCard"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="40dp"
+        app:cardBackgroundColor="@color/transparent"
+        app:cardCornerRadius="6dp"
+        app:layout_constraintEnd_toEndOf="@id/backLine"
+        app:layout_constraintStart_toStartOf="@id/backLine"
+        app:layout_constraintTop_toBottomOf="@id/backLine"
+        app:strokeColor="@color/white"
+        app:strokeWidth="1dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                style="@style/TextFinance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_total_income"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/totalIncomeText"
+                style="@style/TextFinance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/totalOutcomeCard"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        app:cardBackgroundColor="@color/transparent"
+        app:cardCornerRadius="6dp"
+        app:layout_constraintEnd_toEndOf="@id/totalIncomeCard"
+        app:layout_constraintStart_toStartOf="@id/totalIncomeCard"
+        app:layout_constraintTop_toBottomOf="@id/totalIncomeCard"
+        app:strokeColor="@color/white"
+        app:strokeWidth="1dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                style="@style/TextFinance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_total_outcome"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/totalOutcomeText"
+                style="@style/TextFinance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white_29"
+    android:hint="@string/directory_name_hint"
     tools:context=".fragments.finance.CreateIncomeFragment">
 
     <androidx.cardview.widget.CardView
@@ -38,8 +39,8 @@
                 android:gravity="center"
                 android:paddingTop="15dp"
                 android:paddingBottom="15dp"
-                android:text="@string/label_create_directory"
-                android:textColor="@color/primary_color"
+                android:text="@string/label_collect_name"
+                android:textColor="@color/hint_color"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -47,15 +48,15 @@
                 tools:ignore="Autofill,TextFields" />
 
             <EditText
-                android:id="@+id/inputDirectoryName"
+                android:id="@+id/inputPillow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="28dp"
                 android:background="@color/transparent"
                 android:fontFamily="@font/helvetica_regular"
                 android:gravity="center"
-                android:hint="@string/directory_name_hint"
-                android:inputType="text"
+                android:hint="@string/symbol"
+                android:inputType="numberDecimal"
                 android:paddingTop="15dp"
                 android:paddingBottom="15dp"
                 android:singleLine="true"
@@ -65,10 +66,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/name"
-                tools:ignore="Autofill,LabelFor" />
+                tools:ignore="Autofill" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnCommitDirectory"
+                android:id="@+id/btnCommitPillow"
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:layout_marginTop="40dp"
@@ -80,7 +81,7 @@
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/inputDirectoryName" />
+                app:layout_constraintTop_toBottomOf="@id/inputPillow" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

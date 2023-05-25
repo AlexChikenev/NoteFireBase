@@ -1,63 +1,50 @@
 package com.example.notefirebase.fragments.create.note.and.projects
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.view.ViewGroup.LayoutParams
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
+import com.example.notefirebase.R
 import com.example.notefirebase.databinding.FragmentCreateDirectoryBinding
-import com.example.notefirebase.firebasemodel.FirebaseDirectory
+import com.example.notefirebase.utils.FirebaseManager
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import java.util.UUID
 
-class CreateDirectoryFragment() : DialogFragment() {
+class CreateDirectoryFragment : DialogFragment() {
 
-    private lateinit var binding: FragmentCreateDirectoryBinding
+    private lateinit var fragmentBinding: FragmentCreateDirectoryBinding
     private lateinit var gestureDetector: GestureDetector
-    private lateinit var databaseReference: DatabaseReference
+    private lateinit var firebaseManager: FirebaseManager
     private lateinit var userUid: String
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = FragmentCreateDirectoryBinding.inflate(inflater, container, false)
+        fragmentBinding = FragmentCreateDirectoryBinding.inflate(inflater, container, false)
+        firebaseManager = FirebaseManager()
+        userUid = FirebaseAuth.getInstance().currentUser?.uid.orEmpty()
+        return fragmentBinding.root
+    }
 
-        gestureDetector =
-            GestureDetector(requireContext(), object : GestureDetector.SimpleOnGestureListener() {
-                override fun onDown(e: MotionEvent): Boolean {
-                    return true
+    @SuppressLint("ClickableViewAccessibility")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupClickListeners()
+        fragmentBinding.dialogBackground.setOnTouchListener { _, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    dismiss()
+                    false
                 }
 
-                override fun onFling(
-                    e1: MotionEvent,
-                    e2: MotionEvent,
-                    velocityX: Float,
-                    velocityY: Float
-                ): Boolean {
-                    if (e1 != null && e2 != null) {
-                        if (e1.y < e2.y && velocityY > 500)
-                            dismiss()
-                    }
-                    return false
-                }
-            })
-
-        binding.topBar.setOnTouchListener { _, event ->
-            gestureDetector.onTouchEvent(event)
-            true
+                else -> false
+            }
         }
-
-        userUid = FirebaseAuth.getInstance().currentUser?.uid ?: ""
-        return binding.root
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,40 +52,31 @@ class CreateDirectoryFragment() : DialogFragment() {
         isCancelable = true
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        databaseReference = FirebaseDatabase.getInstance().reference
-        // Button of creation new directory
-        binding.btnCommitDir.setOnClickListener {
-            if (binding.editTextDirectoryName.text.toString() != "") {
-
-                val directoryId = UUID.randomUUID().toString()
-                val userUid = FirebaseAuth.getInstance().currentUser?.uid ?: ""
-//                val email = FirebaseAuth.getInstance().currentUser?.email
-//                val parts = email?.split("@")
-//                val userEmail = parts!![0]
-                val directoryName = binding.editTextDirectoryName.text.toString()
-
-
-                writeDirectory(directoryId, userUid, directoryName)
-                dismiss()
-            } else {
-                Toast.makeText(context, "Введите название новой папки", Toast.LENGTH_SHORT).show()
+    private fun setupClickListeners() {
+        with(fragmentBinding) {
+            // Button of creation new directory
+            btnCommitDirectory.setOnClickListener {
+                if (inputDirectoryName.text.toString().isNotBlank()) {
+                    val directoryId = UUID.randomUUID().toString()
+                    val userUid = FirebaseAuth.getInstance().currentUser?.uid.orEmpty()
+                    val directoryName = inputDirectoryName.text.toString()
+                    firebaseManager.writeDirectory(directoryId, userUid, directoryName)
+                    dismiss()
+                } else {
+                    Toast.makeText(context, R.string.enter_directory_name, Toast.LENGTH_SHORT)
+                        .show()
+                }
             }
         }
-    }
-
-    private fun writeDirectory(directoryId: String, userUid: String, name: String) {
-        val directory = FirebaseDirectory(directoryId, userUid, name)
-
-        databaseReference.child("Users").child(userUid).child("Directory").child(name).setValue(directory)
     }
 
     // Parameters for this fragment
     override fun onStart() {
         super.onStart()
-        dialog?.window?.setLayout(LayoutParams.MATCH_PARENT, 1000)
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog?.window?.setGravity(Gravity.BOTTOM)
+        dialog?.window?.apply {
+            val backgroundColor = ContextCompat.getColor(requireContext(), R.color.white_29)
+            setBackgroundDrawable(ColorDrawable(backgroundColor))
+            setLayout(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+        }
     }
 }

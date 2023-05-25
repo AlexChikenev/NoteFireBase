@@ -12,5 +12,6 @@
     <color name="white_50">#50ffffff</color>
     <color name="white_80">#80ffffff</color>
     <color name="start_color_for_btn_to_main">#FA06FF</color>
-    <color name="hint_color">#A3A3A3</color>
+    <color name="hint_color">#C4535353</color>
+    <color name="pillow_color">#8436FD</color>
 </resources>

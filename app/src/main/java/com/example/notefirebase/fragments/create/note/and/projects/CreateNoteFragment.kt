@@ -1,41 +1,36 @@
 package com.example.notefirebase.fragments.create.note.and.projects
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.lifecycleScope
+import androidx.fragment.app.Fragment
 import com.example.notefirebase.R
 import com.example.notefirebase.databinding.FragmentCreateNoteBinding
-import com.example.notefirebase.firebasemodel.FirebaseNoteInDir
-import com.example.notefirebase.firebasemodel.FirebaseProject
 import com.example.notefirebase.fragments.MainFragment
 import com.example.notefirebase.fragments.settings.MainSettingsFragment
+import com.example.notefirebase.utils.FirebaseManager
+import com.example.notefirebase.utils.Helper
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import kotlinx.coroutines.launch
-import java.util.UUID
 
 class CreateNoteFragment(
     private val directoryId: String?,
     private val directoryName: String?,
     private val projectId: String?,
     private val projectName: String?
-) :
-    Fragment() {
+) : Fragment() {
 
     private lateinit var fragmentBinding: FragmentCreateNoteBinding
-    private lateinit var databaseReference: DatabaseReference
+    private lateinit var firebaseManager: FirebaseManager
+    private lateinit var helper: Helper
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         fragmentBinding = FragmentCreateNoteBinding.inflate(inflater, container, false)
-        databaseReference = FirebaseDatabase.getInstance().reference
+        firebaseManager = FirebaseManager()
+        helper = Helper(requireActivity())
         return fragmentBinding.root
     }
 
@@ -47,16 +42,14 @@ class CreateNoteFragment(
     // Set up Click Listeners
     private fun setupClickListeners() {
         with(fragmentBinding) {
+            // Go back
             btnGoBack.setOnClickListener {
                 if (projectId == null) {
-                    updateUI(OpenDirectoryFragment(directoryId, directoryName))
+                    helper.navigate(OpenDirectoryFragment(directoryId, directoryName))
                 } else {
-                    updateUI(
+                    helper.navigate(
                         CreateNoteInProjectFragment(
-                            directoryId,
-                            directoryName,
-                            projectId,
-                            projectName
+                            directoryId, directoryName, projectId, projectName
                         )
                     )
                 }
@@ -64,12 +57,12 @@ class CreateNoteFragment(
 
             // Go to main
             btnToMain.setOnClickListener {
-                updateUI(MainFragment())
+                helper.navigate(MainFragment())
             }
 
             // Show settings
             btnToSettings.setOnClickListener {
-                updateUI(MainSettingsFragment())
+                helper.navigate(MainSettingsFragment())
             }
 
             // Button for project creation
@@ -85,11 +78,15 @@ class CreateNoteFragment(
                         if (noteName.isEmpty()) {
                             val newName = noteContent.split(" ")
                             noteName = newName[0]
-                            writeNoteIntoDir(directoryId, userUid, noteName, noteContent)
+                            firebaseManager.writeNoteIntoDir(
+                                directoryId, userUid, directoryName!!, noteName, noteContent
+                            )
                         } else {
-                            writeNoteIntoDir(directoryId, userUid, noteName, noteContent)
+                            firebaseManager.writeNoteIntoDir(
+                                directoryId, userUid, directoryName!!, noteName, noteContent
+                            )
                         }
-                        updateUI(OpenDirectoryFragment(directoryId, directoryName))
+                        helper.navigate(OpenDirectoryFragment(directoryId, directoryName))
                     }
                 }// If projectId is not null
                 else {
@@ -98,72 +95,37 @@ class CreateNoteFragment(
                             if (noteName.isEmpty()) {
                                 val newName = noteContent.split(" ")
                                 noteName = newName[0]
-                                writeNoteIntoProject(projectId, userUid, noteName, noteContent)
+                                firebaseManager.writeNoteIntoProject(
+                                    projectId,
+                                    userUid,
+                                    directoryName,
+                                    projectName,
+                                    noteName,
+                                    noteContent
+                                )
                             } else {
-                                writeNoteIntoDir(projectId, userUid, noteName, noteContent)
+                                directoryName?.let { it1 ->
+                                    firebaseManager.writeNoteIntoDir(
+                                        projectId, userUid, it1, noteName, noteContent
+                                    )
+                                }
                             }
                         }
-                        updateUI(
+                        helper.navigate(
                             CreateNoteInProjectFragment(
-                                projectId,
-                                directoryName,
-                                projectId,
-                                projectName
+                                projectId, directoryName, projectId, projectName
                             )
                         )
                     } else {
                         Toast.makeText(
-                            context,
-                            "Введите название своего проекта",
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
+                            context, R.string.enter_project_name, Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }
         }
     }
 
-    // Method for writing data inside a folder
-    private fun writeNoteIntoDir(
-        directoryId: String,
-        userUid: String,
-        noteName: String,
-        noteContent: String
-    ) {
-        val note = FirebaseNoteInDir(directoryId, userUid, noteName, noteContent)
-        databaseReference.child("Users").child(userUid).child("Directory").child(directoryName!!)
-            .child("NotesInDirectory").child(noteName).setValue(note)
-    }
-
-    // Method for writing data inside the project
-    private fun writeNoteIntoProject(
-        projectId: String,
-        userUid: String,
-        noteName: String,
-        noteContent: String
-    ) {
-        val note = FirebaseNoteInDir(projectId, userUid, noteName, noteContent)
-        if (projectName != null) {
-            if (directoryName != null) {
-                databaseReference.child("Users").child(userUid).child("Directory")
-                    .child(directoryName)
-                    .child("Projects").child(projectName).child("NotesInProject").child(noteName)
-                    .setValue(note)
-            }
-        }
-    }
-
-    private fun updateUI(fragment: Fragment) {
-        activity
-            ?.supportFragmentManager
-            ?.beginTransaction()
-            ?.replace(
-                R.id.fragmentHolder,
-                fragment
-            )
-            ?.commit()
-    }
 
 //    companion object {
 //        fun newInstance() = CreateNoteFragment(null)

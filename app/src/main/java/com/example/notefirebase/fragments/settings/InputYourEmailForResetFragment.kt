@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import com.example.notefirebase.R
 import com.example.notefirebase.databinding.FragmentForgotPasswordBinding
 import com.example.notefirebase.fragments.MainFragment
+import com.example.notefirebase.utils.Helper
 import com.example.notefirebase.utils.UserDataCheck
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -20,6 +21,7 @@ class InputYourEmailForResetFragment : Fragment() {
 
     private lateinit var fragmentBinding: FragmentForgotPasswordBinding
     private lateinit var userDataCheck: UserDataCheck
+    private lateinit var helper: Helper
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,6 +35,7 @@ class InputYourEmailForResetFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupClickListeners()
+        helper = Helper(requireActivity())
     }
 
     private fun setupClickListeners() {
@@ -63,17 +66,9 @@ class InputYourEmailForResetFragment : Fragment() {
                 if (user == null) {
                     return@setOnClickListener
                 } else {
-                    updateUi(MainFragment())
+                    helper.navigate(MainFragment())
                 }
             }
         }
-    }
-
-    private fun updateUi(fragment: Fragment) {
-        activity
-            ?.supportFragmentManager
-            ?.beginTransaction()
-            ?.replace(R.id.fragmentHolder, fragment)
-            ?.commit()
     }
 }

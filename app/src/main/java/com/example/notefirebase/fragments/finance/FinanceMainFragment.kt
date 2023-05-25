@@ -2,22 +2,23 @@ package com.example.notefirebase.fragments.finance
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.notefirebase.R
 import com.example.notefirebase.adapters.IncomeAdapter
 import com.example.notefirebase.adapters.OutcomeAdapter
 import com.example.notefirebase.databinding.FragmentFinanceMainBinding
-import com.example.notefirebase.firebasemodel.FirebaseDirectory
 import com.example.notefirebase.firebasemodel.FirebaseIncomes
 import com.example.notefirebase.firebasemodel.FirebaseOutcomes
+import com.example.notefirebase.firebasemodel.FirebasePillows
 import com.example.notefirebase.firebasemodel.Income
 import com.example.notefirebase.firebasemodel.Outcome
-import com.example.notefirebase.firebasemodel.Project
+import com.example.notefirebase.firebasemodel.Pillow
+import com.example.notefirebase.fragments.MainFragment
+import com.example.notefirebase.fragments.settings.MainSettingsFragment
+import com.example.notefirebase.utils.Helper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -31,6 +32,7 @@ class FinanceMainFragment : Fragment() {
     private lateinit var outcomeAdapter: OutcomeAdapter
     private lateinit var auth: FirebaseAuth
     private lateinit var databaseReference: DatabaseReference
+    private lateinit var helper: Helper
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +45,7 @@ class FinanceMainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpClickListeners()
+        helper = Helper(requireActivity())
         auth = FirebaseAuth.getInstance()
         databaseReference = FirebaseDatabase.getInstance().reference
         setupDatabase()
@@ -55,15 +58,21 @@ class FinanceMainFragment : Fragment() {
         val incomeRef = databaseReference.child("Users").child(userUid).child("Incomes")
         incomeRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+                var totalIncomeAmount = 0.0
                 val incomeList = mutableListOf<Income>()
                 for (childSnapshot in dataSnapshot.children) {
                     val income = childSnapshot.getValue(FirebaseIncomes::class.java)
                     if (income != null) {
-                        val inc = Income(income.incomeName, income.incomeAmount!!)
-                        incomeList.add(inc)
+                        val inc = income.incomeAmount?.let { Income(income.incomeName, it) }
+                        if (inc != null) {
+                            incomeList.add(inc)
+                            totalIncomeAmount += inc.incomeAmount
+                        }
                     }
                 }
                 incomeAdapter.setIncomes(incomeList)
+                fragmentBinding.totalIncomeText.text = totalIncomeAmount.toString() + " ₽"
+                Log.d("Total", "$totalIncomeAmount")
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -74,18 +83,41 @@ class FinanceMainFragment : Fragment() {
         val outcomeRef = databaseReference.child("Users").child(userUid).child("Outcomes")
         outcomeRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+                var totalOutcomeAmount = 0.0
                 val outcomeList = mutableListOf<Outcome>()
                 for (childSnapshot in dataSnapshot.children) {
                     val outcome = childSnapshot.getValue(FirebaseOutcomes::class.java)
                     if (outcome != null) {
-                        val out = Outcome(outcome.outcomeName, outcome.outcomeAmount!!)
-                        outcomeList.add(out)
+                        val out = outcome.outcomeAmount?.let { Outcome(outcome.outcomeName, it) }
+                        if (out != null) {
+                            outcomeList.add(out)
+                            totalOutcomeAmount += out.outcomeAmount
+                        }
+
                     }
                 }
                 outcomeAdapter.setOutcomes(outcomeList)
+                fragmentBinding.totalOutcomeText.text =  totalOutcomeAmount.toString() + " ₽"
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
+                Log.d("Error", "Не удалось загрузить данные")
+            }
+        })
+
+        val pillowRef = databaseReference.child("Users").child(userUid).child("Pillow")
+        pillowRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                val pillow = dataSnapshot.getValue(FirebasePillows::class.java)
+                val pillowContent = pillow?.pillowAmount?.let { Pillow(it) }
+                if(pillowContent != null){
+                    fragmentBinding.showPillow.text = pillowContent.pillowAmount.toString() + " " + "₽"
+                }
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
                 Log.d("Error", "Не удалось загрузить данные")
             }
         })
@@ -120,6 +152,22 @@ class FinanceMainFragment : Fragment() {
                     requireActivity().supportFragmentManager,
                     "CreateOutcomeFragment"
                 )
+            }
+
+            btnCreatePillow.setOnClickListener {
+                val createPillow = CreatePillowFragment()
+                createPillow.show(
+                    requireActivity().supportFragmentManager,
+                    "CreatePillowFragment"
+                )
+            }
+
+            btnToMain.setOnClickListener {
+                helper.navigate(MainFragment())
+            }
+
+            btnToSettings.setOnClickListener {
+                helper.navigate(MainSettingsFragment())
             }
         }
     }
