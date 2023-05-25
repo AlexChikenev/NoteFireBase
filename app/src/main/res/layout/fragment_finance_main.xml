@@ -129,6 +129,7 @@
         android:id="@+id/backLine"
         style="@style/TopLineBg"
         android:layout_height="1dp"
+        android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnInputIncome" />
@@ -150,7 +151,7 @@
         android:id="@+id/totalIncomeCard"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="25dp"
         app:cardBackgroundColor="@color/transparent"
         app:cardCornerRadius="6dp"
         app:layout_constraintEnd_toEndOf="@id/backLine"
@@ -219,5 +220,29 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnAnaliseInOut"
+        style="@style/ButtonInSettings"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bg_btn_in_finance"
+        android:text="@string/btn_text_to_analise_in_out"
+        app:layout_constraintEnd_toEndOf="@id/totalOutcomeCard"
+        app:layout_constraintStart_toStartOf="@id/totalOutcomeCard"
+        app:layout_constraintTop_toBottomOf="@id/totalOutcomeCard" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnCheckBefore"
+        style="@style/ButtonInSettings"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bg_btn_in_finance"
+        android:text="@string/btn_text_to_check_before"
+        app:layout_constraintEnd_toEndOf="@id/btnAnaliseInOut"
+        app:layout_constraintStart_toStartOf="@id/btnAnaliseInOut"
+        app:layout_constraintTop_toBottomOf="@id/btnAnaliseInOut" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

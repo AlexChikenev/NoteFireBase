@@ -2,10 +2,16 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape>
-            <gradient android:startColor="@color/start_color_for_btn_to_main"
-                android:endColor="#90FA06FF"/>
-            <corners android:radius="15px"/>
+            <gradient
+                android:endColor="#90FA06FF"
+                android:startColor="@color/start_color_for_btn_to_main" />
+            <corners android:radius="15px" />
         </shape>
     </item>
-    <item android:drawable="@drawable/ic_to_main" android:gravity="right" android:right="40px" android:top="37px" android:bottom="38px"/>
+    <item
+        android:bottom="38px"
+        android:drawable="@drawable/ic_to_main"
+        android:gravity="right"
+        android:right="40px"
+        android:top="37px" />
 </layer-list>

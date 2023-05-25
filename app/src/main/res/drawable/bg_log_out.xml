@@ -2,9 +2,10 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape>
-            <gradient android:startColor="@color/start_color_for_btn_to_main"
-                android:endColor="#90FA06FF"/>
-            <corners android:radius="15px"/>
+            <gradient
+                android:endColor="#90FA06FF"
+                android:startColor="@color/start_color_for_btn_to_main" />
+            <corners android:radius="15px" />
         </shape>
     </item>
 </layer-list>
