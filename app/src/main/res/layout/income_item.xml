@@ -9,9 +9,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:maxWidth="150dp"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:maxWidth="150dp">
 
         <ImageView
             android:id="@+id/imgPurpleStar"
@@ -20,19 +20,19 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="36dp"
             android:background="@drawable/ic_purple_star"
+            android:importantForAccessibility="no"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:importantForAccessibility="no" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/incomeName"
             android:layout_width="wrap_content"
-            android:singleLine="true"
-            android:maxWidth="150dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="36dp"
             android:fontFamily="@font/helvetica_regular"
+            android:maxWidth="150dp"
+            android:singleLine="true"
             android:textColor="@color/hint_color"
             android:textSize="9sp"
             app:layout_constraintStart_toEndOf="@+id/imgPurpleStar"

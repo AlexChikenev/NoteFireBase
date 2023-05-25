@@ -10,8 +10,8 @@
         android:id="@+id/btnToSettings"
         style="@style/ButtonToSettings"
         android:layout_marginBottom="18dp"
-        app:layout_constraintBottom_toTopOf="@id/calendarView"
         android:contentDescription="@string/text_btn_to_settings"
+        app:layout_constraintBottom_toTopOf="@id/calendarView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

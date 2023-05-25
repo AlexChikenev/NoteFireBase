@@ -6,14 +6,15 @@
     android:background="@drawable/bg_registration_block_with_oval">
 
     <TextView
+        style="@style/TopLabels"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/TopLabels"
         android:text="@string/wellcome"
         android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@id/topLine"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/topLine" />
+        app:layout_constraintStart_toStartOf="parent" />
+
     <View
         android:id="@+id/topLine"
         style="@style/TopLineBg"
@@ -39,11 +40,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="38dp"
+        android:layout_marginTop="250dp"
         android:fontFamily="@font/saunde"
         android:text="@string/time_management"
         android:textColor="@color/registration_font"
         android:textSize="28sp"
-        android:layout_marginTop="250dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/topLine" />
 
@@ -51,12 +52,12 @@
         android:id="@+id/plans"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/text_plans"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="@font/helvetica_regular"
         android:gravity="center"
+        android:text="@string/text_plans"
         android:textColor="@color/white"
         android:textSize="8sp"
-        android:fontFamily="@font/helvetica_regular"
-        android:layout_marginBottom="5dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -64,9 +65,9 @@
     <View
         android:id="@+id/bottomLine"
         android:layout_width="0dp"
-        android:layout_marginTop="110dp"
         android:layout_height="1dp"
         android:layout_marginStart="38dp"
+        android:layout_marginTop="110dp"
         android:layout_marginEnd="38dp"
         android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
