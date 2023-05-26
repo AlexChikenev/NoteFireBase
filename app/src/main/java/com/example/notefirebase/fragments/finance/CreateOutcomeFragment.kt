@@ -17,6 +17,7 @@ import com.example.notefirebase.R
 import com.example.notefirebase.databinding.FragmentCreateOutcomeBinding
 import com.example.notefirebase.firebasemodel.FirebaseIncomes
 import com.example.notefirebase.firebasemodel.FirebaseOutcomes
+import com.example.notefirebase.utils.FirebaseManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -26,6 +27,7 @@ class CreateOutcomeFragment : DialogFragment() {
     private lateinit var fragmentBinding: FragmentCreateOutcomeBinding
     private lateinit var databaseReference: DatabaseReference
     private lateinit var auth: FirebaseAuth
+    private lateinit var firebaseManager: FirebaseManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -38,6 +40,7 @@ class CreateOutcomeFragment : DialogFragment() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        firebaseManager = FirebaseManager()
         auth = FirebaseAuth.getInstance()
         setUpClickListeners()
         setUpEditText()
@@ -84,16 +87,6 @@ class CreateOutcomeFragment : DialogFragment() {
         }
     }
 
-    private fun writeOutcome(
-        outcomeAmount: Double, outcomeName: String, userUid: String
-    ) {
-        val outcome = FirebaseOutcomes(outcomeName, outcomeAmount)
-        val uniqueId = databaseReference.push().key
-        databaseReference.child("Users").child(userUid).child("Outcomes").child(uniqueId!!)
-            .setValue(outcome)
-
-    }
-
     private fun setUpClickListeners() {
         with(fragmentBinding) {
             btnCommitOutcome.setOnClickListener {
@@ -106,7 +99,7 @@ class CreateOutcomeFragment : DialogFragment() {
                     ).show()
                 } else {
                     try {
-                        writeOutcome(outcome.toDouble(), outcomeName, userUid)
+                        firebaseManager.writeOutcome(outcome.toDouble(), outcomeName, userUid)
                         dismiss()
                     } catch (exception: Exception) {
                         Toast.makeText(

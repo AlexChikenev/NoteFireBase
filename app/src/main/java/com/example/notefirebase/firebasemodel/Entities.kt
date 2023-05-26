@@ -44,21 +44,23 @@ data class Note(
 
 data class FirebaseIncomes(
     val incomeName: String,
-    val incomeAmount: Double?
+    val incomeAmount: Double?,
+    val incomeDate: String
 ) {
-    constructor() : this ("", null)
+    constructor() : this ("", null, "")
 }
 
 data class Income(
     val incomeName: String,
-    val incomeAmount: Double
+    val incomeAmount: Double,
 )
 
 data class FirebaseOutcomes(
     val outcomeName: String,
-    val outcomeAmount: Double?
+    val outcomeAmount: Double?,
+    val incomeDate: String
 ) {
-    constructor() : this ("", null)
+    constructor() : this ("", null, "")
 }
 
 data class Outcome(

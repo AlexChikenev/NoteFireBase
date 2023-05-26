@@ -14,8 +14,8 @@ class DirectoryAdapter : RecyclerView.Adapter<DirectoryAdapter.DirectoryViewHold
     private var onClickListener: OnClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DirectoryViewHolder {
-        val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_directory, parent, false)
+        val itemView =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_directory, parent, false)
         return DirectoryViewHolder(itemView)
     }
 

@@ -14,8 +14,8 @@ class ProjectAdapter : RecyclerView.Adapter<ProjectAdapter.ProjectViewHolder>() 
     private var onClickListener: OnClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProjectViewHolder {
-        val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_project, parent, false)
+        val itemView =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_project, parent, false)
         return ProjectViewHolder(itemView)
     }
 

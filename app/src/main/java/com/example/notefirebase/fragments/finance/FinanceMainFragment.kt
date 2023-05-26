@@ -18,6 +18,7 @@ import com.example.notefirebase.firebasemodel.Outcome
 import com.example.notefirebase.firebasemodel.Pillow
 import com.example.notefirebase.fragments.MainFragment
 import com.example.notefirebase.fragments.settings.MainSettingsFragment
+import com.example.notefirebase.utils.FirebaseManager
 import com.example.notefirebase.utils.Helper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -33,6 +34,7 @@ class FinanceMainFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var databaseReference: DatabaseReference
     private lateinit var helper: Helper
+    private lateinit var firebaseManager: FirebaseManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,6 +50,7 @@ class FinanceMainFragment : Fragment() {
         helper = Helper(requireActivity())
         auth = FirebaseAuth.getInstance()
         databaseReference = FirebaseDatabase.getInstance().reference
+        firebaseManager = FirebaseManager()
         setupDatabase()
         setupRecyclerView()
     }
@@ -55,72 +58,42 @@ class FinanceMainFragment : Fragment() {
     private fun setupDatabase() {
         // Get incomes
         val userUid = auth.currentUser?.uid ?: ""
-        val incomeRef = databaseReference.child("Users").child(userUid).child("Incomes")
-        incomeRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                var totalIncomeAmount = 0.0
-                val incomeList = mutableListOf<Income>()
-                for (childSnapshot in dataSnapshot.children) {
-                    val income = childSnapshot.getValue(FirebaseIncomes::class.java)
-                    if (income != null) {
-                        val inc = income.incomeAmount?.let { Income(income.incomeName, it) }
-                        if (inc != null) {
-                            incomeList.add(inc)
-                            totalIncomeAmount += inc.incomeAmount
-                        }
-                    }
-                }
-                incomeAdapter.setIncomes(incomeList)
-                fragmentBinding.totalIncomeText.text = totalIncomeAmount.toString() + " ₽"
-                Log.d("Total", "$totalIncomeAmount")
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.d("Error", "Не удалось загрузить данные")
-            }
+        firebaseManager.getIncome(userUid, { incomeList ->
+            incomeAdapter.setIncomes(incomeList)
+        }, { totalIncomeAmount ->
+            fragmentBinding.totalIncomeText.text = totalIncomeAmount.toString()
+        }, {
+            Log.d("Error", "Не удалось загрузить данные")
         })
 
-        val outcomeRef = databaseReference.child("Users").child(userUid).child("Outcomes")
-        outcomeRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                var totalOutcomeAmount = 0.0
-                val outcomeList = mutableListOf<Outcome>()
-                for (childSnapshot in dataSnapshot.children) {
-                    val outcome = childSnapshot.getValue(FirebaseOutcomes::class.java)
-                    if (outcome != null) {
-                        val out = outcome.outcomeAmount?.let { Outcome(outcome.outcomeName, it) }
-                        if (out != null) {
-                            outcomeList.add(out)
-                            totalOutcomeAmount += out.outcomeAmount
-                        }
-
-                    }
-                }
+        // Get outComes
+        firebaseManager.getOutcome(userUid,
+            { outcomeList ->
                 outcomeAdapter.setOutcomes(outcomeList)
-                fragmentBinding.totalOutcomeText.text =  totalOutcomeAmount.toString() + " ₽"
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
+            }, { totalOutcomeAmount ->
+                fragmentBinding.totalOutcomeText.text = totalOutcomeAmount.toString()
+            }, {
                 Log.d("Error", "Не удалось загрузить данные")
-            }
-        })
+            })
 
         val pillowRef = databaseReference.child("Users").child(userUid).child("Pillow")
-        pillowRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
+        pillowRef.addValueEventListener(
+            object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
 
-                val pillow = dataSnapshot.getValue(FirebasePillows::class.java)
-                val pillowContent = pillow?.pillowAmount?.let { Pillow(it) }
-                if(pillowContent != null){
-                    fragmentBinding.showPillow.text = pillowContent.pillowAmount.toString() + " " + "₽"
+                    val pillow = dataSnapshot.getValue(FirebasePillows::class.java)
+                    val pillowContent = pillow?.pillowAmount?.let { Pillow(it) }
+                    if (pillowContent != null) {
+                        fragmentBinding.showPillow.text =
+                            pillowContent.pillowAmount.toString() + " " + "₽"
+                    }
+
                 }
 
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.d("Error", "Не удалось загрузить данные")
-            }
-        })
+                override fun onCancelled(error: DatabaseError) {
+                    Log.d("Error", "Не удалось загрузить данные")
+                }
+            })
     }
 
 

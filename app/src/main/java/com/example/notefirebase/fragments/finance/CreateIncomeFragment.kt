@@ -16,19 +16,20 @@ import androidx.fragment.app.DialogFragment
 import com.example.notefirebase.R
 import com.example.notefirebase.databinding.FragmentCreateIncomeBinding
 import com.example.notefirebase.firebasemodel.FirebaseIncomes
+import com.example.notefirebase.utils.FirebaseManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 class CreateIncomeFragment : DialogFragment() {
     private lateinit var fragmentBinding: FragmentCreateIncomeBinding
-    private lateinit var databaseReference: DatabaseReference
     private lateinit var auth: FirebaseAuth
+    private lateinit var firebaseManager: FirebaseManager
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         fragmentBinding = FragmentCreateIncomeBinding.inflate(inflater, container, false)
-        databaseReference = FirebaseDatabase.getInstance().reference
+        firebaseManager = FirebaseManager()
         return fragmentBinding.root
     }
 
@@ -92,7 +93,7 @@ class CreateIncomeFragment : DialogFragment() {
                     ).show()
                 } else {
                     try {
-                        writeIncome(income.toDouble(), incomeName, userUid)
+                        firebaseManager.writeIncome(income.toDouble(), incomeName, userUid)
                         dismiss()
                     } catch (exception: Exception) {
                         Toast.makeText(
@@ -104,16 +105,6 @@ class CreateIncomeFragment : DialogFragment() {
                 }
             }
         }
-    }
-
-    private fun writeIncome(
-        incomeAmount: Double, incomeName: String, userUid: String
-    ) {
-        val income = FirebaseIncomes(incomeName, incomeAmount)
-        val uniqueId = databaseReference.push().key
-        databaseReference.child("Users").child(userUid).child("Incomes").child(uniqueId!!)
-            .setValue(income)
-
     }
 
     override fun onStart() {

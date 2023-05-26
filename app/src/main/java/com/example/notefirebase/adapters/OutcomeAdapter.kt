@@ -17,8 +17,8 @@ class OutcomeAdapter : RecyclerView.Adapter<OutcomeAdapter.OutcomeViewHolder>() 
     private var onClickListener: OnClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OutcomeViewHolder {
-        val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.income_item, parent, false)
+        val itemView =
+            LayoutInflater.from(parent.context).inflate(R.layout.income_item, parent, false)
         return OutcomeViewHolder(itemView)
     }
 
