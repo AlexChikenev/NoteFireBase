@@ -6,10 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notefirebase.R
-import com.example.notefirebase.firebasemodel.Income
-import com.example.notefirebase.firebasemodel.Note
 import com.example.notefirebase.firebasemodel.Outcome
-import com.example.notefirebase.firebasemodel.Project
 
 class OutcomeAdapter : RecyclerView.Adapter<OutcomeAdapter.OutcomeViewHolder>() {
 
@@ -36,7 +33,6 @@ class OutcomeAdapter : RecyclerView.Adapter<OutcomeAdapter.OutcomeViewHolder>() 
             onClickListener?.onClick(currentOutcome)
         }
     }
-
     override fun getItemCount(): Int {
         return outcomes.size
     }

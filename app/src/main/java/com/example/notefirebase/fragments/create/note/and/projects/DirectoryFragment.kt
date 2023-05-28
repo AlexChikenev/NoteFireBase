@@ -42,7 +42,6 @@ class DirectoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         helper = Helper(requireActivity())
-        //val directoryId: String
         auth = FirebaseAuth.getInstance()
         databaseReference = FirebaseDatabase.getInstance().reference
         setupDatabase()

@@ -126,7 +126,6 @@ class CreateNoteFragment(
         }
     }
 
-
 //    companion object {
 //        fun newInstance() = CreateNoteFragment(null)
 //    }

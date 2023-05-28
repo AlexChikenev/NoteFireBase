@@ -17,7 +17,6 @@ import java.util.UUID
 class CreateDirectoryFragment : DialogFragment() {
 
     private lateinit var fragmentBinding: FragmentCreateDirectoryBinding
-    private lateinit var gestureDetector: GestureDetector
     private lateinit var firebaseManager: FirebaseManager
     private lateinit var userUid: String
 

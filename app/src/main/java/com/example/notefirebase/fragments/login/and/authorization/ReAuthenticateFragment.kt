@@ -11,7 +11,6 @@ import com.example.notefirebase.R
 import com.example.notefirebase.databinding.FragmentReAuthenticateBinding
 import com.example.notefirebase.fragments.MainFragment
 import com.example.notefirebase.fragments.settings.ChangeEmailFragment
-import com.example.notefirebase.utils.EmailPasswordAuth
 import com.example.notefirebase.utils.Helper
 import com.example.notefirebase.utils.UserDataCheck
 import com.google.firebase.auth.EmailAuthProvider

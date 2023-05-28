@@ -15,11 +15,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.example.notefirebase.R
 import com.example.notefirebase.databinding.FragmentCreateIncomeBinding
-import com.example.notefirebase.firebasemodel.FirebaseIncomes
 import com.example.notefirebase.utils.FirebaseManager
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 
 class CreateIncomeFragment : DialogFragment() {
     private lateinit var fragmentBinding: FragmentCreateIncomeBinding
@@ -78,7 +75,6 @@ class CreateIncomeFragment : DialogFragment() {
                 }
             })
         }
-
     }
 
     private fun setUpClickListeners() {

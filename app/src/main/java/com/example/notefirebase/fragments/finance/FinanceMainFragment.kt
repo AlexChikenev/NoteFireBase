@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.notefirebase.adapters.IncomeAdapter
-import com.example.notefirebase.adapters.IncomeAndOutcomeAdapter
 import com.example.notefirebase.adapters.OutcomeAdapter
 import com.example.notefirebase.databinding.FragmentFinanceMainBinding
 import com.example.notefirebase.firebasemodel.IncomeAndOutcome

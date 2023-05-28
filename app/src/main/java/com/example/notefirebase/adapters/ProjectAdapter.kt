@@ -41,7 +41,6 @@ class ProjectAdapter : RecyclerView.Adapter<ProjectAdapter.ProjectViewHolder>() 
         notifyDataSetChanged()
     }
 
-
     fun setOnClickListener(onClickListener: OnClickListener) {
         this.onClickListener = onClickListener
     }

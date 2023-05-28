@@ -26,9 +26,7 @@ class RegistrationInputFragment : Fragment() {
     private lateinit var userDataCheck: UserDataCheck
     private lateinit var helper: Helper
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         fragmentBinding = FragmentRegistrationInputBinding.inflate(inflater, container, false)
         return fragmentBinding.root
@@ -45,7 +43,6 @@ class RegistrationInputFragment : Fragment() {
     @SuppressLint("ClickableViewAccessibility")
     private fun setUpTouchListeners() {
         with(fragmentBinding) {
-
             inputName.setOnTouchListener { _, event ->
                 when (event.action) {
                     MotionEvent.ACTION_DOWN -> {
@@ -118,9 +115,7 @@ class RegistrationInputFragment : Fragment() {
                     // Create acc
                 } else {
                     createAccount(
-                        email,
-                        password,
-                        userName
+                        email, password, userName
                     )
                 }
             }
@@ -167,16 +162,15 @@ class RegistrationInputFragment : Fragment() {
     }
 
     private fun sendEmailVerification(user: FirebaseUser) {
-        user.sendEmailVerification()
-            .addOnCompleteListener(requireActivity()) { task ->
-                if (!task.isSuccessful) {
-                    Log.e("EmailPassword", "sendEmailVerification", task.exception)
-                    Toast.makeText(
-                        context,
-                        "Не удалось отправить подтверждение",
-                        Toast.LENGTH_SHORT,
-                    ).show()
-                }
+        user.sendEmailVerification().addOnCompleteListener(requireActivity()) { task ->
+            if (!task.isSuccessful) {
+                Log.e("EmailPassword", "sendEmailVerification", task.exception)
+                Toast.makeText(
+                    context,
+                    "Не удалось отправить подтверждение",
+                    Toast.LENGTH_SHORT,
+                ).show()
             }
+        }
     }
 }

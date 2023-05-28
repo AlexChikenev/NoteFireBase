@@ -4,66 +4,56 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import com.example.notefirebase.utils.Helper
 import android.view.ViewGroup
-import androidx.lifecycle.lifecycleScope
-import com.example.notefirebase.R
 import com.example.notefirebase.databinding.FragmentMainBinding
 import com.example.notefirebase.fragments.create.note.and.projects.DirectoryFragment
 import com.example.notefirebase.fragments.finance.FinanceMainFragment
 import com.example.notefirebase.fragments.settings.MainSettingsFragment
-import kotlinx.coroutines.launch
 
 
 class MainFragment : Fragment() {
 
-    private lateinit var binding: FragmentMainBinding
+    private lateinit var fragmentBinding: FragmentMainBinding
+    private lateinit var helper: Helper
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentMainBinding.inflate(inflater, container, false)
-
-        lifecycleScope.launch {
-//            dao.deleteAllFromDirectory()
-//            dao.deleteAllFromDProject()
-//            dao.deleteAllFromNote()
-//            dao.resetInProject()
-//            dao.resetInDirectory()
-//            dao.resetInNote()
-        }
-
-        return binding.root
+        fragmentBinding = FragmentMainBinding.inflate(inflater, container, false)
+        helper = Helper(requireActivity())
+        return fragmentBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.btnToFinance.setOnClickListener {
-            navigate(FinanceMainFragment())
-        }
-
-        binding.btnToNotes.setOnClickListener {
-            navigate(DirectoryFragment())
-
-        }
-
-        binding.btnToWishList.setOnClickListener {
-            navigate(WishListFragment())
-        }
-
-        binding.btnToSettings.setOnClickListener {
-            activity
-            navigate(MainSettingsFragment())
-        }
+        setUpClickListeners()
     }
 
-    private fun navigate(fragment: Fragment) {
-        activity
-            ?.supportFragmentManager
-            ?.beginTransaction()
-            ?.replace(R.id.fragmentHolder, fragment)
-            ?.commit()
+    private fun setUpClickListeners() {
+        with(fragmentBinding) {
+            // Go to finance
+            btnToFinance.setOnClickListener {
+                helper.navigate(FinanceMainFragment())
+            }
+
+            // Got to notes
+            btnToNotes.setOnClickListener {
+                helper.navigate(DirectoryFragment())
+            }
+
+            // Go to wish list
+            btnToWishList.setOnClickListener {
+                helper.navigate(WishListFragment())
+            }
+
+            // Go to settings
+            btnToSettings.setOnClickListener {
+                activity
+                helper.navigate(MainSettingsFragment())
+            }
+        }
     }
 
     companion object {

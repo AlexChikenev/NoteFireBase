@@ -14,7 +14,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.example.notefirebase.R
 import com.example.notefirebase.databinding.FragmentCreatePillowBinding
-import com.example.notefirebase.firebasemodel.FirebasePillows
 import com.example.notefirebase.utils.FirebaseManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference

@@ -1,8 +1,7 @@
 package com.example.notefirebase.utils
 
 class UserDataCheck(
-    private val password: String,
-    private val email: String
+    private val password: String, private val email: String
 ) {
     private val MIN_PASSWORD_LENGTH = 8
 
@@ -52,8 +51,7 @@ class UserDataCheck(
 
     // Method for checking for the content of English characters
     private fun isEnglishLetters(str: String): Boolean {
-        if(str.matches(Regex("^[a-zA-Z0-9]+\$")))
-            return true
+        if (str.matches(Regex("^[a-zA-Z0-9]+\$"))) return true
         return false
     }
 

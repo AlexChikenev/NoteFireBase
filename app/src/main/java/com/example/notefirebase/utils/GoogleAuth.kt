@@ -25,8 +25,7 @@ class GoogleAuth(private val fragment: Fragment) {
     init {
         // Creating a Google Sign In Options object with parameters for authentication via Google
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(fragment.getString(R.string.default_web_client_id))
-            .requestEmail()
+            .requestIdToken(fragment.getString(R.string.default_web_client_id)).requestEmail()
             .build()
 
         // Creating a Google Sign In Client object for authentication via Google
@@ -43,7 +42,9 @@ class GoogleAuth(private val fragment: Fragment) {
     }
 
     // Method for authenticating a user in Firebase using Google credentials
-    private fun firebaseAuthWithGoogle(idToken: String, onSuccess: () -> Unit, onFailure: () -> Unit) {
+    private fun firebaseAuthWithGoogle(
+        idToken: String, onSuccess: () -> Unit, onFailure: () -> Unit
+    ) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential)
             .addOnCompleteListener(fragment.requireActivity()) { task ->
@@ -65,7 +66,13 @@ class GoogleAuth(private val fragment: Fragment) {
     }
 
     // Method for processing the authentication result via Google
-    fun handleSignInResult(requestCode: Int, resultCode: Int, data: Intent?, onSuccess: () -> Unit, onFailure: () -> Unit) {
+    fun handleSignInResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?,
+        onSuccess: () -> Unit,
+        onFailure: () -> Unit
+    ) {
         if (requestCode == rc_sign_in) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
@@ -80,14 +87,4 @@ class GoogleAuth(private val fragment: Fragment) {
             }
         }
     }
-
-    // Method for checking whether the user is authenticated in Firebase
-//    fun checkCurrentUser(onSuccess: () -> Unit, onFailure: () -> Unit) {
-//        val currentUser = auth.currentUser
-//        if (currentUser != null) {
-//            onSuccess()
-//        } else {
-//            onFailure()
-//        }
-//    }
 }

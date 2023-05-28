@@ -7,7 +7,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notefirebase.R
 import com.example.notefirebase.firebasemodel.Note
-import com.example.notefirebase.firebasemodel.Project
 
 class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
@@ -41,7 +40,6 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
         notes = noteList
         notifyDataSetChanged()
     }
-
 
     fun setOnClickListener(onClickListener: OnClickListener) {
         this.onClickListener = onClickListener

@@ -10,7 +10,6 @@ import com.example.notefirebase.firebasemodel.FirebaseProject
 import com.example.notefirebase.firebasemodel.Income
 import com.example.notefirebase.firebasemodel.Note
 import com.example.notefirebase.firebasemodel.Outcome
-import com.example.notefirebase.firebasemodel.Pillow
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -144,9 +143,7 @@ class FirebaseManager {
 
     // Method for get income
     fun getIncome(
-        userUid: String,
-        callbackList: (List<Income>) -> Unit,
-        errorCallback: () -> Unit
+        userUid: String, callbackList: (List<Income>) -> Unit, errorCallback: () -> Unit
     ) {
         val incomeRef = databaseReference.child("Users").child(userUid).child("Incomes")
         incomeRef.addValueEventListener(object : ValueEventListener {
@@ -189,9 +186,7 @@ class FirebaseManager {
 
     // Method for get outcome
     fun getOutcome(
-        userUid: String,
-        callbackList: (List<Outcome>) -> Unit,
-        errorCallback: () -> Unit
+        userUid: String, callbackList: (List<Outcome>) -> Unit, errorCallback: () -> Unit
     ) {
         val incomeRef = databaseReference.child("Users").child(userUid).child("Outcomes")
         incomeRef.addValueEventListener(object : ValueEventListener {

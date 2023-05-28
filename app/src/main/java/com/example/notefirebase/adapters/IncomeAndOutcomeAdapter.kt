@@ -1,6 +1,5 @@
 package com.example.notefirebase.adapters
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -89,7 +88,6 @@ class IncomeAndOutcomeAdapter :
         incomeAndOutcomeList = combinedList
         notifyDataSetChanged()
     }
-
 
     fun setOnClickListener(onClickListener: OnClickListener) {
         this.onClickListener = onClickListener

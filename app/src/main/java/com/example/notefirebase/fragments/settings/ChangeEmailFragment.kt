@@ -12,13 +12,9 @@ import android.widget.Toast
 import com.example.notefirebase.R
 import com.example.notefirebase.databinding.FragmentChangeEmailBinding
 import com.example.notefirebase.fragments.MainFragment
-import com.example.notefirebase.fragments.login.and.authorization.ReAuthenticateFragment
-import com.example.notefirebase.fragments.login.and.authorization.VerificationFragment
 import com.example.notefirebase.utils.Helper
 import com.example.notefirebase.utils.UserDataCheck
-import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 

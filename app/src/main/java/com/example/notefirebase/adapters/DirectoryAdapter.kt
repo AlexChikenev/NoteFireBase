@@ -41,7 +41,6 @@ class DirectoryAdapter : RecyclerView.Adapter<DirectoryAdapter.DirectoryViewHold
         notifyDataSetChanged()
     }
 
-
     fun setOnClickListener(onClickListener: OnClickListener) {
         this.onClickListener = onClickListener
     }

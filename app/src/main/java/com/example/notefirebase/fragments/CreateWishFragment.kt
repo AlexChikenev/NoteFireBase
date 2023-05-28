@@ -8,9 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.lifecycleScope
 import com.example.notefirebase.databinding.FragmentCreateWishBinding
-import kotlinx.coroutines.launch
 
 class CreateWishFragment(private val wishListFragment: WishListFragment) : DialogFragment() {
 

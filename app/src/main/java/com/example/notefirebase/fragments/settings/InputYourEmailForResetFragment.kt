@@ -2,7 +2,6 @@ package com.example.notefirebase.fragments.settings
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import com.example.notefirebase.databinding.FragmentForgotPasswordBinding
 import com.example.notefirebase.fragments.MainFragment
 import com.example.notefirebase.utils.Helper
 import com.example.notefirebase.utils.UserDataCheck
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
