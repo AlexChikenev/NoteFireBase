@@ -9,6 +9,7 @@ import com.example.notefirebase.R
 import com.example.notefirebase.firebasemodel.Income
 import com.example.notefirebase.firebasemodel.Note
 import com.example.notefirebase.firebasemodel.Project
+import com.example.notefirebase.utils.FirebaseManager
 
 class IncomeAdapter : RecyclerView.Adapter<IncomeAdapter.IncomeViewHolder>() {
 
@@ -28,8 +29,8 @@ class IncomeAdapter : RecyclerView.Adapter<IncomeAdapter.IncomeViewHolder>() {
 
     override fun onBindViewHolder(holder: IncomeViewHolder, position: Int) {
         val currentIncome = incomes[position]
-        holder.nameTextView.text = currentIncome.incomeName
-        holder.amountTextView.text = currentIncome.incomeAmount.toString()
+            holder.nameTextView.text = currentIncome.incomeName
+            holder.amountTextView.text = currentIncome.incomeAmount.toString()
 
         holder.itemView.setOnClickListener {
             onClickListener?.onClick(currentIncome)
@@ -40,8 +41,8 @@ class IncomeAdapter : RecyclerView.Adapter<IncomeAdapter.IncomeViewHolder>() {
         return incomes.size
     }
 
-    fun setIncomes(incomeList: List<Income>) {
-        incomes = incomeList
+    fun setIncomes(incomeList: List<Income>, targetDate: String) {
+        incomes = incomeList.filter { it.incomeDate == targetDate }
         notifyDataSetChanged()
     }
 

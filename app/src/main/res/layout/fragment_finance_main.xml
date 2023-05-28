@@ -80,7 +80,7 @@
         app:layout_constraintTop_toBottomOf="@+id/outcome" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnInputIncome"
+        android:id="@+id/btnCreateIncome"
         style="@style/ButtonNoteBg"
         android:layout_width="0dp"
         android:layout_height="30dp"
@@ -91,7 +91,7 @@
         app:layout_constraintTop_toBottomOf="@id/incomeRcView" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnInputOutcome"
+        android:id="@+id/btnCreateOutcome"
         style="@style/ButtonNoteBg"
         android:layout_width="0dp"
         android:layout_height="30dp"
@@ -132,7 +132,7 @@
         android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnInputIncome" />
+        app:layout_constraintTop_toBottomOf="@+id/btnCreateIncome" />
 
     <TextView
         android:id="@+id/showPillow"

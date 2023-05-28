@@ -10,11 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.notefirebase.adapters.IncomeAdapter
 import com.example.notefirebase.adapters.OutcomeAdapter
 import com.example.notefirebase.databinding.FragmentFinanceMainBinding
-import com.example.notefirebase.firebasemodel.FirebaseIncomes
-import com.example.notefirebase.firebasemodel.FirebaseOutcomes
 import com.example.notefirebase.firebasemodel.FirebasePillows
-import com.example.notefirebase.firebasemodel.Income
-import com.example.notefirebase.firebasemodel.Outcome
 import com.example.notefirebase.firebasemodel.Pillow
 import com.example.notefirebase.fragments.MainFragment
 import com.example.notefirebase.fragments.settings.MainSettingsFragment
@@ -46,11 +42,11 @@ class FinanceMainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpClickListeners()
         helper = Helper(requireActivity())
         auth = FirebaseAuth.getInstance()
         databaseReference = FirebaseDatabase.getInstance().reference
         firebaseManager = FirebaseManager()
+        setUpClickListeners()
         setupDatabase()
         setupRecyclerView()
     }
@@ -58,18 +54,20 @@ class FinanceMainFragment : Fragment() {
     private fun setupDatabase() {
         // Get incomes
         val userUid = auth.currentUser?.uid ?: ""
+        val (year, month) = firebaseManager.getCurrentYearAndMonth()
+        val formattedDate = "$year-$month"
         firebaseManager.getIncome(userUid, { incomeList ->
-            incomeAdapter.setIncomes(incomeList)
+            incomeAdapter.setIncomes(incomeList, formattedDate)
         }, { totalIncomeAmount ->
             fragmentBinding.totalIncomeText.text = totalIncomeAmount.toString()
         }, {
             Log.d("Error", "Не удалось загрузить данные")
         })
 
-        // Get outComes
+        // Get outcomes
         firebaseManager.getOutcome(userUid,
             { outcomeList ->
-                outcomeAdapter.setOutcomes(outcomeList)
+                outcomeAdapter.setOutcomes(outcomeList, formattedDate)
             }, { totalOutcomeAmount ->
                 fragmentBinding.totalOutcomeText.text = totalOutcomeAmount.toString()
             }, {
@@ -100,18 +98,19 @@ class FinanceMainFragment : Fragment() {
     private fun setupRecyclerView() {
         with(fragmentBinding) {
             incomeAdapter = IncomeAdapter()
-            fragmentBinding.incomeRcView.adapter = incomeAdapter
-            fragmentBinding.incomeRcView.layoutManager = LinearLayoutManager(requireContext())
+            incomeRcView.adapter = incomeAdapter
+            incomeRcView.layoutManager = LinearLayoutManager(requireContext())
 
             outcomeAdapter = OutcomeAdapter()
-            fragmentBinding.outcomeRcView.adapter = outcomeAdapter
-            fragmentBinding.outcomeRcView.layoutManager = LinearLayoutManager(requireContext())
+            outcomeRcView.adapter = outcomeAdapter
+            outcomeRcView.layoutManager = LinearLayoutManager(requireContext())
         }
     }
 
     private fun setUpClickListeners() {
         with(fragmentBinding) {
-            btnInputIncome.setOnClickListener {
+            // Create income
+            btnCreateIncome.setOnClickListener {
                 val createIncome = CreateIncomeFragment()
                 createIncome.show(
                     requireActivity().supportFragmentManager,
@@ -119,7 +118,8 @@ class FinanceMainFragment : Fragment() {
                 )
             }
 
-            btnInputOutcome.setOnClickListener {
+            // Create outcome
+            btnCreateOutcome.setOnClickListener {
                 val createIncome = CreateOutcomeFragment()
                 createIncome.show(
                     requireActivity().supportFragmentManager,
@@ -127,6 +127,7 @@ class FinanceMainFragment : Fragment() {
                 )
             }
 
+            // Create pillow
             btnCreatePillow.setOnClickListener {
                 val createPillow = CreatePillowFragment()
                 createPillow.show(
@@ -135,12 +136,19 @@ class FinanceMainFragment : Fragment() {
                 )
             }
 
+            // Go to main
             btnToMain.setOnClickListener {
                 helper.navigate(MainFragment())
             }
 
+            // Go to settings
             btnToSettings.setOnClickListener {
                 helper.navigate(MainSettingsFragment())
+            }
+
+            // Go to month income and outcome
+            btnCheckBefore.setOnClickListener {
+                helper.navigate(MonthsFragment())
             }
         }
     }

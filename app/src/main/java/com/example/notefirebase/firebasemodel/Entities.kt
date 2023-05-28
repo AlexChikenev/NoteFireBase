@@ -53,6 +53,7 @@ data class FirebaseIncomes(
 data class Income(
     val incomeName: String,
     val incomeAmount: Double,
+    val incomeDate: String
 )
 
 data class FirebaseOutcomes(
@@ -65,7 +66,18 @@ data class FirebaseOutcomes(
 
 data class Outcome(
     val outcomeName: String,
-    val outcomeAmount: Double
+    val outcomeAmount: Double,
+    val outcomeDate: String
+)
+
+data class IncomeAndOutcome(
+    val IncomeAmount: Double?,
+    val IncomeDate: String?,
+    val OutcomeAmount: Double?,
+    val OutcomeDate: String?
+//    val incomeAmount: Double,
+    //val outcomeAmount: Double,
+//    val date: String
 )
 
 data class FirebasePillows(

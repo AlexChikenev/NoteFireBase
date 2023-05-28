@@ -94,4 +94,5 @@
     <string name="project_name_hint">Введите название проекта</string>
     <string name="btn_text_to_analise_in_out">Анализ расходов/доходов</string>
     <string name="btn_text_to_check_before">Посмотреть \nпредыдущие месяца</string>
+    <string name="label_finance_month">Финансы / предыдущие месяца</string>
 </resources>

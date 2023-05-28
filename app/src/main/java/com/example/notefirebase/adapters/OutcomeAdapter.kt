@@ -41,8 +41,8 @@ class OutcomeAdapter : RecyclerView.Adapter<OutcomeAdapter.OutcomeViewHolder>() 
         return outcomes.size
     }
 
-    fun setOutcomes(outcomeList: List<Outcome>) {
-        outcomes = outcomeList
+    fun setOutcomes(outcomeList: List<Outcome>, targetDate: String) {
+        outcomes = outcomeList.filter { it.outcomeDate == targetDate }
         notifyDataSetChanged()
     }
 

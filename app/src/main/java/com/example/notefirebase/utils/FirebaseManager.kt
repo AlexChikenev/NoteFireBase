@@ -125,7 +125,7 @@ class FirebaseManager {
     }
 
     // Method for get current data
-    private fun getCurrentYearAndMonth(): Pair<Int, Int> {
+    fun getCurrentYearAndMonth(): Pair<Int, Int> {
         val calendar = Calendar.getInstance()
         val currentYear = calendar.get(Calendar.YEAR)
         val currentMonth = calendar.get(Calendar.MONTH) + 1
@@ -158,7 +158,11 @@ class FirebaseManager {
                 for (childSnapshot in dataSnapshot.children) {
                     val income = childSnapshot.getValue(FirebaseIncomes::class.java)
                     if (income != null) {
-                        val inc = income.incomeAmount?.let { Income(income.incomeName, it) }
+                        val inc = income.incomeAmount?.let {
+                            Income(
+                                income.incomeName, it, income.incomeDate
+                            )
+                        }
                         if (inc != null) {
                             incomeList.add(inc)
                             totalIncomeAmount += inc.incomeAmount
@@ -170,7 +174,7 @@ class FirebaseManager {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-               errorCallback()
+                errorCallback()
             }
         })
     }
@@ -201,7 +205,11 @@ class FirebaseManager {
                 for (childSnapshot in dataSnapshot.children) {
                     val outcome = childSnapshot.getValue(FirebaseOutcomes::class.java)
                     if (outcome != null) {
-                        val inc = outcome.outcomeAmount?.let { Outcome(outcome.outcomeName, it) }
+                        val inc = outcome.outcomeAmount?.let {
+                            Outcome(
+                                outcome.outcomeName, it, outcome.incomeDate
+                            )
+                        }
                         if (inc != null) {
                             outcomeList.add(inc)
                             totalOutcomeAmount += inc.outcomeAmount
@@ -216,5 +224,36 @@ class FirebaseManager {
                 errorCallback()
             }
         })
+    }
+
+    // Calculate incomes per month
+    fun calculateMonthlyIncomes(incomes: List<Income>): Map<String, Double> {
+        val monthlyIncomes = mutableMapOf<String, Double>()
+        for (income in incomes) {
+            val incomeDate = income.incomeDate
+            if (monthlyIncomes.containsKey(incomeDate)) {
+                val currentAmount = monthlyIncomes[incomeDate] ?: 0.0
+                monthlyIncomes[incomeDate] = currentAmount + income.incomeAmount
+            } else {
+                monthlyIncomes[incomeDate] = income.incomeAmount
+            }
+        }
+        return monthlyIncomes
+
+    }
+
+    // Calculate outcomes per month
+    fun calculateMonthlyOutcomes(outcomes: List<Outcome>): Map<String, Double> {
+        val monthlyOutcomes = mutableMapOf<String, Double>()
+        for (outcome in outcomes) {
+            val outcomeDate = outcome.outcomeDate
+            if (monthlyOutcomes.containsKey(outcomeDate)) {
+                val currentAmount = monthlyOutcomes[outcomeDate] ?: 0.0
+                monthlyOutcomes[outcomeDate] = currentAmount + outcome.outcomeAmount
+            } else {
+                monthlyOutcomes[outcomeDate] = outcome.outcomeAmount
+            }
+        }
+        return monthlyOutcomes
     }
 }

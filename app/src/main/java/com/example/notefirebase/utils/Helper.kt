@@ -7,6 +7,7 @@ import com.example.notefirebase.R
 class Helper(
     private val activity: FragmentActivity
 ) {
+    // Navigate into app
     fun navigate(fragment: Fragment){
         activity
             .supportFragmentManager
