@@ -79,14 +79,21 @@ class MonthsFragment : Fragment() {
                 // Calculate outcomes per month
                 val monthlyOutcomes = firebaseManager.calculateMonthlyOutcomes(outcomes)
 
-                incomeAdapter = IncomeAndOutcomeAdapter()
-                fragmentBinding.rcTest.adapter = incomeAdapter
-                fragmentBinding.rcTest.layoutManager = LinearLayoutManager(context)
-                incomeAdapter.setIncomes(monthlyIncomes, monthlyOutcomes)
-            }, {}, {})
-        }, {}, {
+                setUpRecyclerView(monthlyIncomes, monthlyOutcomes)
+            }, {})
+        }, {
             Log.d("Error", "Не удалось загрузить данные")
         })
+    }
+
+    // Set up recycler view
+    private fun setUpRecyclerView(
+        monthlyIncomes: Map<String, Double>, monthlyOutcomes: Map<String, Double>
+    ) {
+        incomeAdapter = IncomeAndOutcomeAdapter()
+        fragmentBinding.rcTest.adapter = incomeAdapter
+        fragmentBinding.rcTest.layoutManager = LinearLayoutManager(context)
+        incomeAdapter.setIncomes(monthlyIncomes, monthlyOutcomes)
     }
 
     companion object {

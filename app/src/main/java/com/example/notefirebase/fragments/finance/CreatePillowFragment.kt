@@ -15,6 +15,7 @@ import androidx.fragment.app.DialogFragment
 import com.example.notefirebase.R
 import com.example.notefirebase.databinding.FragmentCreatePillowBinding
 import com.example.notefirebase.firebasemodel.FirebasePillows
+import com.example.notefirebase.utils.FirebaseManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -22,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase
 class CreatePillowFragment : DialogFragment() {
     private lateinit var fragmentBinding: FragmentCreatePillowBinding
     private lateinit var databaseReference: DatabaseReference
+    private lateinit var firebaseManager: FirebaseManager
     private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
@@ -29,7 +31,6 @@ class CreatePillowFragment : DialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         fragmentBinding = FragmentCreatePillowBinding.inflate(inflater, container, false)
-        databaseReference = FirebaseDatabase.getInstance().reference
         return fragmentBinding.root
     }
 
@@ -37,6 +38,8 @@ class CreatePillowFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         auth = FirebaseAuth.getInstance()
+        databaseReference = FirebaseDatabase.getInstance().reference
+        firebaseManager = FirebaseManager()
         setUpClickListeners()
         setUpEditText()
         fragmentBinding.dialogBackground.setOnTouchListener { _, event ->
@@ -62,7 +65,7 @@ class CreatePillowFragment : DialogFragment() {
                     ).show()
                 } else {
                     try {
-                        writePillow(pillow.toDouble(), userUid)
+                        firebaseManager.writePillow(pillow.toDouble(), userUid)
                         dismiss()
                     } catch (exception: Exception) {
                         Toast.makeText(
@@ -74,15 +77,6 @@ class CreatePillowFragment : DialogFragment() {
                 }
             }
         }
-    }
-
-    private fun writePillow(
-        pillowAmount: Double, userUid: String
-    ) {
-        val pillow = FirebasePillows(pillowAmount)
-        databaseReference.child("Users").child(userUid).child("Pillow")
-            .setValue(pillow)
-
     }
 
     // Replace "," to "."

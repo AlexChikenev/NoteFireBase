@@ -1,22 +1,22 @@
 package com.example.notefirebase.utils
 
 import android.util.Log
-import android.widget.Toast
 import com.example.notefirebase.firebasemodel.FirebaseDirectory
 import com.example.notefirebase.firebasemodel.FirebaseIncomes
 import com.example.notefirebase.firebasemodel.FirebaseNoteInDir
 import com.example.notefirebase.firebasemodel.FirebaseOutcomes
+import com.example.notefirebase.firebasemodel.FirebasePillows
 import com.example.notefirebase.firebasemodel.FirebaseProject
 import com.example.notefirebase.firebasemodel.Income
 import com.example.notefirebase.firebasemodel.Note
 import com.example.notefirebase.firebasemodel.Outcome
+import com.example.notefirebase.firebasemodel.Pillow
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.util.Calendar
-import java.util.Date
 
 class FirebaseManager {
     private val databaseReference: DatabaseReference = FirebaseDatabase.getInstance().reference
@@ -146,7 +146,6 @@ class FirebaseManager {
     fun getIncome(
         userUid: String,
         callbackList: (List<Income>) -> Unit,
-        callbackAmount: (Double) -> Unit,
         errorCallback: () -> Unit
     ) {
         val incomeRef = databaseReference.child("Users").child(userUid).child("Incomes")
@@ -170,7 +169,6 @@ class FirebaseManager {
                     }
                 }
                 callbackList(incomeList)
-                callbackAmount(totalIncomeAmount)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -193,7 +191,6 @@ class FirebaseManager {
     fun getOutcome(
         userUid: String,
         callbackList: (List<Outcome>) -> Unit,
-        callbackAmount: (Double) -> Unit,
         errorCallback: () -> Unit
     ) {
         val incomeRef = databaseReference.child("Users").child(userUid).child("Outcomes")
@@ -212,12 +209,10 @@ class FirebaseManager {
                         }
                         if (inc != null) {
                             outcomeList.add(inc)
-                            totalOutcomeAmount += inc.outcomeAmount
                         }
                     }
                 }
                 callbackList(outcomeList)
-                callbackAmount(totalOutcomeAmount)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -255,5 +250,46 @@ class FirebaseManager {
             }
         }
         return monthlyOutcomes
+    }
+
+    // Write pillow
+    fun writePillow(
+        pillowAmount: Double, userUid: String
+    ) {
+        val (year, month) = getCurrentYearAndMonth()
+        val formattedDate = "$year-$month"
+        val pillow = FirebasePillows(pillowAmount, formattedDate)
+        databaseReference.child("Users").child(userUid).child("Pillow").setValue(pillow)
+
+    }
+
+    // Get pillow
+    fun getPillow(
+        userUid: String,
+        callbackPillow: (Double) -> Unit,
+        callbackZero: (Double) -> Unit,
+        errorCallback: () -> Unit
+    ) {
+        val (year, month) = getCurrentYearAndMonth()
+        val formattedDate = "$year-$month"
+        val pillowRef = databaseReference.child("Users").child(userUid).child("Pillow")
+        pillowRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                var pillow = 0.0
+                for (childSnapshot in dataSnapshot.children) {
+                    val pillowData = dataSnapshot.getValue(FirebasePillows::class.java)
+                    if (pillowData != null) {
+                        if (pillowData.pillowAmount != null && pillowData.date == formattedDate) pillow =
+                            pillowData.pillowAmount
+                        else callbackZero(0.0)
+                    }
+                }
+                callbackPillow(pillow)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                errorCallback()
+            }
+        })
     }
 }

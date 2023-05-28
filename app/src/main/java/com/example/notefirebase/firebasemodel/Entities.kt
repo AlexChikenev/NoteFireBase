@@ -47,7 +47,7 @@ data class FirebaseIncomes(
     val incomeAmount: Double?,
     val incomeDate: String
 ) {
-    constructor() : this ("", null, "")
+    constructor() : this("", null, "")
 }
 
 data class Income(
@@ -61,7 +61,7 @@ data class FirebaseOutcomes(
     val outcomeAmount: Double?,
     val incomeDate: String
 ) {
-    constructor() : this ("", null, "")
+    constructor() : this("", null, "")
 }
 
 data class Outcome(
@@ -81,13 +81,15 @@ data class IncomeAndOutcome(
 )
 
 data class FirebasePillows(
-    val pillowAmount: Double?
+    val pillowAmount: Double,
+    val date: String
 ) {
-    constructor() : this ( null)
+    constructor() : this(0.0, "")
 }
 
 data class Pillow(
-    val pillowAmount: Double
+    val pillowAmount: Double?,
+    val date: String
 )
 
 

@@ -8,20 +8,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.notefirebase.adapters.IncomeAdapter
+import com.example.notefirebase.adapters.IncomeAndOutcomeAdapter
 import com.example.notefirebase.adapters.OutcomeAdapter
 import com.example.notefirebase.databinding.FragmentFinanceMainBinding
-import com.example.notefirebase.firebasemodel.FirebasePillows
-import com.example.notefirebase.firebasemodel.Pillow
+import com.example.notefirebase.firebasemodel.IncomeAndOutcome
 import com.example.notefirebase.fragments.MainFragment
 import com.example.notefirebase.fragments.settings.MainSettingsFragment
 import com.example.notefirebase.utils.FirebaseManager
 import com.example.notefirebase.utils.Helper
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 
 class FinanceMainFragment : Fragment() {
     private lateinit var fragmentBinding: FragmentFinanceMainBinding
@@ -31,10 +28,9 @@ class FinanceMainFragment : Fragment() {
     private lateinit var databaseReference: DatabaseReference
     private lateinit var helper: Helper
     private lateinit var firebaseManager: FirebaseManager
-
+    private var incomeAndOutcomeList = emptyList<IncomeAndOutcome>()
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         fragmentBinding = FragmentFinanceMainBinding.inflate(inflater, container, false)
         return fragmentBinding.root
@@ -56,42 +52,48 @@ class FinanceMainFragment : Fragment() {
         val userUid = auth.currentUser?.uid ?: ""
         val (year, month) = firebaseManager.getCurrentYearAndMonth()
         val formattedDate = "$year-$month"
+
+        // Get incomes
         firebaseManager.getIncome(userUid, { incomeList ->
             incomeAdapter.setIncomes(incomeList, formattedDate)
-        }, { totalIncomeAmount ->
-            fragmentBinding.totalIncomeText.text = totalIncomeAmount.toString()
         }, {
             Log.d("Error", "Не удалось загрузить данные")
         })
 
         // Get outcomes
-        firebaseManager.getOutcome(userUid,
-            { outcomeList ->
-                outcomeAdapter.setOutcomes(outcomeList, formattedDate)
-            }, { totalOutcomeAmount ->
-                fragmentBinding.totalOutcomeText.text = totalOutcomeAmount.toString()
-            }, {
-                Log.d("Error", "Не удалось загрузить данные")
-            })
+        firebaseManager.getOutcome(userUid, { outcomeList ->
+            outcomeAdapter.setOutcomes(outcomeList, formattedDate)
+        }, {
+            Log.d("Error", "Не удалось загрузить данные")
+        })
 
-        val pillowRef = databaseReference.child("Users").child(userUid).child("Pillow")
-        pillowRef.addValueEventListener(
-            object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
+        // Get pillow
+        firebaseManager.getPillow(userUid, { pillowAmount ->
+            fragmentBinding.showPillow.text = pillowAmount.toString()
+        }, { zero -> fragmentBinding.showPillow.text = zero.toString() }, {
+            Log.d("Error", "Не удалось загрузить данные")
+        })
 
-                    val pillow = dataSnapshot.getValue(FirebasePillows::class.java)
-                    val pillowContent = pillow?.pillowAmount?.let { Pillow(it) }
-                    if (pillowContent != null) {
-                        fragmentBinding.showPillow.text =
-                            pillowContent.pillowAmount.toString() + " " + "₽"
-                    }
+        // Get incomes from database
+        firebaseManager.getIncome(userUid, { incomes ->
+            // Get outcomes from database
+            firebaseManager.getOutcome(userUid, { outcomes ->
+                // Calculate incomes per month
+                val incomesMap = firebaseManager.calculateMonthlyIncomes(incomes)
+                // Calculate outcomes per month
+                val outcomesMap = firebaseManager.calculateMonthlyOutcomes(outcomes)
 
-                }
+                // Get total income amount per month
+                val incomeAmount = incomesMap[formattedDate] ?: 0.0
+                fragmentBinding.totalIncomeText.text = incomeAmount.toString()
 
-                override fun onCancelled(error: DatabaseError) {
-                    Log.d("Error", "Не удалось загрузить данные")
-                }
-            })
+                // Get total outcome amount per month
+                val outcomeAmount = outcomesMap[formattedDate] ?: 0.0
+                fragmentBinding.totalOutcomeText.text = outcomeAmount.toString()
+            }, {})
+        }, {
+            Log.d("Error", "Не удалось загрузить данные")
+        })
     }
 
 
@@ -113,8 +115,7 @@ class FinanceMainFragment : Fragment() {
             btnCreateIncome.setOnClickListener {
                 val createIncome = CreateIncomeFragment()
                 createIncome.show(
-                    requireActivity().supportFragmentManager,
-                    "CreateIncomeFragment"
+                    requireActivity().supportFragmentManager, "CreateIncomeFragment"
                 )
             }
 
@@ -122,8 +123,7 @@ class FinanceMainFragment : Fragment() {
             btnCreateOutcome.setOnClickListener {
                 val createIncome = CreateOutcomeFragment()
                 createIncome.show(
-                    requireActivity().supportFragmentManager,
-                    "CreateOutcomeFragment"
+                    requireActivity().supportFragmentManager, "CreateOutcomeFragment"
                 )
             }
 
@@ -131,8 +131,7 @@ class FinanceMainFragment : Fragment() {
             btnCreatePillow.setOnClickListener {
                 val createPillow = CreatePillowFragment()
                 createPillow.show(
-                    requireActivity().supportFragmentManager,
-                    "CreatePillowFragment"
+                    requireActivity().supportFragmentManager, "CreatePillowFragment"
                 )
             }
 
