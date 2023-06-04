@@ -65,7 +65,7 @@
         android:id="@+id/incomeRcView"
         android:layout_width="0dp"
         android:layout_height="250dp"
-        android:background="@color/white"
+        android:background="@color/dark_white"
         app:layout_constraintEnd_toEndOf="@+id/income"
         app:layout_constraintStart_toStartOf="@+id/income"
         app:layout_constraintTop_toBottomOf="@+id/income" />
@@ -74,7 +74,7 @@
         android:id="@+id/outcomeRcView"
         android:layout_width="0dp"
         android:layout_height="250dp"
-        android:background="@color/white"
+        android:background="@color/dark_white"
         app:layout_constraintEnd_toEndOf="@+id/outcome"
         app:layout_constraintStart_toStartOf="@+id/outcome"
         app:layout_constraintTop_toBottomOf="@+id/outcome" />
@@ -154,8 +154,8 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnCreateAim"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_marginBottom="4dp"
         android:background="@drawable/bg_pillow"
         android:contentDescription="@string/go_to_main_ic_content_description"

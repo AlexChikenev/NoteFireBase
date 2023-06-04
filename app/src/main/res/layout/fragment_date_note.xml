@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_date_note"
+    tools:context=".fragments.create.note.and.projects.DateNoteFragment">
+
+    <TextView
+        android:id="@+id/labelDate"
+        style="@style/LabelsDateFinance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="38dp"
+        android:layout_marginTop="38dp"
+        android:text="27 августа 2023 года"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btnToSettings"
+        style="@style/ButtonToSettings"
+        android:layout_marginBottom="10dp"
+        android:contentDescription="@string/text_btn_to_settings"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnToMain"
+        style="@style/LabelsDateFinance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/bg_label_to_main"
+        android:gravity="center"
+        android:paddingStart="30dp"
+        android:paddingEnd="0dp"
+        android:text="@string/text_to_main"
+        app:layout_constraintStart_toStartOf="@id/labelDate"
+        app:layout_constraintTop_toBottomOf="@id/labelDate" />
+
+    <View
+        android:id="@+id/topLine"
+        style="@style/TopLineBg"
+        android:layout_marginTop="10dp"
+        android:background="@color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnToMain" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/income"
+        style="@style/HeaderFinance"
+        android:text="@string/label_personal_affairs"
+        app:layout_constraintEnd_toStartOf="@id/outcome"
+        app:layout_constraintStart_toStartOf="@id/topLine"
+        app:layout_constraintTop_toBottomOf="@id/topLine" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/outcome"
+        style="@style/HeaderFinance"
+        android:layout_marginStart="16dp"
+        android:text="@string/label_work"
+        app:layout_constraintEnd_toEndOf="@id/topLine"
+        app:layout_constraintStart_toEndOf="@+id/income"
+        app:layout_constraintTop_toBottomOf="@id/topLine" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/personalAffairsRcView"
+        android:layout_width="0dp"
+        android:layout_height="250dp"
+        android:background="@color/dark_white"
+        app:layout_constraintEnd_toEndOf="@+id/income"
+        app:layout_constraintStart_toStartOf="@+id/income"
+        app:layout_constraintTop_toBottomOf="@+id/income" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/workRcView"
+        android:layout_width="0dp"
+        android:layout_height="250dp"
+        android:background="@color/dark_white"
+        app:layout_constraintEnd_toEndOf="@+id/outcome"
+        app:layout_constraintStart_toStartOf="@+id/outcome"
+        app:layout_constraintTop_toBottomOf="@+id/outcome" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnCreatePersonalAffairs"
+        style="@style/ButtonNoteBg"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:background="@drawable/bg_button_finance"
+        android:text="@string/btn_text_create"
+        app:layout_constraintEnd_toEndOf="@id/personalAffairsRcView"
+        app:layout_constraintStart_toStartOf="@id/personalAffairsRcView"
+        app:layout_constraintTop_toBottomOf="@id/personalAffairsRcView" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnCreateWork"
+        style="@style/ButtonNoteBg"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:background="@drawable/bg_button_finance"
+        android:text="@string/btn_text_create"
+        app:layout_constraintEnd_toEndOf="@id/workRcView"
+        app:layout_constraintStart_toStartOf="@id/workRcView"
+        app:layout_constraintTop_toBottomOf="@id/workRcView" />
+
+    <ImageView
+        android:id="@+id/ic_middle_star"
+        style="@style/TopStarStyle"
+        android:contentDescription="@string/star_ic_content_description"
+        app:layout_constraintBottom_toTopOf="@+id/middleLine"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/labelTimeEvent"
+        style="@style/TopLabels"
+        android:text="@string/label_time_event"
+        app:layout_constraintBottom_toTopOf="@id/middleLine"
+        app:layout_constraintStart_toEndOf="@id/ic_middle_star" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnCreateTimeEvent"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/bg_pillow"
+        android:contentDescription="@string/go_to_main_ic_content_description"
+        app:layout_constraintBottom_toTopOf="@id/middleLine"
+        app:layout_constraintEnd_toEndOf="@id/middleLine" />
+
+    <View
+        android:id="@+id/middleLine"
+        style="@style/TopLineBg"
+        android:layout_height="1dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnCreatePersonalAffairs" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/timeEventRcView"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        app:layout_constraintEnd_toEndOf="@+id/middleLine"
+        app:layout_constraintStart_toStartOf="@id/middleLine"
+        app:layout_constraintTop_toBottomOf="@id/middleLine" />
+
+    <View
+        android:id="@+id/backLine"
+        style="@style/TopLineBg"
+        android:layout_height="1dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="0dp"
+        app:layout_constraintEnd_toEndOf="@id/middleLine"
+        app:layout_constraintStart_toStartOf="@id/middleLine"
+        app:layout_constraintTop_toBottomOf="@id/timeEventRcView" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/habitsTrackerRcView"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        app:layout_constraintEnd_toEndOf="@+id/middleLine"
+        app:layout_constraintStart_toStartOf="@id/backLine"
+        app:layout_constraintTop_toBottomOf="@id/backLine" />
+
+    <ImageView
+        android:id="@+id/ic_back_star"
+        style="@style/TopStarStyle"
+        android:layout_marginStart="0dp"
+        android:contentDescription="@string/star_ic_content_description"
+        app:layout_constraintBottom_toTopOf="@+id/backLine"
+        app:layout_constraintStart_toStartOf="@id/middleLine" />
+
+    <TextView
+        android:id="@+id/textHabitsTracker"
+        style="@style/TopLabels"
+        android:text="@string/label_habits_tracker"
+        app:layout_constraintBottom_toTopOf="@id/backLine"
+        app:layout_constraintStart_toEndOf="@id/ic_back_star" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnCreateHabit"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/bg_pillow"
+        android:contentDescription="@string/go_to_main_ic_content_description"
+        app:layout_constraintBottom_toTopOf="@id/backLine"
+        app:layout_constraintEnd_toEndOf="@id/backLine" />
+</androidx.constraintlayout.widget.ConstraintLayout>

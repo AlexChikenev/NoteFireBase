@@ -120,5 +120,23 @@
     <string name="text_delete_outcome">Удаление расхода</string>
     <string name="label_income">Доходы:</string>
     <string name="label_outcome">Расходы:</string>
-    <string name="label_finance_analise">Анализ расходов / доходов</string>
+    <string name="label_finance_analise">Анализ расходов /  доходов</string>
+    <string name="text_to_main">на главную</string>
+    <string name="label_personal_affairs">Личные дела</string>
+    <string name="label_work">Работа</string>
+    <string name="label_time_event">Событие по времени</string>
+    <string name="label_habits_tracker">Трекер привычек</string>
+    <string name="btn_text_create">создать</string>
+    <string name="label_create_task">Создать задачу</string>
+    <string name="text_add_name">Добавить название</string>
+    <string name="text_task_description">Описание задачи</string>
+    <string name="text_task_date">Дата</string>
+    <string name="text_task_repeat">Повторить</string>
+    <string name="radio_button_text_never">Никогда</string>
+    <string name="radio_button_text_every_day">Ежедневно</string>
+    <string name="radio_button_text_every_week">Еженедельно</string>
+    <string name="radio_button_text_every_month">Ежемесячно</string>
+    <string name="text_task_notification">Оповещение</string>
+    <string name="text_task_priority">Приоритет</string>
+    <string name="btn_text_go_back_task">назад</string>
 </resources>

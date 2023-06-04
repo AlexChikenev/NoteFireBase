@@ -7,15 +7,21 @@ import android.view.View
 import com.example.notefirebase.utils.Helper
 import android.view.ViewGroup
 import com.example.notefirebase.databinding.FragmentMainBinding
+import com.example.notefirebase.fragments.create.note.and.projects.DateNoteFragment
 import com.example.notefirebase.fragments.create.note.and.projects.DirectoryFragment
 import com.example.notefirebase.fragments.finance.FinanceMainFragment
 import com.example.notefirebase.fragments.settings.MainSettingsFragment
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 
 class MainFragment : Fragment() {
 
     private lateinit var fragmentBinding: FragmentMainBinding
     private lateinit var helper: Helper
+    private var selectedDate: String = ""
+    private var formattedDate: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,11 +34,47 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setUpDatePick()
         setUpClickListeners()
     }
 
+    private fun setUpDatePick() {
+        with(fragmentBinding) {
+            calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
+                formattedDate = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(
+                    Calendar.getInstance().apply {
+                        set(Calendar.YEAR, year)
+                        set(Calendar.MONTH, month)
+                        set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                    }.time
+                )
+                selectedDate = "$dayOfMonth ${month + 1} $year"
+            }
+        }
+    }
+
+    private fun getCurrentDate(): Pair<String, String> {
+        val currentDate = Calendar.getInstance().time
+        return Pair(
+            SimpleDateFormat("dd MM yyyy", Locale.getDefault()).format(currentDate),
+            SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(currentDate)
+        )
+    }
+
+
     private fun setUpClickListeners() {
         with(fragmentBinding) {
+
+            // To date notes
+            btnToCurrentDate.setOnClickListener {
+                if(selectedDate == ""){
+                    val currentDate = Calendar.getInstance().time
+                    selectedDate = SimpleDateFormat("dd MM yyyy", Locale.getDefault()).format(currentDate)
+                    formattedDate = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(currentDate)
+                }
+                    helper.navigate(DateNoteFragment(selectedDate, formattedDate))
+            }
+
             // Go to finance
             btnToFinance.setOnClickListener {
                 helper.navigate(FinanceMainFragment())

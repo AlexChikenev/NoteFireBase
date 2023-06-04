@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_date_note"
+    tools:context=".fragments.create.note.and.projects.DateNoteFragment">
+
+    <TextView
+        android:id="@+id/labelDate"
+        style="@style/LabelsDateFinance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="38dp"
+        android:layout_marginTop="38dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btnToSettings"
+        style="@style/ButtonToSettings"
+        android:layout_marginBottom="10dp"
+        android:contentDescription="@string/text_btn_to_settings"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnToMain"
+        style="@style/LabelsDateFinance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/bg_label_to_main"
+        android:gravity="center"
+        android:paddingStart="30dp"
+        android:paddingEnd="0dp"
+        android:text="@string/btn_text_go_back_task"
+        app:layout_constraintStart_toStartOf="@id/labelDate"
+        app:layout_constraintTop_toBottomOf="@id/labelDate" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/task"
+        style="@style/HeaderFinance"
+        android:layout_height="35dp"
+        android:layout_marginTop="29dp"
+        android:text="@string/label_create_task"
+        app:layout_constraintEnd_toEndOf="@id/btnToSettings"
+        app:layout_constraintStart_toStartOf="@id/btnToMain"
+        app:layout_constraintTop_toBottomOf="@id/btnToMain" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/dark_white"
+        app:layout_constraintEnd_toEndOf="@id/task"
+        app:layout_constraintStart_toStartOf="@id/task"
+        app:layout_constraintTop_toBottomOf="@id/task">
+
+        <EditText
+            android:id="@+id/inputTaskName"
+            style="@style/CreateTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:background="@color/transparent"
+            android:hint="@string/text_add_name"
+            android:inputType="textMultiLine"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:textColor="@color/task_text_color"
+            android:textColorHint="@color/task_text_color"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="Autofill" />
+
+        <EditText
+            android:id="@+id/inputTaskDescription"
+            style="@style/CreateTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:gravity="start"
+            android:hint="@string/text_task_description"
+            android:inputType="textMultiLine"
+            android:minHeight="139dp"
+            android:paddingTop="10dp"
+            android:textColor="@color/task_text_color"
+            android:textColorHint="@color/task_text_color"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@id/inputTaskName"
+            app:layout_constraintStart_toStartOf="@id/inputTaskName"
+            app:layout_constraintTop_toBottomOf="@id/inputTaskName"
+            tools:ignore="Autofill" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/transparent"
+            app:cardCornerRadius="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/inputTaskDescription"
+            app:strokeColor="@color/card_task_stroke_color"
+            app:strokeWidth="0.5dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/labelTaskDate"
+                    style="@style/CreateTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:background="@color/transparent"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="@string/text_task_date"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/taskDate"
+                    style="@style/CreateTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardRepeatPicker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/transparent"
+            app:cardCornerRadius="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardDate"
+            app:strokeWidth="0dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/labelTaskRepeat"
+                    style="@style/CreateTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:background="@color/transparent"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="@string/text_task_repeat"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/taskRepeat"
+                    style="@style/CreateTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="@string/radio_button_text_never"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <RadioGroup
+                    android:id="@+id/repeatRadioGroup"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/taskRepeat"
+                    app:layout_constraintStart_toStartOf="@id/labelTaskRepeat"
+                    app:layout_constraintTop_toBottomOf="@id/labelTaskRepeat">
+
+                    <RadioButton
+                        android:id="@+id/radioButtonRepeatNever"
+                        style="@style/CustomRadioButton"
+                        android:layout_width="0dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:checked="true"
+                        android:text="@string/radio_button_text_never" />
+
+                    <RadioButton
+                        android:id="@+id/radioButtonRepeatEveryDay"
+                        style="@style/CustomRadioButton"
+                        android:layout_width="0dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:text="@string/radio_button_text_every_day" />
+
+                    <RadioButton
+                        android:id="@+id/radioButtonRepeatEveryWeek"
+                        style="@style/CustomRadioButton"
+                        android:layout_width="0dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:text="@string/radio_button_text_every_week" />
+
+                    <RadioButton
+                        android:id="@+id/radioButtonRepeatEveryMonth"
+                        style="@style/CustomRadioButton"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:text="@string/radio_button_text_every_month" />
+                </RadioGroup>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardNotificationPicker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/transparent"
+            app:cardCornerRadius="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardRepeatPicker"
+            app:strokeColor="@color/card_task_stroke_color"
+            app:strokeWidth="0.5dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/labelNotification"
+                    style="@style/CreateTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:background="@color/transparent"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="@string/text_task_notification"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <RadioGroup
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="24dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RadioButton
+                        android:id="@+id/radioNotificationYes"
+                        style="@style/CustomRadioButton"
+                        android:layout_width="0dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:checked="true"
+                        android:text="@string/btn_text_yes" />
+
+                    <RadioButton
+                        android:id="@+id/radioNotificationNo"
+                        style="@style/CustomRadioButton"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:text="@string/btn_text_no" />
+                </RadioGroup>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardPriorityPicker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/transparent"
+            app:cardCornerRadius="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardNotificationPicker"
+            app:strokeWidth="0dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/labelPriority"
+                    style="@style/CreateTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/transparent"
+                    android:paddingTop="8dp"
+                    android:text="@string/text_task_priority"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <RadioGroup
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="24dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="@id/labelPriority"
+                    app:layout_constraintEnd_toEndOf="parent"
+
+                    app:layout_constraintHeight_percent="0.6"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.4">
+
+                    <RadioButton
+                        android:id="@+id/radioNoPriority"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="16dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/custom_no_priority_radio_button_background"
+                        android:button="@null"
+                        android:checked="true" />
+
+                    <RadioButton
+                        android:id="@+id/radioSmallPriority"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="16dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/custom_small_priority_radio_button_background"
+                        android:button="@null" />
+
+                    <RadioButton
+                        android:id="@+id/radioMiddlePriority"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="16dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/custom_middle_priority_radio_button_background"
+                        android:button="@null" />
+
+                    <RadioButton
+                        android:id="@+id/radioMainPriority"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/custom_main_priority_radio_button_background"
+                        android:button="@null" />
+                </RadioGroup>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bottom"
+        android:layout_width="0dp"
+        android:layout_height="10dp"
+        android:background="@drawable/bottom"
+        app:layout_constraintEnd_toEndOf="@id/constraintLayout"
+        app:layout_constraintStart_toStartOf="@id/constraintLayout"
+        app:layout_constraintTop_toBottomOf="@id/constraintLayout" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/appCompatButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/bg_btn_commit_note"
+        android:fontFamily="@font/helvetica_regular"
+        android:text="@string/btn_text_commit_note"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.03"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:layout_constraintWidth_percent="0.4" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
