@@ -7,6 +7,7 @@ import com.example.notefirebase.firebasemodel.FirebaseNoteInDir
 import com.example.notefirebase.firebasemodel.FirebaseOutcomes
 import com.example.notefirebase.firebasemodel.FirebasePillows
 import com.example.notefirebase.firebasemodel.FirebaseProject
+import com.example.notefirebase.firebasemodel.FirebaseTask
 import com.example.notefirebase.firebasemodel.Income
 import com.example.notefirebase.firebasemodel.Note
 import com.example.notefirebase.firebasemodel.Outcome
@@ -16,8 +17,6 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.util.Calendar
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 class FirebaseManager {
     private val databaseReference: DatabaseReference = FirebaseDatabase.getInstance().reference
@@ -290,5 +289,38 @@ class FirebaseManager {
                 errorCallback()
             }
         })
+    }
+
+    // Write task
+    fun writeTask(
+        taskType: Int,
+        userUid: String,
+        taskName: String,
+        taskContent: String,
+        taskDate: String,
+        taskRepeat: Int,
+        taskNotification: Boolean,
+        taskPriority: Int
+    ) {
+        val uniqueId = databaseReference.push().key
+        val task = uniqueId?.let {
+            FirebaseTask(
+                it,
+                taskName,
+                taskContent,
+                taskDate,
+                taskRepeat,
+                taskNotification,
+                taskPriority
+            )
+        }
+        if (taskType == 0) {
+            databaseReference.child("Users").child(userUid).child("Personal").child(uniqueId!!)
+                .setValue(task)
+        } else {
+            databaseReference.child("Users").child(userUid).child("Work").child(uniqueId!!)
+                .setValue(task)
+        }
+
     }
 }

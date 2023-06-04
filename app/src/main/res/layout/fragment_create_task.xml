@@ -26,7 +26,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnToMain"
+        android:id="@+id/btnGoBack"
         style="@style/LabelsDateFinance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,8 +46,8 @@
         android:layout_marginTop="29dp"
         android:text="@string/label_create_task"
         app:layout_constraintEnd_toEndOf="@id/btnToSettings"
-        app:layout_constraintStart_toStartOf="@id/btnToMain"
-        app:layout_constraintTop_toBottomOf="@id/btnToMain" />
+        app:layout_constraintStart_toStartOf="@id/btnGoBack"
+        app:layout_constraintTop_toBottomOf="@id/btnGoBack" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -79,7 +79,7 @@
             tools:ignore="Autofill" />
 
         <EditText
-            android:id="@+id/inputTaskDescription"
+            android:id="@+id/inputTaskContent"
             style="@style/CreateTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -105,7 +105,7 @@
             app:cardCornerRadius="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/inputTaskDescription"
+            app:layout_constraintTop_toBottomOf="@id/inputTaskContent"
             app:strokeColor="@color/card_task_stroke_color"
             app:strokeWidth="0.5dp">
 
@@ -168,7 +168,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/taskRepeat"
+                    android:id="@+id/textTaskRepeat"
                     style="@style/CreateTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -187,7 +187,7 @@
                     android:layout_marginBottom="10dp"
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@id/taskRepeat"
+                    app:layout_constraintEnd_toEndOf="@id/textTaskRepeat"
                     app:layout_constraintStart_toStartOf="@id/labelTaskRepeat"
                     app:layout_constraintTop_toBottomOf="@id/labelTaskRepeat">
 
@@ -259,33 +259,20 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <RadioGroup
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="24dp"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <RadioButton
-                        android:id="@+id/radioNotificationYes"
+                    <CheckBox
+                        android:id="@+id/checkNotification"
+                        android:layout_height="0dp"
+                        app:layout_constraintHeight_percent="0.4"
                         style="@style/CustomRadioButton"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="24dp"
                         android:layout_width="0dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_weight="1"
-                        android:button="@null"
-                        android:checked="true"
-                        android:text="@string/btn_text_yes" />
-
-                    <RadioButton
-                        android:id="@+id/radioNotificationNo"
-                        style="@style/CustomRadioButton"
-                        android:layout_width="0dp"
+                        app:layout_constraintWidth_percent="0.1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
                         android:layout_weight="1"
                         android:button="@null"
                         android:text="@string/btn_text_no" />
-                </RadioGroup>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -311,7 +298,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="8dp"
                     android:background="@color/transparent"
                     android:paddingTop="8dp"
                     android:text="@string/text_task_priority"
@@ -320,6 +307,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <RadioGroup
+                    android:id="@+id/radioRadioGroup"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginTop="10dp"
@@ -327,8 +315,7 @@
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="@id/labelPriority"
                     app:layout_constraintEnd_toEndOf="parent"
-
-                    app:layout_constraintHeight_percent="0.6"
+                    app:layout_constraintHeight_percent="0.65"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintWidth_percent="0.4">
 
@@ -382,7 +369,7 @@
         app:layout_constraintTop_toBottomOf="@id/constraintLayout" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/appCompatButton"
+        android:id="@+id/btnCommitTask"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="40dp"

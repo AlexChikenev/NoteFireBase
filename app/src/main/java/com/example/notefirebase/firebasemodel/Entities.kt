@@ -1,7 +1,5 @@
 package com.example.notefirebase.firebasemodel
 
-import com.github.mikephil.charting.data.PieEntry
-
 data class FirebaseDirectory(
     val directoryId: String = "", val userUid: String? = null, val name: String = ""
 ) {
@@ -89,5 +87,17 @@ data class Chart(
     val outcomePercent: Double?,
     val outcomeDate: String?
 )
+
+data class FirebaseTask(
+    val uniqueId: String,
+    val taskName: String,
+    val taskContent: String,
+    val taskDate: String,
+    val taskRepeat: Int,
+    val taskNotification: Boolean,
+    val taskPriority: Int
+) {
+    constructor() : this("", "", "", "", 0, false, 0)
+}
 
 

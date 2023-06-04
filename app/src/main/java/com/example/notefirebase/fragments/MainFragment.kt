@@ -69,7 +69,7 @@ class MainFragment : Fragment() {
             btnToCurrentDate.setOnClickListener {
                 if(selectedDate == ""){
                     val currentDate = Calendar.getInstance().time
-                    selectedDate = SimpleDateFormat("dd MM yyyy", Locale.getDefault()).format(currentDate)
+                    selectedDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(currentDate)
                     formattedDate = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(currentDate)
                 }
                     helper.navigate(DateNoteFragment(selectedDate, formattedDate))

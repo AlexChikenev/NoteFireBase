@@ -139,4 +139,6 @@
     <string name="text_task_notification">Оповещение</string>
     <string name="text_task_priority">Приоритет</string>
     <string name="btn_text_go_back_task">назад</string>
+    <string name="input_task_name">Введите название задачи</string>
+    <string name="input_task_content">Введите содержание задачи</string>
 </resources>

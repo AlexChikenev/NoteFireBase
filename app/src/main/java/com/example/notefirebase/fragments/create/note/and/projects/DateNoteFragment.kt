@@ -18,6 +18,8 @@ class DateNoteFragment(private val selectedDate: String, private val formattedDa
 
     private lateinit var fragmentBinding: FragmentDateNoteBinding
     private lateinit var helper: Helper
+    private val personalTask = 0
+    private val workTask = 1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,12 +51,12 @@ class DateNoteFragment(private val selectedDate: String, private val formattedDa
 
             // Create personal affair
             btnCreatePersonalAffairs.setOnClickListener {
-                helper.navigate(CreateTaskFragment(selectedDate, formattedDate))
+                helper.navigate(CreateTaskFragment(selectedDate, formattedDate, personalTask))
             }
 
             // Create work
             btnCreateWork.setOnClickListener {
-                helper.navigate(CreateTaskFragment(selectedDate, formattedDate))
+                helper.navigate(CreateTaskFragment(selectedDate, formattedDate, workTask))
             }
 
             // Create time event
