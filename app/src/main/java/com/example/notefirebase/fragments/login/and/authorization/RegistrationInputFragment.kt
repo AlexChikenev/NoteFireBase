@@ -119,6 +119,11 @@ class RegistrationInputFragment : Fragment() {
                     )
                 }
             }
+
+            // Go back
+            btnGoBack.setOnClickListener {
+                helper.navigate(SignInFragment())
+            }
         }
     }
 

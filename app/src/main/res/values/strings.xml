@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NoteFireBase</string>
+    <string name="app_name">Органайзер</string>
     <string name="btn_text_to_current_date">Открыть ежедневник\nна выбранную дату</string>
     <string name="btn_text_to_notes">заметки</string>
     <string name="btn_text_to_finance">финансы</string>
@@ -83,10 +83,10 @@
     <string name="label_outcome_per_month">Расходы в месяц</string>
     <string name="slash">/</string>
     <string name="symbol">₽</string>
-    <string name="label_pillow">Подушка безопасности</string>
-    <string name="label_collect_name">Введите накопленную сумму</string>
-    <string name="label_total_income">Заработано всего</string>
-    <string name="label_total_outcome">Потрачено всего</string>
+    <string name="label_pillow">Чистая прибыль:</string>
+    <string name="label_collect_name">Введите сумму накопления</string>
+    <string name="label_total_income">Заработано всего:</string>
+    <string name="label_total_outcome">Потрачено всего:</string>
     <string name="enter_directory_name">Введите название новой папки</string>
     <string name="enter_project_name">Введите название своего проекта</string>
     <string name="label_create_directory">Создание папки</string>
@@ -95,4 +95,30 @@
     <string name="btn_text_to_analise_in_out">Анализ расходов/доходов</string>
     <string name="btn_text_to_check_before">Посмотреть \nпредыдущие месяца</string>
     <string name="label_finance_month">Финансы / предыдущие месяца</string>
+    <string name="auth_error">Вход не удался</string>
+    <string name="btn_text_ok">Ок</string>
+    <string name="btn_text_go_back">Назад</string>
+    <string name="input_data">Введите данные</string>
+    <string name="doesnt_send">Сообщение не было отправлено</string>
+    <string name="alert_dialog_password_message">На указанный адрес электронной почты было\nотправлено сообщение с инструкцией для\nвосстановления пароля.\nЕсли сообщение не пришло, проверьте папку спам.</string>
+    <string name="alert_dialog_password_message_reset">На указанный адрес электронной почты будет\nотправлено сообщение с инструкцией для\nвосстановления пароля.\nЕсли сообщение не придёт, проверьте папку спам.</string>
+    <string name="email_doesnt_exist">Указанный email не сущесвует</string>
+    <string name="text_commit_reset">Вы уверены что хотите восстановить пароль?</string>
+    <string name="btn_text_no">Нет</string>
+    <string name="btn_text_yes">Да</string>
+    <string name="label_aim">Сколько надо накопить:</string>
+    <string name="input_aim">Введите сумму накопеления</string>
+    <string name="input_number">Введите число в поле накопления</string>
+    <string name="accumulated">Вы накопили!</string>
+    <string name="input_income_name">Введите название дохода</string>
+    <string name="input_income_ammount">Введите сумму дохода в поле доходов</string>
+    <string name="input_outcome_name">Введите название расхода</string>
+    <string name="input_outcome_ammount">Введите сумму расхода в поле расходов</string>
+    <string name="label_delete">Вы точно хотите удалить выбранный элемент?</string>
+    <string name="label_delete_question">Удаление элемента</string>
+    <string name="text_delete_income">Удаление дохода</string>
+    <string name="text_delete_outcome">Удаление расхода</string>
+    <string name="label_income">Доходы:</string>
+    <string name="label_outcome">Расходы:</string>
+    <string name="label_finance_analise">Анализ расходов / доходов</string>
 </resources>

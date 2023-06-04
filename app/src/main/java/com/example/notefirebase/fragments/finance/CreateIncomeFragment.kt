@@ -16,17 +16,22 @@ import androidx.fragment.app.DialogFragment
 import com.example.notefirebase.R
 import com.example.notefirebase.databinding.FragmentCreateIncomeBinding
 import com.example.notefirebase.utils.FirebaseManager
+import com.example.notefirebase.utils.Helper
 import com.google.firebase.auth.FirebaseAuth
 
 class CreateIncomeFragment : DialogFragment() {
     private lateinit var fragmentBinding: FragmentCreateIncomeBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var firebaseManager: FirebaseManager
+    private lateinit var helper: Helper
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         fragmentBinding = FragmentCreateIncomeBinding.inflate(inflater, container, false)
         firebaseManager = FirebaseManager()
+        helper = Helper(requireActivity())
+        val decorView: View = dialog?.window!!.decorView
+        helper.uiControls(decorView)
         return fragmentBinding.root
     }
 
@@ -84,19 +89,13 @@ class CreateIncomeFragment : DialogFragment() {
                 val income = inputIncome.text.toString()
                 val incomeName = inputIncomeName.text.toString()
                 if (incomeName.isEmpty()) {
-                    Toast.makeText(
-                        requireContext(), "Введите название дохода", Toast.LENGTH_SHORT
-                    ).show()
+                    helper.customToast(requireContext(), R.string.input_income_name)
                 } else {
                     try {
                         firebaseManager.writeIncome(income.toDouble(), incomeName, userUid)
                         dismiss()
                     } catch (exception: Exception) {
-                        Toast.makeText(
-                            requireContext(),
-                            "Введите числовое значение в поле доходов",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                       helper.customToast(requireContext(), R.string.input_income_ammount)
                     }
                 }
             }

@@ -42,11 +42,11 @@ class MainFragment : Fragment() {
             btnToNotes.setOnClickListener {
                 helper.navigate(DirectoryFragment())
             }
-
-            // Go to wish list
-            btnToWishList.setOnClickListener {
-                helper.navigate(WishListFragment())
-            }
+//
+//            // Go to wish list
+//            btnToWishList.setOnClickListener {
+//                helper.navigate(WishListFragment())
+//            }
 
             // Go to settings
             btnToSettings.setOnClickListener {

@@ -4,24 +4,42 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notefirebase.R
 import com.example.notefirebase.firebasemodel.Outcome
+import com.example.notefirebase.fragments.finance.DeleteItemFragment
+import com.example.notefirebase.utils.Helper
 
-class OutcomeAdapter : RecyclerView.Adapter<OutcomeAdapter.OutcomeViewHolder>() {
+class OutcomeAdapter(private val activity: FragmentActivity) :
+    RecyclerView.Adapter<OutcomeAdapter.OutcomeViewHolder>() {
 
     private var outcomes: List<Outcome> = emptyList()
-    private var onClickListener: OnClickListener? = null
+    private lateinit var helper: Helper
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OutcomeViewHolder {
         val itemView =
             LayoutInflater.from(parent.context).inflate(R.layout.income_item, parent, false)
+        helper = Helper(activity)
         return OutcomeViewHolder(itemView)
     }
 
     inner class OutcomeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val nameTextView: TextView = itemView.findViewById(R.id.incomeName)
         val amountTextView: TextView = itemView.findViewById(R.id.incomeAmount)
+
+        // Set long click listener
+        init {
+            itemView.setOnLongClickListener {
+                helper.vibrateDevice()
+                // Delete selected outcome
+                val selectedOutcome = outcomes[adapterPosition]
+                val deleteOutcome = DeleteItemFragment(null, selectedOutcome, 1)
+                deleteOutcome.show(activity.supportFragmentManager, "DeleteSelectedItem")
+
+                true
+            }
+        }
     }
 
     override fun onBindViewHolder(holder: OutcomeViewHolder, position: Int) {
@@ -29,10 +47,9 @@ class OutcomeAdapter : RecyclerView.Adapter<OutcomeAdapter.OutcomeViewHolder>() 
         holder.nameTextView.text = currentOutcome.outcomeName
         holder.amountTextView.text = currentOutcome.outcomeAmount.toString()
 
-        holder.itemView.setOnClickListener {
-            onClickListener?.onClick(currentOutcome)
-        }
+
     }
+
     override fun getItemCount(): Int {
         return outcomes.size
     }
@@ -40,14 +57,5 @@ class OutcomeAdapter : RecyclerView.Adapter<OutcomeAdapter.OutcomeViewHolder>() 
     fun setOutcomes(outcomeList: List<Outcome>, targetDate: String) {
         outcomes = outcomeList.filter { it.outcomeDate == targetDate }
         notifyDataSetChanged()
-    }
-
-
-    fun setOnClickListener(onClickListener: OnClickListener) {
-        this.onClickListener = onClickListener
-    }
-
-    interface OnClickListener {
-        fun onClick(outcome: Outcome)
     }
 }

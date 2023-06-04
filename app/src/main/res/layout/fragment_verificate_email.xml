@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white_29"
-    android:hint="@string/directory_name_hint"
     tools:context=".fragments.finance.CreateIncomeFragment">
 
     <androidx.cardview.widget.CardView
@@ -30,58 +29,31 @@
             android:paddingBottom="40dp">
 
             <TextView
-                android:id="@+id/name"
-                android:layout_width="0dp"
+                android:id="@+id/inputIncome"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginEnd="40dp"
                 android:fontFamily="@font/helvetica_regular"
-                android:gravity="center"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
-                android:text="@string/label_collect_name"
+                android:text="@string/alert_dialog_message"
                 android:textColor="@color/hint_color"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="Autofill,TextFields" />
-
-            <EditText
-                android:id="@+id/inputAim"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
-                android:background="@color/transparent"
-                android:fontFamily="@font/helvetica_regular"
-                android:gravity="center"
-                android:hint="@string/symbol"
-                android:inputType="numberDecimal"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
-                android:singleLine="true"
-                android:textColor="@color/hint_color"
-                android:textColorHint="@color/hint_color"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/name"
-                tools:ignore="Autofill" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnCommitAim"
+                android:id="@+id/btnCommit"
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:layout_marginTop="40dp"
                 android:layout_marginBottom="40dp"
                 android:background="@drawable/bg_btn_commit_note"
                 android:fontFamily="@font/helvetica_regular"
-                android:text="@string/btn_text_commit_note"
+                android:text="@string/btn_text_ok"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/inputAim" />
+                app:layout_constraintTop_toBottomOf="@id/inputIncome" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

@@ -9,27 +9,31 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.example.notefirebase.R
 import com.example.notefirebase.databinding.FragmentCreatePillowBinding
 import com.example.notefirebase.utils.FirebaseManager
+import com.example.notefirebase.utils.Helper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
-class CreatePillowFragment : DialogFragment() {
+class CreateAimFragment : DialogFragment() {
     private lateinit var fragmentBinding: FragmentCreatePillowBinding
     private lateinit var databaseReference: DatabaseReference
     private lateinit var firebaseManager: FirebaseManager
     private lateinit var auth: FirebaseAuth
+    private lateinit var helper: Helper
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         fragmentBinding = FragmentCreatePillowBinding.inflate(inflater, container, false)
+        helper = Helper(requireActivity())
+        val decorView: View = dialog?.window!!.decorView
+        helper.uiControls(decorView)
         return fragmentBinding.root
     }
 
@@ -55,23 +59,17 @@ class CreatePillowFragment : DialogFragment() {
 
     private fun setUpClickListeners() {
         with(fragmentBinding) {
-            btnCommitPillow.setOnClickListener {
+            btnCommitAim.setOnClickListener {
                 val userUid = FirebaseAuth.getInstance().currentUser?.uid ?: ""
-                val pillow = inputPillow.text.toString()
-                if (pillow.isEmpty()) {
-                    Toast.makeText(
-                        requireContext(), "Введите сумму подушки", Toast.LENGTH_SHORT
-                    ).show()
+                val aim = inputAim.text.toString()
+                if (aim.isEmpty()) {
+                    helper.customToast(requireContext(), R.string.input_aim)
                 } else {
                     try {
-                        firebaseManager.writePillow(pillow.toDouble(), userUid)
+                        firebaseManager.writeAim(aim.toDouble(), userUid)
                         dismiss()
                     } catch (exception: Exception) {
-                        Toast.makeText(
-                            requireContext(),
-                            "Введите числовое значение в поле накопления",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        helper.customToast(requireContext(), R.string.input_number)
                     }
                 }
             }
@@ -81,7 +79,7 @@ class CreatePillowFragment : DialogFragment() {
     // Replace "," to "."
     private fun setUpEditText() {
         with(fragmentBinding) {
-            inputPillow.addTextChangedListener(object : TextWatcher {
+            inputAim.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
                 }
 
@@ -95,11 +93,11 @@ class CreatePillowFragment : DialogFragment() {
                     text?.let {
                         val modifiedText = it.replace(",", ".")
                         if (modifiedText != text) {
-                            val selectionStart = inputPillow.selectionStart
-                            val selectionEnd = inputPillow.selectionEnd
+                            val selectionStart = inputAim.selectionStart
+                            val selectionEnd = inputAim.selectionEnd
 
-                            inputPillow.setText(modifiedText)
-                            inputPillow.setSelection(selectionStart, selectionEnd)
+                            inputAim.setText(modifiedText)
+                            inputAim.setSelection(selectionStart, selectionEnd)
                         }
                     }
                 }
@@ -117,6 +115,6 @@ class CreatePillowFragment : DialogFragment() {
     }
 
     companion object {
-        fun newInstance() = CreatePillowFragment()
+        fun newInstance() = CreateAimFragment()
     }
 }

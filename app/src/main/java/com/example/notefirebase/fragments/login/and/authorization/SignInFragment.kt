@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.example.notefirebase.R
 import com.example.notefirebase.databinding.FragmentSigInBinding
 import com.example.notefirebase.fragments.MainFragment
+import com.example.notefirebase.fragments.finance.CreateIncomeFragment
 import com.example.notefirebase.fragments.settings.InputYourEmailForResetFragment
 import com.example.notefirebase.utils.EmailPasswordAuth
 import com.example.notefirebase.utils.GoogleAuth
@@ -45,7 +46,7 @@ class SignInFragment : Fragment() {
         helper = Helper(requireActivity())
         auth = FirebaseAuth.getInstance()
         googleAuthenticator = GoogleAuth(this)
-        emailPasswordAuthenticator = EmailPasswordAuth(requireContext())
+        emailPasswordAuthenticator = EmailPasswordAuth(requireContext(), requireActivity())
         setUpClickListeners()
     }
 
@@ -77,11 +78,14 @@ class SignInFragment : Fragment() {
                             updateUI(null)
                         }
                     )
+                }else{
+                    helper.customToast(requireContext(), R.string.input_data)
                 }
             }
 
+            // Forgot password
             btnForgotPassword.setOnClickListener {
-                 helper.navigate(InputYourEmailForResetFragment())
+                helper.navigate(InputYourEmailForResetFragment())
             }
         }
 
@@ -108,22 +112,16 @@ class SignInFragment : Fragment() {
 
     private fun updateUI(user: FirebaseUser?) {
         val isEmailVerified = auth.currentUser?.isEmailVerified
-
         if (user != null) {
             if (isEmailVerified == false) {
-                showEmailVerificationDialog()
+                val accept = VerificateEmailFragment()
+                accept.show(
+                    requireActivity().supportFragmentManager, "AcceptEmail"
+                )
             } else if (isEmailVerified == true) {
                 helper.navigate(MainFragment())
             }
         }
-    }
-
-    private fun showEmailVerificationDialog() {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle(R.string.alert_dialog_title)
-        builder.setMessage(R.string.alert_dialog_message)
-        builder.setPositiveButton(R.string.alert_dialog_positive) { dialog, _ -> dialog.dismiss() }
-        builder.show()
     }
 }
 

@@ -85,6 +85,7 @@ class IncomeAndOutcomeAdapter :
             combinedList.add(incomeAndOutcome)
         }
 
+        combinedList.reverse()
         incomeAndOutcomeList = combinedList
         notifyDataSetChanged()
     }

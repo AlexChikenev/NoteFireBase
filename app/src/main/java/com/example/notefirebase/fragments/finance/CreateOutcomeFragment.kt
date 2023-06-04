@@ -15,6 +15,7 @@ import androidx.fragment.app.DialogFragment
 import com.example.notefirebase.R
 import com.example.notefirebase.databinding.FragmentCreateOutcomeBinding
 import com.example.notefirebase.utils.FirebaseManager
+import com.example.notefirebase.utils.Helper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -25,18 +26,22 @@ class CreateOutcomeFragment : DialogFragment() {
     private lateinit var databaseReference: DatabaseReference
     private lateinit var auth: FirebaseAuth
     private lateinit var firebaseManager: FirebaseManager
+    private lateinit var helper: Helper
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         fragmentBinding = FragmentCreateOutcomeBinding.inflate(inflater, container, false)
-        databaseReference = FirebaseDatabase.getInstance().reference
+        helper = Helper(requireActivity())
+        val decorView: View = dialog?.window!!.decorView
+        helper.uiControls(decorView)
         return fragmentBinding.root
     }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        databaseReference = FirebaseDatabase.getInstance().reference
         firebaseManager = FirebaseManager()
         auth = FirebaseAuth.getInstance()
         setUpClickListeners()
@@ -91,19 +96,13 @@ class CreateOutcomeFragment : DialogFragment() {
                 val outcome = inputOutcome.text.toString()
                 val outcomeName = inputIncomeName.text.toString()
                 if (outcomeName.isEmpty()) {
-                    Toast.makeText(
-                        requireContext(), "Введите название расхода", Toast.LENGTH_SHORT
-                    ).show()
+                    helper.customToast(requireContext(), R.string.input_outcome_name)
                 } else {
                     try {
                         firebaseManager.writeOutcome(outcome.toDouble(), outcomeName, userUid)
                         dismiss()
                     } catch (exception: Exception) {
-                        Toast.makeText(
-                            requireContext(),
-                            "Введите числовое значение в поле расходов",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        helper.customToast(requireContext(), R.string.input_outcome_ammount)
                     }
                 }
             }

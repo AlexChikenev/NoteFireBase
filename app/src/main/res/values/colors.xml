@@ -14,4 +14,8 @@
     <color name="start_color_for_btn_to_main">#FA06FF</color>
     <color name="hint_color">#C4535353</color>
     <color name="pillow_color">#8436FD</color>
+    <color name="toast_color">#494949</color>
+    <color name="income_chart_color">#5E3FBE</color>
+    <color name="outcome_chart_color">#E5DAFB</color>
+    <color name="accumulate_chart_color">#F4F0FD</color>
 </resources>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/transparent"
+    app:cardCornerRadius="0dp"
+    app:contentPaddingTop="20dp"
+    app:strokeWidth="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/helvetica_light"
+            android:textColor="@color/primary_color"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/linearContainer"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/linearContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textDate">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_text_income"
+                    android:fontFamily="@font/helvetica_regular"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="0dp"
+                    android:text="@string/label_income"
+                    android:textColor="@color/black"
+                    android:textSize="8dp" />
+
+                <TextView
+                    android:id="@+id/textIncomePercent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/helvetica_regular"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="0dp"
+                    android:textColor="@color/black"
+                    android:textSize="8dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_text_outcome"
+                    android:fontFamily="@font/helvetica_regular"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="0dp"
+                    android:text="@string/label_outcome"
+                    android:textColor="@color/black"
+                    android:textSize="8dp" />
+
+                <TextView
+                    android:id="@+id/textOutcomePercent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/helvetica_regular"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="0dp"
+                    android:textColor="@color/black"
+                    android:textSize="8dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pieChart"
+            android:layout_width="232dp"
+            android:layout_height="232dp"
+            app:layout_constraintStart_toEndOf="@id/linearContainer"
+            app:layout_constraintTop_toBottomOf="@id/textDate" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

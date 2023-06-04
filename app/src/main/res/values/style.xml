@@ -19,8 +19,8 @@
         <item name="android:fontFamily">@font/helvetica_light</item>
         <item name="android:background">@drawable/bg_btn_on_main_fragment</item>
         <item name="android:textColor">@color/primary_color</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">102dp</item>
+        <item name="android:layout_width">0dp</item>
         <item name="android:textAllCaps">false</item>
     </style>
 

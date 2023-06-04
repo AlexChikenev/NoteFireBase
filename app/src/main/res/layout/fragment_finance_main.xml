@@ -102,21 +102,58 @@
         app:layout_constraintTop_toBottomOf="@id/outcomeRcView" />
 
     <ImageView
-        android:id="@+id/ic_back_star"
+        android:id="@+id/ic_middle_star"
         style="@style/TopStarStyle"
         android:contentDescription="@string/star_ic_content_description"
-        app:layout_constraintBottom_toTopOf="@+id/backLine"
+        app:layout_constraintBottom_toTopOf="@+id/middleLine"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/save"
+        android:id="@+id/labelSavedNow"
         style="@style/TopLabels"
         android:text="@string/label_pillow"
+        app:layout_constraintBottom_toTopOf="@id/middleLine"
+        app:layout_constraintStart_toEndOf="@id/ic_middle_star" />
+
+    <View
+        android:id="@+id/middleLine"
+        style="@style/TopLineBg"
+        android:layout_height="1dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnCreateIncome" />
+
+    <TextView
+        android:id="@+id/showSave"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:fontFamily="@font/helvetica_bold"
+        android:gravity="center"
+        android:textColor="@color/pillow_color"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@id/middleLine"
+        app:layout_constraintEnd_toStartOf="@id/btnCreateAim"
+        app:layout_constraintStart_toEndOf="@id/textAim" />
+
+    <ImageView
+        android:id="@+id/ic_back_star"
+        style="@style/TopStarStyle"
+        android:layout_marginStart="0dp"
+        android:contentDescription="@string/star_ic_content_description"
+        app:layout_constraintBottom_toTopOf="@+id/backLine"
+        app:layout_constraintStart_toStartOf="@id/middleLine" />
+
+    <TextView
+        android:id="@+id/textAim"
+        style="@style/TopLabels"
+        android:text="@string/label_aim"
         app:layout_constraintBottom_toTopOf="@id/backLine"
         app:layout_constraintStart_toEndOf="@id/ic_back_star" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnCreatePillow"
+        android:id="@+id/btnCreateAim"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginBottom="4dp"
@@ -129,13 +166,15 @@
         android:id="@+id/backLine"
         style="@style/TopLineBg"
         android:layout_height="1dp"
+        android:layout_marginStart="0dp"
         android:layout_marginTop="50dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnCreateIncome" />
+        android:layout_marginEnd="0dp"
+        app:layout_constraintEnd_toEndOf="@id/middleLine"
+        app:layout_constraintStart_toStartOf="@id/middleLine"
+        app:layout_constraintTop_toBottomOf="@id/middleLine" />
 
     <TextView
-        android:id="@+id/showPillow"
+        android:id="@+id/showAim"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="3dp"
@@ -144,8 +183,8 @@
         android:textColor="@color/pillow_color"
         android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@id/backLine"
-        app:layout_constraintEnd_toStartOf="@id/btnCreatePillow"
-        app:layout_constraintStart_toEndOf="@id/save" />
+        app:layout_constraintEnd_toStartOf="@id/btnCreateAim"
+        app:layout_constraintStart_toEndOf="@id/textAim" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/totalIncomeCard"
@@ -222,7 +261,7 @@
     </com.google.android.material.card.MaterialCardView>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnAnaliseInOut"
+        android:id="@+id/btnCharts"
         style="@style/ButtonInSettings"
         android:layout_width="0dp"
         android:layout_height="48dp"
@@ -241,8 +280,8 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/bg_btn_in_finance"
         android:text="@string/btn_text_to_check_before"
-        app:layout_constraintEnd_toEndOf="@id/btnAnaliseInOut"
-        app:layout_constraintStart_toStartOf="@id/btnAnaliseInOut"
-        app:layout_constraintTop_toBottomOf="@id/btnAnaliseInOut" />
+        app:layout_constraintEnd_toEndOf="@id/btnCharts"
+        app:layout_constraintStart_toStartOf="@id/btnCharts"
+        app:layout_constraintTop_toBottomOf="@id/btnCharts" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

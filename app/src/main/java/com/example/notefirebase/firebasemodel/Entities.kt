@@ -1,5 +1,7 @@
 package com.example.notefirebase.firebasemodel
 
+import com.github.mikephil.charting.data.PieEntry
+
 data class FirebaseDirectory(
     val directoryId: String = "", val userUid: String? = null, val name: String = ""
 ) {
@@ -24,7 +26,10 @@ data class Project(
 )
 
 data class FirebaseNoteInDir(
-    val directoryId: String, val userUid: String?, val name: String?, val content: String?
+    val directoryId: String,
+    val userUid: String?,
+    val name: String?,
+    val content: String?
 ) {
     constructor() : this("", null, "", "")
 }
@@ -34,23 +39,35 @@ data class Note(
 )
 
 data class FirebaseIncomes(
-    val incomeName: String, val incomeAmount: Double?, val incomeDate: String
+    val uniqueId: String,
+    val incomeName: String,
+    val incomeAmount: Double?,
+    val incomeDate: String
 ) {
-    constructor() : this("", null, "")
+    constructor() : this("", "", null, "")
 }
 
 data class Income(
-    val incomeName: String, val incomeAmount: Double, val incomeDate: String
+    val uniqueId: String,
+    val incomeName: String,
+    val incomeAmount: Double,
+    val incomeDate: String
 )
 
 data class FirebaseOutcomes(
-    val outcomeName: String, val outcomeAmount: Double?, val incomeDate: String
+    val uniqueId: String,
+    val outcomeName: String,
+    val outcomeAmount: Double?,
+    val incomeDate: String
 ) {
-    constructor() : this("", null, "")
+    constructor() : this("", "", null, "")
 }
 
 data class Outcome(
-    val outcomeName: String, val outcomeAmount: Double, val outcomeDate: String
+    val uniqueId: String,
+    val outcomeName: String,
+    val outcomeAmount: Double,
+    val outcomeDate: String
 )
 
 data class IncomeAndOutcome(
@@ -65,5 +82,12 @@ data class FirebasePillows(
 ) {
     constructor() : this(0.0, "")
 }
+
+data class Chart(
+    val incomePercent: Double?,
+    val incomeDate: String?,
+    val outcomePercent: Double?,
+    val outcomeDate: String?
+)
 
 

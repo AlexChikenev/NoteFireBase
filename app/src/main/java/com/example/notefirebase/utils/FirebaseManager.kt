@@ -16,6 +16,8 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.util.Calendar
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 class FirebaseManager {
     private val databaseReference: DatabaseReference = FirebaseDatabase.getInstance().reference
@@ -134,9 +136,8 @@ class FirebaseManager {
     // Method for writing income
     fun writeIncome(incomeAmount: Double, incomeName: String, userUid: String) {
         val (year, month) = getCurrentYearAndMonth()
-
-        val income = FirebaseIncomes(incomeName, incomeAmount, "$year-$month")
         val uniqueId = databaseReference.push().key
+        val income = uniqueId?.let { FirebaseIncomes(it, incomeName, incomeAmount, "$year-$month") }
         databaseReference.child("Users").child(userUid).child("Incomes").child(uniqueId!!)
             .setValue(income)
     }
@@ -156,7 +157,7 @@ class FirebaseManager {
                     if (income != null) {
                         val inc = income.incomeAmount?.let {
                             Income(
-                                income.incomeName, it, income.incomeDate
+                                income.uniqueId, income.incomeName, it, income.incomeDate
                             )
                         }
                         if (inc != null) {
@@ -178,8 +179,10 @@ class FirebaseManager {
     fun writeOutcome(outcomeAmount: Double, outcomeName: String, userUid: String) {
         val (year, month) = getCurrentYearAndMonth()
 
-        val outcome = FirebaseOutcomes(outcomeName, outcomeAmount, "$year-$month")
         val uniqueId = databaseReference.push().key
+        val outcome =
+            uniqueId?.let { FirebaseOutcomes(it, outcomeName, outcomeAmount, "$year-$month") }
+
         databaseReference.child("Users").child(userUid).child("Outcomes").child(uniqueId!!)
             .setValue(outcome)
     }
@@ -188,8 +191,8 @@ class FirebaseManager {
     fun getOutcome(
         userUid: String, callbackList: (List<Outcome>) -> Unit, errorCallback: () -> Unit
     ) {
-        val incomeRef = databaseReference.child("Users").child(userUid).child("Outcomes")
-        incomeRef.addValueEventListener(object : ValueEventListener {
+        val outcomeRef = databaseReference.child("Users").child(userUid).child("Outcomes")
+        outcomeRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 var totalOutcomeAmount = 0.0
                 val outcomeList = mutableListOf<Outcome>()
@@ -197,13 +200,14 @@ class FirebaseManager {
                 for (childSnapshot in dataSnapshot.children) {
                     val outcome = childSnapshot.getValue(FirebaseOutcomes::class.java)
                     if (outcome != null) {
-                        val inc = outcome.outcomeAmount?.let {
+                        val out = outcome.outcomeAmount?.let {
                             Outcome(
-                                outcome.outcomeName, it, outcome.incomeDate
+                                outcome.uniqueId, outcome.outcomeName, it, outcome.incomeDate
                             )
                         }
-                        if (inc != null) {
-                            outcomeList.add(inc)
+                        if (out != null) {
+                            outcomeList.add(out)
+                            totalOutcomeAmount += out.outcomeAmount
                         }
                     }
                 }
@@ -215,6 +219,7 @@ class FirebaseManager {
             }
         })
     }
+
 
     // Calculate incomes per month
     fun calculateMonthlyIncomes(incomes: List<Income>): Map<String, Double> {
@@ -247,39 +252,38 @@ class FirebaseManager {
         return monthlyOutcomes
     }
 
-    // Write pillow
-    fun writePillow(
-        pillowAmount: Double, userUid: String
+    // Write aim
+    fun writeAim(
+        aimAmount: Double, userUid: String
     ) {
         val (year, month) = getCurrentYearAndMonth()
         val formattedDate = "$year-$month"
-        val pillow = FirebasePillows(pillowAmount, formattedDate)
-        databaseReference.child("Users").child(userUid).child("Pillow").setValue(pillow)
-
+        val aim = FirebasePillows(aimAmount, formattedDate)
+        databaseReference.child("Users").child(userUid).child("Aim").setValue(aim)
     }
 
-    // Get pillow
-    fun getPillow(
+    // Get aim
+    fun getAim(
         userUid: String,
-        callbackPillow: (Double) -> Unit,
+        callbackAim: (Double) -> Unit,
         callbackZero: (Double) -> Unit,
         errorCallback: () -> Unit
     ) {
         val (year, month) = getCurrentYearAndMonth()
         val formattedDate = "$year-$month"
-        val pillowRef = databaseReference.child("Users").child(userUid).child("Pillow")
+        val pillowRef = databaseReference.child("Users").child(userUid).child("Aim")
         pillowRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                var pillow = 0.0
+                var aim = 0.0
                 for (childSnapshot in dataSnapshot.children) {
-                    val pillowData = dataSnapshot.getValue(FirebasePillows::class.java)
-                    if (pillowData != null) {
-                        if (pillowData.pillowAmount != null && pillowData.date == formattedDate) pillow =
-                            pillowData.pillowAmount
+                    val aimData = dataSnapshot.getValue(FirebasePillows::class.java)
+                    if (aimData != null) {
+                        if (aimData.pillowAmount != null && aimData.date == formattedDate) aim =
+                            aimData.pillowAmount
                         else callbackZero(0.0)
                     }
                 }
-                callbackPillow(pillow)
+                callbackAim(aim)
             }
 
             override fun onCancelled(error: DatabaseError) {
