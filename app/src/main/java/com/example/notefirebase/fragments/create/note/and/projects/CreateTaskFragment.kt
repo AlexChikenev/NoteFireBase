@@ -7,13 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.notefirebase.R
 import com.example.notefirebase.databinding.FragmentCreateTaskBinding
+import com.example.notefirebase.firebasemodel.Task
 import com.example.notefirebase.utils.FirebaseManager
 import com.example.notefirebase.utils.Helper
-import com.google.firebase.auth.FirebaseAuth
 
 class CreateTaskFragment(
     private var selectedDate: String,
     private val formattedDate: String,
+    private val taskUidId: String?,
     private var taskType: Int = 0,
     private var taskRepeat: Int = 0,
     private var taskNotify: Boolean = false,
@@ -24,10 +25,10 @@ class CreateTaskFragment(
     private lateinit var fragmentBinding: FragmentCreateTaskBinding
     private lateinit var helper: Helper
     private lateinit var firebaseManager: FirebaseManager
+    private var task: List<Task> = emptyList()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         fragmentBinding = FragmentCreateTaskBinding.inflate(inflater, container, false)
         return fragmentBinding.root
@@ -40,7 +41,55 @@ class CreateTaskFragment(
         fragmentBinding.taskDate.text = selectedDate
         setUpRadioButton()
         setUpClickListeners()
+        setUpDatabase()
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    private fun setUpDatabase() {
+        // Get personal task
+        if (taskType == 0) {
+            if (taskUidId != null) {
+                firebaseManager.getPersonalTaskForEdit(helper.getUid(), taskUidId, {
+                    task = it
+                    setUpUi(task[0])
+                }, {})
+            }
+        } // Get work task
+        else {
+            if (taskUidId != null) {
+                firebaseManager.getWorkTaskForEdit(helper.getUid(), taskUidId, {
+                    task = it
+                    setUpUi(task[0])
+                }, {})
+            }
+        }
+    }
+
+    // Set up task data
+    private fun setUpUi(selectedTask: Task) {
+        with(fragmentBinding) {
+            inputTaskName.setText(selectedTask.taskName ?: "")
+            inputTaskContent.setText(selectedTask.taskContent ?: "")
+
+            // Repeat radio buttons
+            when (selectedTask.taskRepeat) {
+                0 -> radioButtonRepeatNever.isChecked = true
+                1 -> radioButtonRepeatEveryDay.isChecked = true
+                2 -> radioButtonRepeatEveryWeek.isChecked = true
+                3 -> radioButtonRepeatEveryMonth.isChecked = true
+            }
+
+            // Notification check button
+            checkNotification.isChecked = selectedTask.taskNotification != false
+
+            // Priority radio buttons
+            when (selectedTask.taskPriority) {
+                0 -> radioButtonNoPriority.isChecked = true
+                1 -> radioButtonSmallPriority.isChecked = true
+                2 -> radioButtonMiddlePriority.isChecked = true
+                3 -> radioButtonMainPriority.isChecked = true
+            }
+        }
     }
 
     private fun setUpClickListeners() {
@@ -52,7 +101,7 @@ class CreateTaskFragment(
 
             // Button commit task
             btnCommitTask.setOnClickListener {
-                val userUid = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+
                 val taskName = fragmentBinding.inputTaskName.text.toString()
                 val taskContent = fragmentBinding.inputTaskContent.text.toString()
                 if (taskName == "")
@@ -62,13 +111,14 @@ class CreateTaskFragment(
                 else
                     firebaseManager.writeTask(
                         taskType,
-                        userUid,
+                        helper.getUid(),
                         taskName,
                         taskContent,
                         selectedDate,
                         taskRepeat,
                         taskNotify,
-                        taskPriority
+                        taskPriority,
+                        false
                     )
             }
         }
@@ -117,21 +167,15 @@ class CreateTaskFragment(
             radioRadioGroup.setOnCheckedChangeListener { _, checkedId ->
                 when (checkedId) {
                     // Radio button no priority
-                    R.id.radioNoPriority -> taskPriority = 0
+                    R.id.radioButtonNoPriority -> taskPriority = 0
                     // Radio button small priority
-                    R.id.radioSmallPriority -> taskPriority = 1
+                    R.id.radioButtonSmallPriority -> taskPriority = 1
                     // Radio button middle priority
-                    R.id.radioMiddlePriority -> taskPriority = 2
+                    R.id.radioButtonMiddlePriority -> taskPriority = 2
                     // Radio button main priority
-                    R.id.radioMainPriority -> taskPriority = 3
+                    R.id.radioButtonMainPriority -> taskPriority = 3
                 }
             }
         }
     }
-
-
-
-//    companion object {
-//        fun newInstance() = CreateTaskFragment()
-//    }
 }

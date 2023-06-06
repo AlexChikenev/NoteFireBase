@@ -11,7 +11,7 @@
     app:contentPaddingTop="15dp"
     app:layout_constraintWidth_default="wrap"
     app:layout_constraintWidth_max="wrap"
-    app:strokeColor="@color/white">
+    app:strokeColor="@color/transparent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

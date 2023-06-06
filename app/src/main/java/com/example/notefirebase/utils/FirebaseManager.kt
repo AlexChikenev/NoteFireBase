@@ -11,6 +11,7 @@ import com.example.notefirebase.firebasemodel.FirebaseTask
 import com.example.notefirebase.firebasemodel.Income
 import com.example.notefirebase.firebasemodel.Note
 import com.example.notefirebase.firebasemodel.Outcome
+import com.example.notefirebase.firebasemodel.Task
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -300,18 +301,22 @@ class FirebaseManager {
         taskDate: String,
         taskRepeat: Int,
         taskNotification: Boolean,
-        taskPriority: Int
+        taskPriority: Int,
+        taskIsCompleted: Boolean
+
     ) {
         val uniqueId = databaseReference.push().key
         val task = uniqueId?.let {
             FirebaseTask(
                 it,
+                taskType,
                 taskName,
                 taskContent,
                 taskDate,
                 taskRepeat,
                 taskNotification,
-                taskPriority
+                taskPriority,
+                taskIsCompleted
             )
         }
         if (taskType == 0) {
@@ -322,5 +327,137 @@ class FirebaseManager {
                 .setValue(task)
         }
 
+    }
+
+
+    // Writing data to Task
+    private fun writeDataIntoTask(affairData: FirebaseTask): Task {
+        return Task(
+            affairData.uniqueId,
+            affairData.taskType,
+            affairData.taskName,
+            affairData.taskContent,
+            affairData.taskDate,
+            affairData.taskRepeat,
+            affairData.taskNotification,
+            affairData.taskPriority,
+            affairData.taskIsCompleted
+        )
+    }
+
+    // Get personal task
+    fun getPersonalTask(
+        userUid: String,
+        callbackList: (List<Task>) -> Unit,
+        errorCallback: () -> Unit
+    ) {
+        val personalTaskRef = databaseReference.child("Users").child(userUid).child("Personal")
+        personalTaskRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val personalTaskList = mutableListOf<Task>()
+                for (childSnapshot in dataSnapshot.children) {
+                    val taskData = childSnapshot.getValue(FirebaseTask::class.java)
+                    if (taskData != null) {
+                        val task = writeDataIntoTask(taskData)
+                        if (task != null) {
+                            personalTaskList.add(task)
+                        }
+                    }
+                }
+                callbackList(personalTaskList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                errorCallback()
+            }
+
+        })
+    }
+
+    // Get personal task for editing
+    fun getPersonalTaskForEdit(
+        userUid: String,
+        taskUid: String,
+        callbackList: (List<Task>) -> Unit,
+        errorCallback: () -> Unit
+    ) {
+        val personalTaskRef =
+            databaseReference.child("Users").child(userUid).child("Personal").child(taskUid)
+        personalTaskRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val personalTaskList = mutableListOf<Task>()
+                val taskData = dataSnapshot.getValue(FirebaseTask::class.java)
+                if (taskData != null) {
+                    val task = writeDataIntoTask(taskData)
+                    if (task != null) {
+                        personalTaskList.add(task)
+                    }
+                }
+                callbackList(personalTaskList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                errorCallback()
+            }
+
+        })
+    }
+
+    // Get work task for editing
+    fun getWorkTaskForEdit(
+        userUid: String,
+        taskUid: String,
+        callbackList: (List<Task>) -> Unit,
+        errorCallback: () -> Unit
+    ) {
+        val workTaskRef =
+            databaseReference.child("Users").child(userUid).child("Work").child(taskUid)
+        workTaskRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val workTaskList = mutableListOf<Task>()
+                val affairData = dataSnapshot.getValue(FirebaseTask::class.java)
+                if (affairData != null) {
+                    val task = writeDataIntoTask(affairData)
+                    if (task != null) {
+                        workTaskList.add(task)
+                    }
+                }
+                callbackList(workTaskList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                errorCallback()
+            }
+
+        })
+    }
+
+    // Get work task
+    fun getWorkTask(
+        userUid: String,
+        callbackList: (List<Task>) -> Unit,
+        errorCallback: () -> Unit
+    ) {
+        val workTaskRef = databaseReference.child("Users").child(userUid).child("Work")
+        workTaskRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val workTaskList = mutableListOf<Task>()
+                for (childSnapshot in dataSnapshot.children) {
+                    val taskData = childSnapshot.getValue(FirebaseTask::class.java)
+                    if (taskData != null) {
+                        val task = writeDataIntoTask(taskData)
+                        if (task != null) {
+                            workTaskList.add(task)
+                        }
+                    }
+                }
+                callbackList(workTaskList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                errorCallback()
+            }
+
+        })
     }
 }

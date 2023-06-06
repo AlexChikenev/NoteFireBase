@@ -90,14 +90,29 @@ data class Chart(
 
 data class FirebaseTask(
     val uniqueId: String,
+    val taskType: Int,
     val taskName: String,
     val taskContent: String,
     val taskDate: String,
     val taskRepeat: Int,
     val taskNotification: Boolean,
-    val taskPriority: Int
+    val taskPriority: Int,
+    val taskIsCompleted: Boolean?
 ) {
-    constructor() : this("", "", "", "", 0, false, 0)
+    constructor() : this("", 0,"", "", "", 0, false, 0, null)
 }
+
+data class Task(
+    val uniqueId: String,
+    val taskType: Int,
+    var taskName: String?,
+    var taskContent: String?,
+    val taskDate: String,
+    var taskRepeat: Int,
+    var taskNotification: Boolean,
+    var taskPriority: Int?,
+    var taskIsCompleted: Boolean?
+)
+
 
 

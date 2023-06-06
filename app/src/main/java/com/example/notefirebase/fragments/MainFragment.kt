@@ -48,19 +48,10 @@ class MainFragment : Fragment() {
                         set(Calendar.DAY_OF_MONTH, dayOfMonth)
                     }.time
                 )
-                selectedDate = "$dayOfMonth ${month + 1} $year"
+                selectedDate = String.format("%02d-%02d-%d", dayOfMonth, month + 1, year)
             }
         }
     }
-
-    private fun getCurrentDate(): Pair<String, String> {
-        val currentDate = Calendar.getInstance().time
-        return Pair(
-            SimpleDateFormat("dd MM yyyy", Locale.getDefault()).format(currentDate),
-            SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(currentDate)
-        )
-    }
-
 
     private fun setUpClickListeners() {
         with(fragmentBinding) {

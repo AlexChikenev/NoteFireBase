@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.notefirebase.R
 import com.example.notefirebase.adapters.DirectoryAdapter
 import com.example.notefirebase.databinding.FragmentDirectoryBinding
 import com.example.notefirebase.firebasemodel.Directory
@@ -45,7 +44,7 @@ class DirectoryFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
         databaseReference = FirebaseDatabase.getInstance().reference
         setupDatabase()
-        setupClickListeners()
+        setUpClickListeners()
     }
 
     // Installing the adapter for RecyclerView
@@ -79,7 +78,7 @@ class DirectoryFragment : Fragment() {
     }
 
     // Set up Click Listeners
-    private fun setupClickListeners() {
+    private fun setUpClickListeners() {
         with(fragmentBinding) {
             btnCreateDirectory.setOnClickListener {
                 val createDirectory = CreateDirectoryFragment()
@@ -90,9 +89,7 @@ class DirectoryFragment : Fragment() {
 
             adapter.setOnClickListener(object : DirectoryAdapter.OnClickListener {
                 override fun onClick(directory: Directory) {
-                    activity?.supportFragmentManager?.beginTransaction()?.replace(
-                        R.id.fragmentHolder, OpenDirectoryFragment(directory.id, directory.name)
-                    )?.commit()
+                    helper.navigate(OpenDirectoryFragment(directory.id, directory.name))
                 }
             })
 

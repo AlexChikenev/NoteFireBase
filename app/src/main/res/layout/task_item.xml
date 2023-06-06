@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    app:cardBackgroundColor="@color/transparent"
+    android:layout_marginStart="10dp"
+    app:cardCornerRadius="0dp"
+    app:cardUseCompatPadding="true"
+    app:contentPaddingBottom="15dp"
+    app:contentPaddingTop="15dp"
+    app:layout_constraintWidth_default="wrap"
+    app:layout_constraintWidth_max="wrap"
+    app:strokeColor="@color/transparent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <CheckBox
+            android:id="@+id/checkPriority"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/custom_main_priority_radio_button_background"
+            android:button="@null"
+            android:checked="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/taskName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/checkPriority"
+            android:layout_marginStart="12dp"
+            android:singleLine="false"
+            android:textColor="@color/hint_color"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="9sp"
+            android:fontFamily="@font/helvetica_regular"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

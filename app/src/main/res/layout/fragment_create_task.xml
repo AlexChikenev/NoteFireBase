@@ -47,7 +47,8 @@
         android:text="@string/label_create_task"
         app:layout_constraintEnd_toEndOf="@id/btnToSettings"
         app:layout_constraintStart_toStartOf="@id/btnGoBack"
-        app:layout_constraintTop_toBottomOf="@id/btnGoBack" />
+        app:layout_constraintTop_toBottomOf="@id/btnGoBack"
+        tools:ignore="TextSizeCheck" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -320,7 +321,7 @@
                     app:layout_constraintWidth_percent="0.4">
 
                     <RadioButton
-                        android:id="@+id/radioNoPriority"
+                        android:id="@+id/radioButtonNoPriority"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="16dp"
@@ -330,16 +331,17 @@
                         android:checked="true" />
 
                     <RadioButton
-                        android:id="@+id/radioSmallPriority"
+                        android:id="@+id/radioButtonSmallPriority"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="16dp"
                         android:layout_weight="1"
                         android:background="@drawable/custom_small_priority_radio_button_background"
-                        android:button="@null" />
+                        android:button="@null"
+                        tools:ignore="DuplicateSpeakableTextCheck" />
 
                     <RadioButton
-                        android:id="@+id/radioMiddlePriority"
+                        android:id="@+id/radioButtonMiddlePriority"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="16dp"
@@ -348,7 +350,7 @@
                         android:button="@null" />
 
                     <RadioButton
-                        android:id="@+id/radioMainPriority"
+                        android:id="@+id/radioButtonMainPriority"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"

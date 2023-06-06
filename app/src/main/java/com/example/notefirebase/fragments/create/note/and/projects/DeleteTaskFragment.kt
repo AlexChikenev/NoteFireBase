@@ -1,4 +1,4 @@
-package com.example.notefirebase.fragments.finance
+package com.example.notefirebase.fragments.create.note.and.projects
 
 import android.annotation.SuppressLint
 import android.graphics.drawable.ColorDrawable
@@ -10,29 +10,27 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.example.notefirebase.R
-import com.example.notefirebase.databinding.FragmentDeleteItemBinding
-import com.example.notefirebase.firebasemodel.Income
-import com.example.notefirebase.firebasemodel.Outcome
+import com.example.notefirebase.databinding.FragmentDeleteTaskBinding
+import com.example.notefirebase.firebasemodel.Task
 import com.example.notefirebase.utils.Helper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
-class DeleteItemFragment(
-    private val incomes: Income?,
-    private val outcomes: Outcome?,
+
+class DeleteTaskFragment(
+    private val task: Task?,
     private val id: Int
 ) : DialogFragment() {
 
-    private lateinit var fragmentBinding: FragmentDeleteItemBinding
+    private lateinit var fragmentBinding: FragmentDeleteTaskBinding
     private lateinit var helper: Helper
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        fragmentBinding = FragmentDeleteItemBinding.inflate(inflater, container, false)
+        fragmentBinding = FragmentDeleteTaskBinding.inflate(inflater, container, false)
         helper = Helper(requireActivity())
         val decorView = dialog?.window!!.decorView
         helper.uiControls(decorView)
@@ -56,11 +54,11 @@ class DeleteItemFragment(
         }
 
         if (id == 0) {
-            fragmentBinding.textItem.text = incomes!!.incomeName
-            fragmentBinding.textDelete.setText(R.string.text_delete_income)
+            fragmentBinding.textTask.text = task!!.taskName
+            fragmentBinding.textDelete.setText(R.string.text_delete_personal)
         } else {
-            fragmentBinding.textItem.text = outcomes!!.outcomeName
-            fragmentBinding.textDelete.setText(R.string.text_delete_outcome)
+            fragmentBinding.textTask.text = task!!.taskName
+            fragmentBinding.textDelete.setText(R.string.text_delete_work)
         }
     }
 
@@ -69,26 +67,26 @@ class DeleteItemFragment(
             btnCommit.setOnClickListener {
                 val userUid = FirebaseAuth.getInstance().currentUser?.uid
                 val databaseReference: DatabaseReference = FirebaseDatabase.getInstance().reference
-                // Remove incomes
+                // Delete personal task
                 if (id == 0) {
                     userUid?.let { it1 ->
-                        incomes?.let { it2 ->
-                            databaseReference.child("Users").child(it1).child("Incomes")
-                                .child(it2.uniqueId)
+                        task?.uniqueId?.let { it2 ->
+                            databaseReference.child("Users").child(it1).child("Personal")
+                                .child(it2)
                                 .removeValue()
                         }
                     }
                     dismiss()
-                } else {
-                    // Remove outcomes
+                }// Delete work task
+                else {
                     userUid?.let { it1 ->
-                        outcomes?.let { it2 ->
-                            databaseReference.child("Users").child(it1).child("Outcomes")
-                                .child(it2.uniqueId).removeValue()
+                        task?.uniqueId?.let { it2 ->
+                            databaseReference.child("Users").child(it1).child("Work").child(it2)
+                                .removeValue()
                         }
                     }
-                    dismiss()
                 }
+                dismiss()
             }
 
             btnDecline.setOnClickListener {

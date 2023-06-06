@@ -1,9 +1,9 @@
 package com.example.notefirebase.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Canvas
-import android.os.Build
 import android.os.VibrationEffect
+import android.os.Vibrator
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
@@ -11,15 +11,17 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.example.notefirebase.R
-import android.os.Vibrator
-import android.text.StaticLayout
-import android.util.TypedValue
-import androidx.core.graphics.withTranslation
+import com.google.firebase.auth.FirebaseAuth
 
 @Suppress("DEPRECATION")
 class Helper(
     private val activity: FragmentActivity
 ) {
+    // Get user uid
+    fun getUid(): String {
+        return FirebaseAuth.getInstance().currentUser?.uid ?: ""
+    }
+
     // Navigate into app
     fun navigate(fragment: Fragment) {
         activity.supportFragmentManager.beginTransaction().replace(R.id.fragmentHolder, fragment)
@@ -27,6 +29,7 @@ class Helper(
     }
 
     // Create custom toast
+    @SuppressLint("InflateParams")
     fun customToast(context: Context, content: Int) {
         val inflater = LayoutInflater.from(context)
         val layout = inflater.inflate(R.layout.toast_layout, null)

@@ -141,4 +141,7 @@
     <string name="btn_text_go_back_task">назад</string>
     <string name="input_task_name">Введите название задачи</string>
     <string name="input_task_content">Введите содержание задачи</string>
+    <string name="label_delete_task_question">Удаление задачи</string>
+    <string name="text_delete_personal">Удаление личной задачи</string>
+    <string name="text_delete_work">Удаление рабочей задачи</string>
 </resources>
