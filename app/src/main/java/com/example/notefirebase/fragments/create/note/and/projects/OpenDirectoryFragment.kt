@@ -7,12 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.notefirebase.R
 import com.example.notefirebase.adapters.NoteAdapter
 import com.example.notefirebase.adapters.ProjectAdapter
 import com.example.notefirebase.databinding.FragmentOpenDirectoryBinding
-import com.example.notefirebase.firebasemodel.FirebaseNoteInDir
-import com.example.notefirebase.firebasemodel.FirebaseProject
 import com.example.notefirebase.firebasemodel.Note
 import com.example.notefirebase.firebasemodel.Project
 import com.example.notefirebase.fragments.MainFragment
@@ -20,9 +17,6 @@ import com.example.notefirebase.fragments.settings.MainSettingsFragment
 import com.example.notefirebase.utils.FirebaseManager
 import com.example.notefirebase.utils.Helper
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
 
 class OpenDirectoryFragment(
     private val directoryId: String?, private val directoryName: String?
@@ -47,62 +41,39 @@ class OpenDirectoryFragment(
         firebaseManager = FirebaseManager()
         fragmentBinding.nameOfDirectory.setText("Заметки / $directoryName")
         setupRecyclerView()
-        val directoryKey = arguments?.getString("directoryKey")
         auth = FirebaseAuth.getInstance()
         setupDatabase()
         setupClickListeners()
     }
 
     private fun setupRecyclerView() {
-        projectAdapter = ProjectAdapter()
+        projectAdapter = ProjectAdapter(requireActivity())
         fragmentBinding.rcOpenDirectory.adapter = projectAdapter
         fragmentBinding.rcOpenDirectory.layoutManager = LinearLayoutManager(requireContext())
 
-        noteAdapter = NoteAdapter()
+        noteAdapter = NoteAdapter(requireActivity(), 0)
         fragmentBinding.rcOpenDirectoryNotes.adapter = noteAdapter
         fragmentBinding.rcOpenDirectoryNotes.layoutManager = LinearLayoutManager(requireContext())
     }
 
     // Loading data from the database
     private fun setupDatabase() {
-        // Get projects
-        val userUid = auth.currentUser?.uid ?: ""
-        firebaseManager.getProjectList(userUid, directoryName, object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val projectList = mutableListOf<Project>()
-                for (childSnapshot in dataSnapshot.children) {
-                    val project = childSnapshot.getValue(FirebaseProject::class.java)
-                    if (project != null) {
-                        val proj = Project(project.directoryId, project.name)
-                        projectList.add(proj)
-                    }
-                }
-                projectAdapter.setProjects(projectList)
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
+        if (directoryId != null) {
+            // Get projects
+            firebaseManager.getProject(helper.getUid(), directoryId, {
+                projectAdapter.setProjects(it)
+            }, {
                 Log.d("Error", "Не удалось загрузить данные")
-            }
-        })
+            })
 
-        // Get notes
-        firebaseManager.getNoteList(userUid, directoryName!!, object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val noteList = mutableListOf<Note>()
-                for (childSnapshot in dataSnapshot.children) {
-                    val note = childSnapshot.getValue(FirebaseNoteInDir::class.java)
-                    if (note != null) {
-                        val n = Note(note.name)
-                        noteList.add(n)
-                    }
-                }
-                noteAdapter.setNotes(noteList)
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
+            // Get notes
+            firebaseManager.getNote(0, helper.getUid(), null, directoryId, {
+                Log.d("Note", "$it")
+                noteAdapter.setNotes(it)
+            }, {
                 Log.d("Error", "Не удалось загрузить данные")
-            }
-        })
+            })
+        }
     }
 
     // Set up Click Listeners
@@ -110,7 +81,7 @@ class OpenDirectoryFragment(
         with(fragmentBinding) {
             // Show create project fragment
             btnAddProject.setOnClickListener {
-                val createProject = CreateProjectFragment(directoryId, directoryName)
+                val createProject = CreateProjectFragment(directoryId)
                 createProject.show(
                     requireActivity().supportFragmentManager, "CreateProjectFragment"
                 )
@@ -118,7 +89,7 @@ class OpenDirectoryFragment(
 
             // Show create note fragment
             btnCreateNote.setOnClickListener {
-                helper.navigate(CreateNoteFragment(directoryId, directoryName, null, null))
+                helper.navigate(CreateNoteFragment(0, directoryId, directoryName, null, null, null))
             }
 
             // Go back
@@ -139,17 +110,20 @@ class OpenDirectoryFragment(
             // Show project
             projectAdapter.setOnClickListener(object : ProjectAdapter.OnClickListener {
                 override fun onClick(project: Project) {
-                    activity?.supportFragmentManager?.beginTransaction()?.replace(
-                        R.id.fragmentHolder, CreateNoteInProjectFragment(
-                            directoryId, directoryName, project.id, project.name
+                    helper.navigate(
+                        CreateNoteInProjectFragment(
+                            directoryId, directoryName, project.projectUid, project.name
                         )
-                    )?.commit()
+                    )
+                }
+            })
+
+            // Show note
+            noteAdapter.setOnClickListener(object : NoteAdapter.OnClickListener {
+                override fun onClick(note: Note) {
+                    helper.navigate(CreateNoteFragment(0, note.directoryUid, directoryName, note.projectUid, null, note.noteUid))
                 }
             })
         }
     }
 }
-
-//    companion object {
-//        fun newInstance() = OpenDirectoryFragment()
-//    }

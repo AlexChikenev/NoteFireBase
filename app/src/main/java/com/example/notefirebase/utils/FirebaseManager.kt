@@ -1,6 +1,7 @@
 package com.example.notefirebase.utils
 
 import android.util.Log
+import com.example.notefirebase.firebasemodel.Directory
 import com.example.notefirebase.firebasemodel.FirebaseDirectory
 import com.example.notefirebase.firebasemodel.FirebaseIncomes
 import com.example.notefirebase.firebasemodel.FirebaseNoteInDir
@@ -11,6 +12,7 @@ import com.example.notefirebase.firebasemodel.FirebaseTask
 import com.example.notefirebase.firebasemodel.Income
 import com.example.notefirebase.firebasemodel.Note
 import com.example.notefirebase.firebasemodel.Outcome
+import com.example.notefirebase.firebasemodel.Project
 import com.example.notefirebase.firebasemodel.Task
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -23,106 +25,196 @@ class FirebaseManager {
     private val databaseReference: DatabaseReference = FirebaseDatabase.getInstance().reference
 
     // Method for creating directory
-    fun writeDirectory(directoryId: String, userUid: String, name: String) {
-        val directory = FirebaseDirectory(directoryId, userUid, name)
-        databaseReference.child("Users").child(userUid).child("Directory").child(name)
-            .setValue(directory)
-    }
-
-    // Method for creating project
-    fun writeProject(
-        directoryName: String,
-        projectId: String,
-        directoryId: String,
-        userUid: String,
-        projectName: String
-    ) {
-        val project = FirebaseProject(projectId, directoryId, userUid, projectName)
-        val projectRef =
-            databaseReference.child("Users").child(userUid).child("Directory").child(directoryName)
-                .child("Projects").child(projectName)
-        projectRef.setValue(project)
-    }
-
-    // Method for get project
-    fun getProjectList(
-        userUid: String, directoryName: String?, listener: ValueEventListener
-    ) {
-        val projectRef = databaseReference.child("Users").child(userUid).child("Directory")
-            .child(directoryName!!).child("Projects")
-        projectRef.addValueEventListener(listener)
-    }
-
-    // Method for get note inside directory
-    fun getNoteList(
-        userUid: String, directoryName: String, listener: ValueEventListener
-    ) {
-        val noteRef =
-            databaseReference.child("Users").child(userUid).child("Directory").child(directoryName)
-                .child("NotesInDirectory")
-        noteRef.addValueEventListener(listener)
-    }
-
-    // Method for writing data inside a folder
-    fun writeNoteIntoDir(
-        directoryId: String,
-        userUid: String,
-        directoryName: String,
-        noteName: String,
-        noteContent: String
-    ) {
-        val note = FirebaseNoteInDir(directoryId, userUid, noteName, noteContent)
-        databaseReference.child("Users").child(userUid).child("Directory").child(directoryName)
-            .child("NotesInDirectory").child(noteName).setValue(note)
-    }
-
-    // Method for writing data inside the project
-    fun writeNoteIntoProject(
-        projectId: String,
-        userUid: String,
-        directoryName: String?,
-        projectName: String?,
-        noteName: String,
-        noteContent: String
-    ) {
-        val note = FirebaseNoteInDir(projectId, userUid, noteName, noteContent)
-        directoryName?.let {
-            projectName?.let { projectName ->
-                databaseReference.child("Users").child(userUid).child("Directory").child(it)
-                    .child("Projects").child(projectName).child("NotesInProject").child(noteName)
-                    .setValue(note)
-            }
+    fun writeDirectory(userUid: String, directoryName: String) {
+        val uniqueId = databaseReference.push().key
+        val directory = uniqueId?.let { FirebaseDirectory(it, directoryName) }
+        if (uniqueId != null) {
+            databaseReference.child("Users").child(userUid).child("Directories").child(uniqueId)
+                .setValue(directory)
         }
     }
 
-    // Method for get data from note inside the project
-    fun getNotesInProject(
+    // Method for getting directory
+    fun getDirectory(
         userUid: String,
-        directoryName: String,
-        projectName: String,
-        callback: (List<Note>) -> Unit,
+        callbackList: (List<Directory>) -> Unit,
         errorCallback: () -> Unit
     ) {
-        val noteRef =
-            databaseReference.child("Users").child(userUid).child("Directory").child(directoryName)
-                .child("Projects").child(projectName).child("NotesInProject")
-        noteRef.addValueEventListener(object : ValueEventListener {
+        val directoryRef = databaseReference.child("Users").child(userUid).child("Directories")
+        directoryRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val noteList = mutableListOf<Note>()
+                val directoryList = mutableListOf<Directory>()
                 for (childSnapshot in dataSnapshot.children) {
-                    val note = childSnapshot.getValue(FirebaseDirectory::class.java)
-                    if (note != null) {
-                        val n = Note(note.name)
-                        noteList.add(n)
+                    val directory = childSnapshot.getValue(FirebaseDirectory::class.java)
+                    if (directory != null) {
+                        val dir = Directory(directory.directoryUniqueId, directory.directoryName)
+                        directoryList.add(dir)
                     }
                 }
-                callback(noteList)
+                callbackList(directoryList)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
                 errorCallback()
             }
         })
+    }
+
+    // Method for creating project
+    fun writeProject(
+        directoryUid: String,
+        userUid: String,
+        projectName: String
+    ) {
+        val uniqueId = databaseReference.push().key
+        val project = uniqueId?.let { FirebaseProject(it, directoryUid, projectName) }
+        uniqueId?.let {
+            databaseReference.child("Users").child(userUid).child("Directories").child(directoryUid)
+                .child("Projects").child(it).setValue(project)
+        }
+    }
+
+
+    // Method for getting project
+    fun getProject(
+        userUid: String,
+        directoryUid: String,
+        callbackList: (List<Project>) -> Unit,
+        errorCallback: () -> Unit
+    ) {
+        val projectRef =
+            databaseReference.child("Users").child(userUid).child("Directories").child(directoryUid)
+                .child("Projects")
+
+        projectRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val projectList = mutableListOf<Project>()
+                for (childSnapshot in dataSnapshot.children) {
+                    val project = childSnapshot.getValue(FirebaseProject::class.java)
+                    if (project != null) {
+                        val dir = Project(project.projectUid, project.directoryUid, project.name)
+                        projectList.add(dir)
+                    }
+                }
+                callbackList(projectList)
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                errorCallback()
+            }
+        })
+    }
+
+    // Method for get note
+    fun getNote(
+        noteType: Int,
+        userUid: String,
+        projectUid: String?,
+        directoryUid: String,
+        callbackList: (List<Note>) -> Unit,
+        errorCallback: () -> Unit
+    ) {
+        val ref =
+            databaseReference.child("Users").child(userUid).child("Directories").child(directoryUid)
+
+        val noteRef: DatabaseReference = if (noteType == 0) {
+            ref.child("NotesInDirectory")
+        } else {
+            ref.child("Projects").child(projectUid!!).child("NoteInProject")
+        }
+        noteRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val noteList = mutableListOf<Note>()
+                for (childSnapshot in dataSnapshot.children) {
+                    val noteData = childSnapshot.getValue(FirebaseNoteInDir::class.java)
+                    if (noteData != null) {
+                        val note = noteData.name?.let { noteName ->
+                            noteData.content?.let { noteContent ->
+                                Note(
+                                    noteData.directoryUid, projectUid, noteData.noteUid,
+                                    noteName, noteContent
+                                )
+                            }
+                        }
+                        if (note != null) {
+                            noteList.add(note)
+                        }
+                    }
+                }
+                callbackList(noteList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                errorCallback()
+            }
+        })
+    }
+
+    fun getNoteForEdit(
+        noteType: Int,
+        noteUid: String,
+        userUid: String,
+        projectUid: String?,
+        directoryUid: String,
+        callbackList: (List<Note>) -> Unit,
+        errorCallback: () -> Unit
+    ) {
+        val ref =
+            databaseReference.child("Users").child(userUid).child("Directories").child(directoryUid)
+
+        val noteRef: DatabaseReference = if (noteType == 0) {
+            ref.child("NotesInDirectory").child(noteUid)
+        } else {
+            ref.child("Projects").child(projectUid!!).child("NoteInProject").child(noteUid)
+        }
+
+        noteRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val noteList = mutableListOf<Note>()
+                val noteData = dataSnapshot.getValue(FirebaseNoteInDir::class.java)
+                if (noteData != null) {
+                    val note = noteData.name?.let { noteName ->
+                        noteData.content?.let { noteContent ->
+                            Note(
+                                noteData.directoryUid, projectUid, noteData.noteUid,
+                                noteName, noteContent
+                            )
+                        }
+                    }
+                    if (note != null) {
+                        noteList.add(note)
+                    }
+                }
+                callbackList(noteList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                errorCallback()
+            }
+        })
+    }
+
+
+    // Write note
+    fun writeNote(
+        uniqueId: String,
+        noteType: Int,
+        userUid: String,
+        projectUid: String? = "",
+        directoryUid: String,
+        noteName: String,
+        noteContent: String
+    ) {
+        val ref =
+            databaseReference.child("Users").child(userUid).child("Directories").child(directoryUid)
+        val note = FirebaseNoteInDir(directoryUid, uniqueId, noteName, noteContent)
+        if (noteType == 0) {
+            ref.child("NotesInDirectory").child(uniqueId).setValue(note)
+        } else {
+            // Write note in project
+            ref.child("Projects").child(projectUid!!).child("NoteInProject").child(uniqueId)
+                .setValue(note)
+        }
     }
 
     // Method for get current data
@@ -294,6 +386,7 @@ class FirebaseManager {
 
     // Write task
     fun writeTask(
+        uniqueId: String,
         taskType: Int,
         userUid: String,
         taskName: String,
@@ -305,10 +398,10 @@ class FirebaseManager {
         taskIsCompleted: Boolean
 
     ) {
-        val uniqueId = databaseReference.push().key
-        val task = uniqueId?.let {
+
+        val task =
             FirebaseTask(
-                it,
+                uniqueId,
                 taskType,
                 taskName,
                 taskContent,
@@ -318,12 +411,12 @@ class FirebaseManager {
                 taskPriority,
                 taskIsCompleted
             )
-        }
+
         if (taskType == 0) {
-            databaseReference.child("Users").child(userUid).child("Personal").child(uniqueId!!)
+            databaseReference.child("Users").child(userUid).child("Personal").child(uniqueId)
                 .setValue(task)
         } else {
-            databaseReference.child("Users").child(userUid).child("Work").child(uniqueId!!)
+            databaseReference.child("Users").child(userUid).child("Work").child(uniqueId)
                 .setValue(task)
         }
 

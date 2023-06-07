@@ -9,7 +9,7 @@
     <string name="btn_text_to_habits">трекер</string>
     <string name="btn_text_create_directory">создать папку</string>
     <string name="btn_text_commit_note">Готово</string>
-    <string name="btn_text_create_note">создать заметку</string>
+    <string name="btn_text_create_note">Создать заметку</string>
     <string name="btn_text_to_leaveReview">Оставить отзыв</string>
     <string name="btn_text_write_to_support">Написать в поддержку</string>
     <string name="btn_text_change_email">Сменить адрес электронной почты</string>
@@ -26,7 +26,7 @@
     <string name="label_wish">Спискок желаний</string>
     <string name="label_back">Назад</string>
     <string name="label_notes">Заметки</string>
-    <string name="label_create_note">Введите имя заметки</string>
+    <string name="label_create_note">Введите название заметки</string>
     <string name="label_input_email">Введите привязанный адрес электронной почты</string>
     <string name="label_income_per_month">Доходы в месяц</string>
     <string name="label_income_name">Введите название дохода</string>
@@ -144,4 +144,9 @@
     <string name="label_delete_task_question">Удаление задачи</string>
     <string name="text_delete_personal">Удаление личной задачи</string>
     <string name="text_delete_work">Удаление рабочей задачи</string>
+    <string name="label_delete_directory_question">Удаление папки</string>
+    <string name="input_project_name">Введите название своего проекта</string>
+    <string name="input_note_content">Введите содержание заметки</string>
+    <string name="label_delete_project_question">Удаление проекта</string>
+    <string name="label_delete_note_question">Удаление заметки</string>
 </resources>

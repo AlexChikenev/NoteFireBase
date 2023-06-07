@@ -10,22 +10,17 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.notefirebase.adapters.DirectoryAdapter
 import com.example.notefirebase.databinding.FragmentDirectoryBinding
 import com.example.notefirebase.firebasemodel.Directory
-import com.example.notefirebase.firebasemodel.FirebaseDirectory
 import com.example.notefirebase.fragments.MainFragment
 import com.example.notefirebase.fragments.settings.MainSettingsFragment
+import com.example.notefirebase.utils.FirebaseManager
 import com.example.notefirebase.utils.Helper
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 
 
 class DirectoryFragment : Fragment() {
 
     private lateinit var fragmentBinding: FragmentDirectoryBinding
-    private lateinit var databaseReference: DatabaseReference
+    private lateinit var firebaseManager: FirebaseManager
     private lateinit var adapter: DirectoryAdapter
     private lateinit var auth: FirebaseAuth
     private lateinit var helper: Helper
@@ -39,47 +34,34 @@ class DirectoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupRecyclerView()
+        firebaseManager = FirebaseManager()
         helper = Helper(requireActivity())
         auth = FirebaseAuth.getInstance()
-        databaseReference = FirebaseDatabase.getInstance().reference
+        setupRecyclerView()
         setupDatabase()
         setUpClickListeners()
     }
 
-    // Installing the adapter for RecyclerView
+    // Set Up RecyclerView
     private fun setupRecyclerView() {
-        adapter = DirectoryAdapter()
+        adapter = DirectoryAdapter(requireActivity(), requireContext())
         fragmentBinding.rcDirectory.adapter = adapter
         fragmentBinding.rcDirectory.layoutManager = GridLayoutManager(requireContext(), 3)
     }
 
     // Loading data from the database
     private fun setupDatabase() {
-        val userUid = auth.currentUser?.uid ?: ""
-        val directoryRef = databaseReference.child("Users").child(userUid).child("Directory")
-        directoryRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val directoryList = mutableListOf<Directory>()
-                for (childSnapshot in dataSnapshot.children) {
-                    val directory = childSnapshot.getValue(FirebaseDirectory::class.java)
-                    if (directory != null) {
-                        val dir = Directory(directory.directoryId, directory.name)
-                        directoryList.add(dir)
-                    }
-                }
-                adapter.setDirectories(directoryList)
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.d("Error", "Не удалось загрузить данные")
-            }
+        firebaseManager.getDirectory(helper.getUid(), {
+            adapter.setDirectories(it)
+        }, {
+            Log.d("Directory error", "Не удалось загрузить данные")
         })
     }
 
-    // Set up Click Listeners
+    // Set up click listeners
     private fun setUpClickListeners() {
         with(fragmentBinding) {
+            // Create directory
             btnCreateDirectory.setOnClickListener {
                 val createDirectory = CreateDirectoryFragment()
                 createDirectory.show(
@@ -87,16 +69,24 @@ class DirectoryFragment : Fragment() {
                 )
             }
 
+            // Click on item
             adapter.setOnClickListener(object : DirectoryAdapter.OnClickListener {
                 override fun onClick(directory: Directory) {
-                    helper.navigate(OpenDirectoryFragment(directory.id, directory.name))
+                    helper.navigate(
+                        OpenDirectoryFragment(
+                            directory.directoryUniqueId,
+                            directory.directoryName
+                        )
+                    )
                 }
             })
 
+            // To main
             btnToMain.setOnClickListener {
                 helper.navigate(MainFragment())
             }
 
+            // To settings
             btnToSettings.setOnClickListener {
                 helper.navigate(MainSettingsFragment())
             }

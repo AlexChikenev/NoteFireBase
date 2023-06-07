@@ -1,39 +1,46 @@
 package com.example.notefirebase.firebasemodel
 
 data class FirebaseDirectory(
-    val directoryId: String = "", val userUid: String? = null, val name: String = ""
+    val directoryUniqueId: String,
+    val directoryName: String
 ) {
-    constructor() : this("", null, "")
+    constructor() : this("", "")
 }
 
 data class Directory(
-    val id: String, val name: String
+    val directoryUniqueId: String,
+    val directoryName: String
 )
 
 data class FirebaseProject(
-    val projectId: String = "",
-    val directoryId: String = "",
-    val userUid: String? = null,
-    val name: String = ""
+    val projectUid: String,
+    val directoryUid: String,
+    val name: String
 ) {
-    constructor() : this("", "", null, "")
+    constructor() : this("", "", "")
 }
 
 data class Project(
-    val id: String, val name: String
+    val projectUid: String,
+    val directoryUid: String,
+    val name: String
 )
 
 data class FirebaseNoteInDir(
-    val directoryId: String,
-    val userUid: String?,
+    val directoryUid: String,
+    val noteUid: String,
     val name: String?,
     val content: String?
 ) {
-    constructor() : this("", null, "", "")
+    constructor() : this("", "","", "")
 }
 
 data class Note(
-    val name: String?,
+    val directoryUid: String,
+    val projectUid: String?,
+    val noteUid: String,
+    var noteName: String,
+    var noteContent: String
 )
 
 data class FirebaseIncomes(

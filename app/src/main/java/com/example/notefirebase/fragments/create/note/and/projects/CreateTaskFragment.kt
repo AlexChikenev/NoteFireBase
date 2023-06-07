@@ -10,6 +10,8 @@ import com.example.notefirebase.databinding.FragmentCreateTaskBinding
 import com.example.notefirebase.firebasemodel.Task
 import com.example.notefirebase.utils.FirebaseManager
 import com.example.notefirebase.utils.Helper
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class CreateTaskFragment(
     private var selectedDate: String,
@@ -26,6 +28,7 @@ class CreateTaskFragment(
     private lateinit var helper: Helper
     private lateinit var firebaseManager: FirebaseManager
     private var task: List<Task> = emptyList()
+    private var taskIsCompleted: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -50,16 +53,22 @@ class CreateTaskFragment(
         if (taskType == 0) {
             if (taskUidId != null) {
                 firebaseManager.getPersonalTaskForEdit(helper.getUid(), taskUidId, {
-                    task = it
-                    setUpUi(task[0])
+                    if(it.isNotEmpty()){
+                        task = it
+                        taskIsCompleted = task[0].taskIsCompleted!!
+                        setUpUi(task[0])
+                    }
                 }, {})
             }
         } // Get work task
         else {
             if (taskUidId != null) {
                 firebaseManager.getWorkTaskForEdit(helper.getUid(), taskUidId, {
-                    task = it
-                    setUpUi(task[0])
+                    if(it.isNotEmpty()){
+                        task = it
+                        taskIsCompleted = task[0].taskIsCompleted!!
+                        setUpUi(task[0])
+                    }
                 }, {})
             }
         }
@@ -101,6 +110,8 @@ class CreateTaskFragment(
 
             // Button commit task
             btnCommitTask.setOnClickListener {
+                val databaseReference: DatabaseReference = FirebaseDatabase.getInstance().reference
+                val uniqueId: String? = taskUidId ?: databaseReference.push().key
 
                 val taskName = fragmentBinding.inputTaskName.text.toString()
                 val taskContent = fragmentBinding.inputTaskContent.text.toString()
@@ -110,6 +121,7 @@ class CreateTaskFragment(
                     helper.customToast(requireContext(), R.string.input_task_content)
                 else
                     firebaseManager.writeTask(
+                        uniqueId!!,
                         taskType,
                         helper.getUid(),
                         taskName,
@@ -118,7 +130,7 @@ class CreateTaskFragment(
                         taskRepeat,
                         taskNotify,
                         taskPriority,
-                        false
+                        taskIsCompleted
                     )
             }
         }

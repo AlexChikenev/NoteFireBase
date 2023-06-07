@@ -49,21 +49,21 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnCreateDirectory"
         style="@style/ButtonNoteBg"
-        android:layout_marginStart="38dp"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_percent="0.4"
         android:layout_marginTop="26dp"
         android:text="@string/btn_text_create_directory"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/topLine"
         app:layout_constraintTop_toTopOf="@id/topLine" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcDirectory"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="15dp"
         android:layout_marginEnd="18dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/topLine"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnCreateDirectory" />
 </androidx.constraintlayout.widget.ConstraintLayout>

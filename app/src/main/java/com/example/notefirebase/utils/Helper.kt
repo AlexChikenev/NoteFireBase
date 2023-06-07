@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
@@ -12,6 +13,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.example.notefirebase.R
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 @Suppress("DEPRECATION")
 class Helper(
@@ -21,11 +24,20 @@ class Helper(
     fun getUid(): String {
         return FirebaseAuth.getInstance().currentUser?.uid ?: ""
     }
+    fun getDatabaseReference(): DatabaseReference {
+        return FirebaseDatabase.getInstance().reference
+    }
 
     // Navigate into app
     fun navigate(fragment: Fragment) {
         activity.supportFragmentManager.beginTransaction().replace(R.id.fragmentHolder, fragment)
             .commit()
+    }
+
+    // Convert dp to px
+    fun dpToPx(context: Context, dp: Float): Float {
+        val displayMetrics = context.resources.displayMetrics
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, displayMetrics)
     }
 
     // Create custom toast

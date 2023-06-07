@@ -4,7 +4,7 @@
         <shape>
             <stroke
                 android:width="40px"
-                android:color="@color/white" />
+                android:color="@color/dark_white" />
         </shape>
     </item>
     <item
@@ -12,6 +12,6 @@
         android:end="40px"
         android:start="40px"
         android:top="40px">
-        <color android:color="@color/dark_white" />
+        <color android:color="@color/white" />
     </item>
 </layer-list>

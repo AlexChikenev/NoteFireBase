@@ -5,20 +5,18 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
 import android.view.ViewGroup.LayoutParams
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.example.notefirebase.R
 import com.example.notefirebase.databinding.FragmentCreateDirectoryBinding
 import com.example.notefirebase.utils.FirebaseManager
-import com.google.firebase.auth.FirebaseAuth
-import java.util.UUID
+import com.example.notefirebase.utils.Helper
 
 class CreateDirectoryFragment : DialogFragment() {
 
     private lateinit var fragmentBinding: FragmentCreateDirectoryBinding
     private lateinit var firebaseManager: FirebaseManager
-    private lateinit var userUid: String
+    private lateinit var helper: Helper
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
@@ -26,7 +24,9 @@ class CreateDirectoryFragment : DialogFragment() {
     ): View {
         fragmentBinding = FragmentCreateDirectoryBinding.inflate(inflater, container, false)
         firebaseManager = FirebaseManager()
-        userUid = FirebaseAuth.getInstance().currentUser?.uid.orEmpty()
+        helper = Helper(requireActivity())
+        val decorView = dialog?.window!!.decorView
+        helper.uiControls(decorView)
         return fragmentBinding.root
     }
 
@@ -46,24 +46,16 @@ class CreateDirectoryFragment : DialogFragment() {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        isCancelable = true
-    }
-
     private fun setupClickListeners() {
         with(fragmentBinding) {
             // Button of creation new directory
             btnCommitDirectory.setOnClickListener {
                 if (inputDirectoryName.text.toString().isNotBlank()) {
-                    val directoryId = UUID.randomUUID().toString()
-                    val userUid = FirebaseAuth.getInstance().currentUser?.uid.orEmpty()
                     val directoryName = inputDirectoryName.text.toString()
-                    firebaseManager.writeDirectory(directoryId, userUid, directoryName)
+                    firebaseManager.writeDirectory(helper.getUid(), directoryName)
                     dismiss()
                 } else {
-                    Toast.makeText(context, R.string.enter_directory_name, Toast.LENGTH_SHORT)
-                        .show()
+                    helper.customToast(requireContext(), R.string.enter_directory_name)
                 }
             }
         }

@@ -101,7 +101,7 @@
     <style name="LabelsInRegistrationBlocks" parent="Theme.AppCompat">
         <item name="android:textColor">@color/white</item>
         <item name="android:fontFamily">@font/helvetica_regular</item>
-        <item name="android:textSize">8dp</item>
+        <item name="android:textSize">8sp</item>
         <item name="android:layout_marginBottom">10dp</item>
     </style>
 
@@ -109,7 +109,7 @@
     <style name="ButtonsOnRegistrationBlock" parent="Widget.AppCompat.Button">
         <item name="android:fontFamily">@font/helvetica_regular</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:textSize">8dp</item>
+        <item name="android:textSize">8sp</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:layout_marginTop">40dp</item>
         <item name="android:background">@drawable/bg_btn_on_reg_block</item>
@@ -119,7 +119,7 @@
     <!--    Style for button to settings    -->
     <style name="ButtonToSettings" parent="Widget.AppCompat.ImageButton">
         <item name="android:contentDescription">@string/text_btn_to_settings</item>
-        <item name="android:layout_marginTop">38dp</item>
+        <item name="android:layout_marginTop">25dp</item>
         <item name="android:layout_marginEnd">38dp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -146,7 +146,7 @@
         <item name="android:layout_height">22dp</item>
         <item name="android:background">@drawable/bg_header_finance</item>
         <item name="android:fontFamily">@font/helvetica_regular</item>
-        <item name="android:textSize">12dp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:layout_marginTop">20dp</item>

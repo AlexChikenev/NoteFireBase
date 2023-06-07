@@ -52,50 +52,53 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnAddProject"
+        android:layout_width="0dp"
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp"
+        android:textAlignment="center"
+        android:textSize="11sp"
         style="@style/ButtonNoteBg"
-        android:layout_width="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/topLine"
         android:layout_height="30dp"
-        android:layout_marginStart="38dp"
         android:layout_marginTop="26dp"
         android:text="@string/btn_text_create_project"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.35"
         app:layout_constraintTop_toBottomOf="@id/topLine" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnCreateNote"
         style="@style/ButtonNoteBg"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:paddingStart="0dp"
         android:layout_height="30dp"
+        android:paddingEnd="0dp"
+        android:textAlignment="center"
+        android:textSize="11sp"
+        app:layout_constraintEnd_toEndOf="@id/topLine"
         android:layout_marginStart="10dp"
         android:layout_marginTop="26dp"
-        android:layout_marginEnd="38dp"
-        android:gravity="center_vertical"
         android:text="@string/btn_text_create_note"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.35"
         app:layout_constraintTop_toBottomOf="@id/topLine" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcOpenDirectory"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="38dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.35"
         android:layout_marginTop="15dp"
-        android:layout_marginEnd="38dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_max="250dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/topLine"
+        app:layout_constraintStart_toStartOf="@id/topLine"
         app:layout_constraintTop_toBottomOf="@+id/btnAddProject" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcOpenDirectoryNotes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="38dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.35"
         android:layout_marginTop="25dp"
-        android:layout_marginEnd="38dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_max="250dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/rcOpenDirectory"
+        app:layout_constraintStart_toStartOf="@id/rcOpenDirectory"
         app:layout_constraintTop_toBottomOf="@+id/rcOpenDirectory" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

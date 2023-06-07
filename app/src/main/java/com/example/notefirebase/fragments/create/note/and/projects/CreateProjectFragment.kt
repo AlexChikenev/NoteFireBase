@@ -7,26 +7,28 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.example.notefirebase.R
 import com.example.notefirebase.databinding.FragmentCreateProjectBinding
 import com.example.notefirebase.utils.FirebaseManager
-import com.google.firebase.auth.FirebaseAuth
-import java.util.UUID
+import com.example.notefirebase.utils.Helper
 
 class CreateProjectFragment(
-    private val directoryId: String?, private val directoryName: String?
+    private val directoryUid: String?
 ) : DialogFragment() {
     private lateinit var fragmentBinding: FragmentCreateProjectBinding
     private lateinit var firebaseManager: FirebaseManager
+    private lateinit var helper: Helper
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         fragmentBinding = FragmentCreateProjectBinding.inflate(inflater, container, false)
         firebaseManager = FirebaseManager()
+        helper = Helper(requireActivity())
+        val decorView = dialog?.window!!.decorView
+        helper.uiControls(decorView)
         return fragmentBinding.root
     }
 
@@ -52,18 +54,16 @@ class CreateProjectFragment(
             btnCommitProject.setOnClickListener {
                 // Check data
                 if (inputProjectName.text.isNotEmpty()) {
-                    val projectId = UUID.randomUUID().toString()
-                    val directoryId = directoryId
-                    val userUid = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+                    val directoryUid = directoryUid
                     val projectName = inputProjectName.text.toString()
-
-                    firebaseManager.writeProject(
-                        directoryName!!, projectId, directoryId!!, userUid, projectName
-                    )
+                    directoryUid?.let { it1 ->
+                        firebaseManager.writeProject(
+                            it1, helper.getUid(), projectName
+                        )
+                    }
                     dismiss()
                 } else {
-                    Toast.makeText(context, "Введите название своего проекта", Toast.LENGTH_SHORT)
-                        .show()
+                    helper.customToast(requireContext(), R.string.input_project_name)
                 }
             }
         }

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.notefirebase.adapters.NoteAdapter
 import com.example.notefirebase.databinding.FragmentCreateNoteInProjectBinding
+import com.example.notefirebase.firebasemodel.Note
 import com.example.notefirebase.fragments.MainFragment
 import com.example.notefirebase.fragments.settings.MainSettingsFragment
 import com.example.notefirebase.utils.FirebaseManager
@@ -18,9 +19,9 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 class CreateNoteInProjectFragment(
-    private val directoryId: String?,
+    private val directoryUid: String?,
     private val directoryName: String?,
-    private val projectId: String?,
+    private val projectUid: String?,
     private val projectName: String?
 ) : Fragment() {
 
@@ -52,16 +53,18 @@ class CreateNoteInProjectFragment(
 
     private fun setupDatabase() {
         // Get notes in project
-        val userUid = auth.currentUser?.uid ?: ""
-        firebaseManager.getNotesInProject(userUid, directoryName!!, projectName!!, { noteList ->
-            noteAdapter.setNotes(noteList)
-        }, {
-            Log.d("Error", "Не удалось загрузить данные")
-        })
+        if (directoryUid != null) {
+            firebaseManager.getNote(1, helper.getUid(), projectUid, directoryUid, {
+                Log.d("it", "$it")
+                noteAdapter.setNotes(it)
+            }, {
+                Log.d("Error", "Не удалось загрузить данные")
+            })
+        }
     }
 
     private fun setupRecyclerView() {
-        noteAdapter = NoteAdapter()
+        noteAdapter = NoteAdapter(requireActivity(), 1)
         fragmentBinding.rcOpenDirectoryNotes.adapter = noteAdapter
         fragmentBinding.rcOpenDirectoryNotes.layoutManager = LinearLayoutManager(requireContext())
     }
@@ -71,12 +74,21 @@ class CreateNoteInProjectFragment(
         with(fragmentBinding) {
             // Create note
             btnCreateNote.setOnClickListener {
-                helper.navigate(CreateNoteFragment(null, directoryName, projectId, projectName))
+                helper.navigate(
+                    CreateNoteFragment(
+                        1,
+                        directoryUid,
+                        directoryName,
+                        projectUid,
+                        projectName,
+                        null
+                    )
+                )
             }
 
             // Go back
             btnGoBack.setOnClickListener {
-                helper.navigate(OpenDirectoryFragment(directoryId, directoryName))
+                helper.navigate(OpenDirectoryFragment(directoryUid, directoryName))
             }
 
             // Go to main
@@ -88,10 +100,21 @@ class CreateNoteInProjectFragment(
             btnToSettings.setOnClickListener {
                 helper.navigate(MainSettingsFragment())
             }
+
+            noteAdapter.setOnClickListener(object : NoteAdapter.OnClickListener {
+                override fun onClick(note: Note) {
+                    helper.navigate(
+                        CreateNoteFragment(
+                            1,
+                            note.directoryUid,
+                            directoryName,
+                            note.projectUid,
+                            projectName,
+                            note.noteUid
+                        )
+                    )
+                }
+            })
         }
     }
-
-//    companion object {
-//        fun newInstance() = CreateNoteInProjectFragment()
-//    }
 }
