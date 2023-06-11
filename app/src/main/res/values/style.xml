@@ -182,4 +182,9 @@
         <item name="android:checked">false</item>
         <item name="android:background">@drawable/custom_radio_button_background</item>
     </style>
+
+    <!--    Style for number picker    -->
+    <style name="NumberPickerStyle">
+        <item name="android:fontFamily">@font/roboto_medium</item>
+    </style>
 </resources>

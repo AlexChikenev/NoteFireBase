@@ -9,11 +9,13 @@ import com.example.notefirebase.firebasemodel.FirebaseOutcomes
 import com.example.notefirebase.firebasemodel.FirebasePillows
 import com.example.notefirebase.firebasemodel.FirebaseProject
 import com.example.notefirebase.firebasemodel.FirebaseTask
+import com.example.notefirebase.firebasemodel.FirebaseTimeEvent
 import com.example.notefirebase.firebasemodel.Income
 import com.example.notefirebase.firebasemodel.Note
 import com.example.notefirebase.firebasemodel.Outcome
 import com.example.notefirebase.firebasemodel.Project
 import com.example.notefirebase.firebasemodel.Task
+import com.example.notefirebase.firebasemodel.TimeEvent
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -395,7 +397,8 @@ class FirebaseManager {
         taskRepeat: Int,
         taskNotification: Boolean,
         taskPriority: Int,
-        taskIsCompleted: Boolean
+        taskIsCompleted: Boolean,
+        alarmTime: Long?
 
     ) {
 
@@ -409,7 +412,8 @@ class FirebaseManager {
                 taskRepeat,
                 taskNotification,
                 taskPriority,
-                taskIsCompleted
+                taskIsCompleted,
+                alarmTime
             )
 
         if (taskType == 0) {
@@ -545,6 +549,67 @@ class FirebaseManager {
                     }
                 }
                 callbackList(workTaskList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                errorCallback()
+            }
+
+        })
+    }
+
+    // Create time event
+    fun writeTimeEvent(
+        userUid: String,
+        eventName: String,
+        eventDate: String,
+        eventIsCompleted: Boolean,
+        alarmTime: Long?
+
+    ) {
+        val uniqueId = databaseReference.push().key
+        val task =
+            uniqueId?.let {
+                FirebaseTimeEvent(
+                    it,
+                    eventName,
+                    eventDate,
+                    eventIsCompleted,
+                    alarmTime
+                )
+            }
+        if (uniqueId != null) {
+            databaseReference.child("Users").child(userUid).child("TimeEvents").child(uniqueId)
+                .setValue(task)
+        }
+    }
+
+    // Get time event
+    fun getTimeEvent(
+        userUid: String,
+        callbackList: (List<TimeEvent>) -> Unit,
+        errorCallback: () -> Unit
+    ) {
+        val workTaskRef = databaseReference.child("Users").child(userUid).child("TimeEvents")
+        workTaskRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val timeEventList = mutableListOf<TimeEvent>()
+                for (childSnapshot in dataSnapshot.children) {
+                    val timeEventData = childSnapshot.getValue(FirebaseTimeEvent::class.java)
+                    if (timeEventData != null) {
+                        val timeEvent = TimeEvent(
+                            timeEventData.uniqueId,
+                            timeEventData.eventName,
+                            timeEventData.eventDate,
+                            timeEventData.eventIsCompleted,
+                            timeEventData.alarmTime
+                        )
+                        if (timeEvent != null) {
+                            timeEventList.add(timeEvent)
+                        }
+                    }
+                }
+                callbackList(timeEventList)
             }
 
             override fun onCancelled(error: DatabaseError) {

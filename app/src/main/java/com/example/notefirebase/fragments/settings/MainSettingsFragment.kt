@@ -1,7 +1,6 @@
 package com.example.notefirebase.fragments.settings
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -68,8 +67,6 @@ class MainSettingsFragment : Fragment() {
                             userName.text = name
                         }
                 }
-            } else {
-                Log.d("User||DbRef", "Error")
             }
         }
     }

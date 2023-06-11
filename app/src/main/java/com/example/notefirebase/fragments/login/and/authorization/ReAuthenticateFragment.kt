@@ -6,14 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.example.notefirebase.R
 import com.example.notefirebase.databinding.FragmentReAuthenticateBinding
-import com.example.notefirebase.fragments.MainFragment
 import com.example.notefirebase.fragments.settings.ChangeEmailFragment
+import com.example.notefirebase.fragments.settings.MainSettingsFragment
 import com.example.notefirebase.utils.Helper
 import com.example.notefirebase.utils.UserDataCheck
 import com.google.firebase.auth.EmailAuthProvider
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -21,6 +21,7 @@ class ReAuthenticateFragment : Fragment() {
     private lateinit var fragmentBinding: FragmentReAuthenticateBinding
     private lateinit var userDataCheck: UserDataCheck
     private lateinit var helper: Helper
+    private var user: FirebaseUser? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -32,13 +33,13 @@ class ReAuthenticateFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         helper = Helper(requireActivity())
+        user = Firebase.auth.currentUser!!
         setupClickListeners()
     }
 
     private fun setupClickListeners() {
         with(fragmentBinding) {
             btnEnter.setOnClickListener {
-                val user = Firebase.auth.currentUser!!
                 val email = inputEmail.text.toString()
                 val password = inputPassword.text.toString()
                 userDataCheck = UserDataCheck("", email)
@@ -50,19 +51,18 @@ class ReAuthenticateFragment : Fragment() {
                     labelPassword.setText(R.string.password_error)
                 } else {
                     val credential = EmailAuthProvider.getCredential(email, password)
-                    user.reauthenticate(credential).addOnCompleteListener {
+                    user?.reauthenticate(credential)?.addOnCompleteListener {
                         if (it.isSuccessful) {
                             helper.navigate(ChangeEmailFragment())
                         } else {
-                            Toast.makeText(requireContext(), "Данные не верны", Toast.LENGTH_SHORT)
-                                .show()
+                            helper.customToast(requireContext(), R.string.reauth_error)
                         }
                     }
                 }
             }
 
-            btnToMain.setOnClickListener {
-                helper.navigate(MainFragment())
+            btnGoBack.setOnClickListener {
+                helper.navigate(MainSettingsFragment())
             }
         }
 

@@ -24,6 +24,8 @@ class Helper(
     fun getUid(): String {
         return FirebaseAuth.getInstance().currentUser?.uid ?: ""
     }
+
+    //Get database reference
     fun getDatabaseReference(): DatabaseReference {
         return FirebaseDatabase.getInstance().reference
     }

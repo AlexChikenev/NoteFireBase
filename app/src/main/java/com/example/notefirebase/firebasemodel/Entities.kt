@@ -104,11 +104,11 @@ data class FirebaseTask(
     val taskRepeat: Int,
     val taskNotification: Boolean,
     val taskPriority: Int,
-    val taskIsCompleted: Boolean?
+    val taskIsCompleted: Boolean?,
+    val alarmTime: Long?
 ) {
-    constructor() : this("", 0,"", "", "", 0, false, 0, null)
+    constructor() : this("", 0, "", "", "", 0, false, 0, null, null)
 }
-
 data class Task(
     val uniqueId: String,
     val taskType: Int,
@@ -119,6 +119,24 @@ data class Task(
     var taskNotification: Boolean,
     var taskPriority: Int?,
     var taskIsCompleted: Boolean?
+)
+
+data class FirebaseTimeEvent(
+    val uniqueId: String,
+    val eventName: String,
+    val eventDate: String,
+    val eventIsCompleted: Boolean?,
+    val alarmTime: Long?
+) {
+    constructor() : this("", "", "", false,  0)
+}
+
+data class TimeEvent(
+    val uniqueId: String,
+    val eventName: String,
+    val eventDate: String,
+    var eventIsCompleted: Boolean?,
+    val alarmTime: Long?
 )
 
 

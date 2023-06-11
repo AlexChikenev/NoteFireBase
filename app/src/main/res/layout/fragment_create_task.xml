@@ -140,96 +140,96 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardRepeatPicker"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/transparent"
-            app:cardCornerRadius="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cardDate"
-            app:strokeWidth="0dp">
+<!--        <com.google.android.material.card.MaterialCardView-->
+<!--            android:id="@+id/cardRepeatPicker"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:cardBackgroundColor="@color/transparent"-->
+<!--            app:cardCornerRadius="0dp"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/cardDate"-->
+<!--            app:strokeWidth="0dp">-->
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent">-->
 
-                <TextView
-                    android:id="@+id/labelTaskRepeat"
-                    style="@style/CreateTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:background="@color/transparent"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:text="@string/text_task_repeat"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+<!--                <TextView-->
+<!--                    android:id="@+id/labelTaskRepeat"-->
+<!--                    style="@style/CreateTextStyle"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="24dp"-->
+<!--                    android:background="@color/transparent"-->
+<!--                    android:paddingTop="8dp"-->
+<!--                    android:paddingBottom="8dp"-->
+<!--                    android:text="@string/text_task_repeat"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" />-->
 
-                <TextView
-                    android:id="@+id/textTaskRepeat"
-                    style="@style/CreateTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="24dp"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:text="@string/radio_button_text_never"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+<!--                <TextView-->
+<!--                    android:id="@+id/textTaskRepeat"-->
+<!--                    style="@style/CreateTextStyle"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginEnd="24dp"-->
+<!--                    android:paddingTop="8dp"-->
+<!--                    android:paddingBottom="8dp"-->
+<!--                    android:text="@string/radio_button_text_never"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" />-->
 
-                <RadioGroup
-                    android:id="@+id/repeatRadioGroup"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@id/textTaskRepeat"
-                    app:layout_constraintStart_toStartOf="@id/labelTaskRepeat"
-                    app:layout_constraintTop_toBottomOf="@id/labelTaskRepeat">
+<!--                <RadioGroup-->
+<!--                    android:id="@+id/repeatRadioGroup"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="10dp"-->
+<!--                    android:layout_marginBottom="10dp"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintEnd_toEndOf="@id/textTaskRepeat"-->
+<!--                    app:layout_constraintStart_toStartOf="@id/labelTaskRepeat"-->
+<!--                    app:layout_constraintTop_toBottomOf="@id/labelTaskRepeat">-->
 
-                    <RadioButton
-                        android:id="@+id/radioButtonRepeatNever"
-                        style="@style/CustomRadioButton"
-                        android:layout_width="0dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_weight="1"
-                        android:button="@null"
-                        android:checked="true"
-                        android:text="@string/radio_button_text_never" />
+<!--                    <RadioButton-->
+<!--                        android:id="@+id/radioButtonRepeatNever"-->
+<!--                        style="@style/CustomRadioButton"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_marginEnd="16dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:button="@null"-->
+<!--                        android:checked="true"-->
+<!--                        android:text="@string/radio_button_text_never" />-->
 
-                    <RadioButton
-                        android:id="@+id/radioButtonRepeatEveryDay"
-                        style="@style/CustomRadioButton"
-                        android:layout_width="0dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_weight="1"
-                        android:button="@null"
-                        android:text="@string/radio_button_text_every_day" />
+<!--                    <RadioButton-->
+<!--                        android:id="@+id/radioButtonRepeatEveryDay"-->
+<!--                        style="@style/CustomRadioButton"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_marginEnd="16dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:button="@null"-->
+<!--                        android:text="@string/radio_button_text_every_day" />-->
 
-                    <RadioButton
-                        android:id="@+id/radioButtonRepeatEveryWeek"
-                        style="@style/CustomRadioButton"
-                        android:layout_width="0dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_weight="1"
-                        android:button="@null"
-                        android:text="@string/radio_button_text_every_week" />
+<!--                    <RadioButton-->
+<!--                        android:id="@+id/radioButtonRepeatEveryWeek"-->
+<!--                        style="@style/CustomRadioButton"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_marginEnd="16dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:button="@null"-->
+<!--                        android:text="@string/radio_button_text_every_week" />-->
 
-                    <RadioButton
-                        android:id="@+id/radioButtonRepeatEveryMonth"
-                        style="@style/CustomRadioButton"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:button="@null"
-                        android:text="@string/radio_button_text_every_month" />
-                </RadioGroup>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
+<!--                    <RadioButton-->
+<!--                        android:id="@+id/radioButtonRepeatEveryMonth"-->
+<!--                        style="@style/CustomRadioButton"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:button="@null"-->
+<!--                        android:text="@string/radio_button_text_every_month" />-->
+<!--                </RadioGroup>-->
+<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--        </com.google.android.material.card.MaterialCardView>-->
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardNotificationPicker"
@@ -239,7 +239,7 @@
             app:cardCornerRadius="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cardRepeatPicker"
+            app:layout_constraintTop_toBottomOf="@id/cardDate"
             app:strokeColor="@color/card_task_stroke_color"
             app:strokeWidth="0.5dp">
 
@@ -254,8 +254,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:background="@color/transparent"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
                     android:text="@string/text_task_notification"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -263,12 +263,13 @@
                     <CheckBox
                         android:id="@+id/checkNotification"
                         android:layout_height="0dp"
-                        app:layout_constraintHeight_percent="0.4"
+                        app:layout_constraintHeight_percent="0.5"
                         style="@style/CustomRadioButton"
-                        android:layout_marginTop="10dp"
+                        android:textSize="11sp"
                         android:layout_marginEnd="24dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_width="0dp"
-                        app:layout_constraintWidth_percent="0.1"
+                        app:layout_constraintWidth_percent="0.2"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         android:layout_weight="1"

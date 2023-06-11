@@ -8,7 +8,7 @@
     android:background="@color/white_29"
     tools:context=".fragments.finance.CreateIncomeFragment">
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/card"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -19,7 +19,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeWidth="0dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -27,65 +28,52 @@
             android:background="@color/white"
             android:paddingBottom="40dp">
 
-            <TextView
-                android:id="@+id/labelSure"
-                android:gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/helvetica_bold"
-                android:text="@string/text_commit_reset"
-                android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/inputIncome"
+            <EditText
+                android:id="@+id/inputTimeEventName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="35dp"
-                android:layout_marginEnd="15dp"
-                android:fontFamily="@font/helvetica_regular"
-                android:text="@string/alert_dialog_password_message"
-                android:textColor="@color/hint_color"
                 android:textSize="12sp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
+                android:background="@color/transparent"
+                android:fontFamily="@font/helvetica_regular"
+                android:gravity="center"
+                android:hint="@string/enter_time_event"
+                android:inputType="textMultiLine"
+                android:padding="8dp"
+                android:textColor="@color/task_text_color"
+                android:textColorHint="@color/primary_color"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/labelSure" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:importantForAutofill="no" />
+
+
+            <TimePicker
+                android:id="@+id/timePicker"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:timePickerMode="spinner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/inputTimeEventName" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnCommit"
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginBottom="40dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/bg_btn_commit_note"
                 android:fontFamily="@font/helvetica_regular"
-                android:text="@string/btn_text_ok"
+                android:text="@string/btn_text_commit_note"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/inputIncome" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnDismiss"
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginBottom="40dp"
-                android:background="@drawable/bg_btn_commit_note"
-                android:fontFamily="@font/helvetica_regular"
-                android:text="@string/btn_text_no"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:visibility="visible"
-                app:layout_constraintStart_toStartOf="@id/inputIncome"
-                app:layout_constraintTop_toBottomOf="@id/inputIncome" />
+                app:layout_constraintTop_toBottomOf="@id/timePicker" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

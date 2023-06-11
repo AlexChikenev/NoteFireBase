@@ -28,62 +28,47 @@
             android:paddingBottom="40dp">
 
             <TextView
-                android:id="@+id/labelSure"
-                android:gravity="center"
-                android:layout_width="wrap_content"
+                android:id="@+id/textNotificate"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/helvetica_bold"
-                android:text="@string/text_commit_reset"
-                android:visibility="invisible"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
+                android:fontFamily="@font/helvetica_regular"
+                android:gravity="center"
+                android:text="@string/label_time_notification"
+                android:textColor="@color/task_text_color"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/inputIncome"
+
+            <TimePicker
+                android:id="@+id/timePicker"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="35dp"
-                android:layout_marginEnd="15dp"
-                android:fontFamily="@font/helvetica_regular"
-                android:text="@string/alert_dialog_password_message"
-                android:textColor="@color/hint_color"
-                android:textSize="12sp"
+                android:numbersTextColor="@color/black"
+                android:timePickerMode="spinner"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/labelSure" />
+                app:layout_constraintTop_toBottomOf="@id/textNotificate" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnCommit"
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
+                android:layout_width="0dp"
+                app:layout_constraintWidth_percent="0.5"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_percent="0.11"
                 android:layout_marginTop="40dp"
-                android:layout_marginBottom="40dp"
                 android:background="@drawable/bg_btn_commit_note"
                 android:fontFamily="@font/helvetica_regular"
-                android:text="@string/btn_text_ok"
+                android:gravity="center"
+                android:text="@string/btn_text_commit_time"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/inputIncome" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnDismiss"
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginBottom="40dp"
-                android:background="@drawable/bg_btn_commit_note"
-                android:fontFamily="@font/helvetica_regular"
-                android:text="@string/btn_text_no"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:visibility="visible"
-                app:layout_constraintStart_toStartOf="@id/inputIncome"
-                app:layout_constraintTop_toBottomOf="@id/inputIncome" />
+                app:layout_constraintTop_toBottomOf="@id/timePicker" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

@@ -56,7 +56,7 @@
     <string name="btn_registration_text">Регистрация</string>
     <string name="label_settings">Настройки</string>
     <string name="user_photo">Аватар пользователя</string>
-    <string name="btn_exit">Выйти</string>
+    <string name="btn_exit">Выйти из аккаунта</string>
     <string name="text_btn_to_main">Вернуться на главную</string>
     <string name="text_btn_to_settings">Перейти к настройкам</string>
     <string name="label_text_email">Введите email</string>
@@ -149,4 +149,15 @@
     <string name="input_note_content">Введите содержание заметки</string>
     <string name="label_delete_project_question">Удаление проекта</string>
     <string name="label_delete_note_question">Удаление заметки</string>
+    <string name="label_time_notification">Напоминание задачи в</string>
+    <string name="channel_name">Alarm</string>
+    <string name="channel_description">Alarm notification</string>
+    <string name="enter_time_event">Название события</string>
+    <string name="label_delete_time_event_question">Удаление события по времени</string>
+    <string name="grant_permission_text">Для корректной работы приложения, вам необходимо предоставить разрешение на показ уведомлений)</string>
+    <string name="label_delete_permission">Необходимо разрешение на показ уведомлений</string>
+    <string name="btn_text_commit_time">Подтвердить время</string>
+    <string name="input_event_name">Введите название события</string>
+    <string name="text_btn_go_back">Назад</string>
+    <string name="reauth_error">Данные неверны</string>
 </resources>

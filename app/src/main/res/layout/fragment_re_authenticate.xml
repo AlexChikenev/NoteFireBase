@@ -67,6 +67,11 @@
     <EditText
         android:id="@+id/inputEmail"
         android:layout_width="0dp"
+        android:importantForAutofill="no"
+        android:inputType="textEmailAddress"
+        android:paddingStart="15dp"
+        android:paddingEnd="0dp"
+        android:textColor="@color/black"
         android:layout_height="48dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="10dp"
@@ -74,7 +79,9 @@
         android:background="@color/white_80"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/labelEmail" />
+        android:textSize="15sp"
+        app:layout_constraintTop_toBottomOf="@id/labelEmail"
+        tools:ignore="LabelFor" />
 
 
     <TextView
@@ -95,13 +102,20 @@
         android:id="@+id/inputPassword"
         android:layout_width="0dp"
         android:layout_height="48dp"
+        android:importantForAutofill="no"
+        android:inputType="textPassword"
+        android:paddingStart="15dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="10dp"
+        android:paddingEnd="0dp"
+        android:textColor="@color/black"
         android:layout_marginEnd="40dp"
         android:background="@color/white_80"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/labelPassword" />
+        android:textSize="15sp"
+        app:layout_constraintTop_toBottomOf="@id/labelPassword"
+        tools:ignore="LabelFor" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnEnter"
@@ -129,13 +143,13 @@
         app:layout_constraintTop_toBottomOf="@id/inputPassword" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnToMain"
+        android:id="@+id/btnGoBack"
         style="@style/ButtonInSettings"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
         android:layout_marginBottom="40dp"
         android:background="@drawable/bg_btn_to_main_setting"
-        android:text="@string/text_btn_to_main"
+        android:text="@string/text_btn_go_back"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

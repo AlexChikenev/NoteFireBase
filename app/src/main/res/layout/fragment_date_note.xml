@@ -142,52 +142,55 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/timeEventRcView"
         android:layout_width="0dp"
-        android:layout_height="80dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintWidth_percent="0.6"
+        app:layout_constraintHeight_percent="0.2"
         app:layout_constraintEnd_toEndOf="@+id/middleLine"
         app:layout_constraintStart_toStartOf="@id/middleLine"
         app:layout_constraintTop_toBottomOf="@id/middleLine" />
 
-    <View
-        android:id="@+id/backLine"
-        style="@style/TopLineBg"
-        android:layout_height="1dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="0dp"
-        app:layout_constraintEnd_toEndOf="@id/middleLine"
-        app:layout_constraintStart_toStartOf="@id/middleLine"
-        app:layout_constraintTop_toBottomOf="@id/timeEventRcView" />
+<!--    <View-->
+<!--        android:id="@+id/backLine"-->
+<!--        style="@style/TopLineBg"-->
+<!--        android:layout_height="1dp"-->
+<!--        android:layout_marginStart="0dp"-->
+<!--        android:layout_marginTop="50dp"-->
+<!--        android:layout_marginEnd="0dp"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/middleLine"-->
+<!--        app:layout_constraintStart_toStartOf="@id/middleLine"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/timeEventRcView" />-->
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/habitsTrackerRcView"
-        android:layout_width="0dp"
-        android:layout_height="80dp"
-        app:layout_constraintEnd_toEndOf="@+id/middleLine"
-        app:layout_constraintStart_toStartOf="@id/backLine"
-        app:layout_constraintTop_toBottomOf="@id/backLine" />
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/habitsTrackerRcView"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="80dp"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/middleLine"-->
+<!--        app:layout_constraintStart_toStartOf="@id/backLine"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/backLine" />-->
 
-    <ImageView
-        android:id="@+id/ic_back_star"
-        style="@style/TopStarStyle"
-        android:layout_marginStart="0dp"
-        android:contentDescription="@string/star_ic_content_description"
-        app:layout_constraintBottom_toTopOf="@+id/backLine"
-        app:layout_constraintStart_toStartOf="@id/middleLine" />
+<!--    <ImageView-->
+<!--        android:id="@+id/ic_back_star"-->
+<!--        style="@style/TopStarStyle"-->
+<!--        android:layout_marginStart="0dp"-->
+<!--        android:contentDescription="@string/star_ic_content_description"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/backLine"-->
+<!--        app:layout_constraintStart_toStartOf="@id/middleLine" />-->
 
-    <TextView
-        android:id="@+id/textHabitsTracker"
-        style="@style/TopLabels"
-        android:text="@string/label_habits_tracker"
-        app:layout_constraintBottom_toTopOf="@id/backLine"
-        app:layout_constraintStart_toEndOf="@id/ic_back_star" />
+<!--    <TextView-->
+<!--        android:id="@+id/textHabitsTracker"-->
+<!--        style="@style/TopLabels"-->
+<!--        android:text="@string/label_habits_tracker"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/backLine"-->
+<!--        app:layout_constraintStart_toEndOf="@id/ic_back_star" />-->
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnCreateHabit"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginBottom="4dp"
-        android:background="@drawable/bg_pillow"
-        android:contentDescription="@string/go_to_main_ic_content_description"
-        app:layout_constraintBottom_toTopOf="@id/backLine"
-        app:layout_constraintEnd_toEndOf="@id/backLine" />
+<!--    <androidx.appcompat.widget.AppCompatButton-->
+<!--        android:id="@+id/btnCreateHabit"-->
+<!--        android:layout_width="25dp"-->
+<!--        android:layout_height="25dp"-->
+<!--        android:layout_marginBottom="4dp"-->
+<!--        android:background="@drawable/bg_pillow"-->
+<!--        android:contentDescription="@string/go_to_main_ic_content_description"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/backLine"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/backLine" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>
