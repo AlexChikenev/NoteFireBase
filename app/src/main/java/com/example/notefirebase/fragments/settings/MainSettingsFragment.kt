@@ -1,6 +1,8 @@
 package com.example.notefirebase.fragments.settings
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,16 +17,74 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
+import com.yandex.mobile.ads.common.AdRequest
+import com.yandex.mobile.ads.common.AdRequestError
+import com.yandex.mobile.ads.common.ImpressionData
+import com.yandex.mobile.ads.common.MobileAds
+import com.yandex.mobile.ads.interstitial.InterstitialAd
+import com.yandex.mobile.ads.interstitial.InterstitialAdEventListener
+
 
 class MainSettingsFragment : Fragment() {
     private lateinit var frameBinding: FragmentMainSettingsBinding
     private lateinit var helper: Helper
+    private var mInterstitialAd: InterstitialAd? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         frameBinding = FragmentMainSettingsBinding.inflate(inflater, container, false)
         // Initializing user interface elements
+
+        MobileAds.initialize(requireContext()) {}
+        val adRequest = AdRequest.Builder().build()
+
+        mInterstitialAd = InterstitialAd(requireContext())
+        mInterstitialAd!!.setAdUnitId("R-M-DEMO-interstitial")
+        mInterstitialAd!!.loadAd(adRequest)
+
+        mInterstitialAd!!.setInterstitialAdEventListener(object : InterstitialAdEventListener {
+            override fun onAdLoaded() {
+                Log.i(TAG, "onAdLoaded")
+            }
+
+            override fun onAdFailedToLoad(error: AdRequestError) {
+                // Handle the error
+                Log.i(TAG, error.description)
+            }
+
+            override fun onAdDismissed() {
+                // Called when an interstitial ad has been dismissed.
+                Log.d("TAG", "The ad was dismissed.")
+            }
+
+            override fun onAdShown() {
+                // Called when an interstitial ad has been shown.
+                Log.d("TAG", "The ad was shown.")
+            }
+
+            override fun onImpression(impressionData: ImpressionData?) {
+                // Called when an impression was tracked
+                Log.d("TAG", "The ad imprassion was tracked.")
+            }
+
+            override fun onAdClicked() {
+                // Called when user clicked on the ad.
+                Log.d("TAG", "The ad was clicked.")
+            }
+
+            override fun onReturnedToApplication() {
+                // Called when user returned to application after click.
+                Log.d("TAG", "The ad was clicked.")
+            }
+
+            override fun onLeftApplication() {
+                // Called when user is about to leave application after tapping on an ad.
+                Log.d("TAG", "The ad left application after click.")
+            }
+        })
+
+
         init()
         return frameBinding.root
     }
@@ -90,6 +150,11 @@ class MainSettingsFragment : Fragment() {
 
             // Go to main
             btnToMain.setOnClickListener {
+                if (mInterstitialAd!!.isLoaded) {
+                    mInterstitialAd!!.show()
+                } else {
+                    Log.d("TAG", "The interstitial ad wasn't ready yet.")
+                }
                 helper.navigate(MainFragment())
             }
         }
